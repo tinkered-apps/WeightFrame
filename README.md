@@ -64,7 +64,9 @@ Commands, architecture and conventions are in [AGENTS.md](AGENTS.md).
 - Fonts: Hanken Grotesk and JetBrains Mono, SIL Open Font License 1.1, licence texts in
   [public/assets/fonts/](public/assets/fonts)
 - Growth references: CDC 2000 and WHO 2006/2007 BMI-for-age tables, original downloads in
-  [data-src/](data-src)
+  [data-src/](data-src). Their sources and terms of use are in
+  [data-src/NOTICE.md](data-src/NOTICE.md); neither WHO nor CDC endorses this app, and the WHO
+  data may not be used commercially without WHO's permission
 
 ## Disclaimer
 
