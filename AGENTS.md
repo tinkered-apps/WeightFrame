@@ -3,10 +3,10 @@
 ## Commands
 
 ```bash
-npm install                        # dev dependencies only (wrangler, @playwright/test, @axe-core/playwright)
+npm install                        # dev dependencies only (wrangler, @playwright/test, @axe-core/playwright, eslint)
 npx playwright install chromium    # once, before the first e2e run
 npm start                          # wrangler dev on http://localhost:8770, with the production headers
-npm test                           # unit tests (node:test): engine, offline file list, version, no inline scripts
+npm test                           # ESLint (eslint.config.mjs), then unit tests (node:test): engine, offline file list, version, no inline scripts
 npm run test:e2e                   # Playwright, desktop and mobile, against npm start; includes an axe scan and an offline run
 npm run deploy                     # unit tests, then wrangler deploy
 node scripts/check_refs.js         # needs network: every citation resolves to the intended paper
