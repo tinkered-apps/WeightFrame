@@ -2,7 +2,22 @@
   <img src="public/icons/social-card.png" alt="The WeightFrame name next to a panel showing a daily intake of 1,860 kcal and a weight curve levelling off at the goal." width="760">
 </p>
 
-# WeightFrame
+<h1 align="center">WeightFrame</h1>
+
+<p align="center">
+  <b>Weight and energy numbers, each linked to its source.</b><br>
+  BMI, resting metabolic rate, daily energy needs and a weight-change projection, for adults and children.
+</p>
+
+<p align="center">
+  <a href="https://weightframe.tinkered.app/"><b>▶ Open it</b></a>
+  &nbsp;·&nbsp; English and Polish
+  &nbsp;·&nbsp; installs as an app
+  &nbsp;·&nbsp; works offline
+  &nbsp;·&nbsp; no account
+</p>
+
+---
 
 An evidence-based, single-page dashboard for weight and energy: BMI (adults and children),
 resting metabolic rate, total daily energy expenditure, a dynamic weight-loss projection,
