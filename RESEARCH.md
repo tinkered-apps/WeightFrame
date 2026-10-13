@@ -494,21 +494,21 @@ verified bands, but could not be cross-checked independently.
 The full, clickable reference list (78 sources, grouped by topic) is rendered in the app's
 **Sources** tab, generated from `public/js/core/refs.js`. Key sources:
 
-- Frankenfield D, et al. J Am Diet Assoc 2005;105:775-789 — RMR equations systematic review.
+- Frankenfield D, et al. J Am Diet Assoc 2005;105:775-789: RMR equations systematic review.
 - Mifflin MD, St Jeor ST, et al. Am J Clin Nutr 1990;51:241-247.
-- O'Neill JER, et al. Sports Med 2023;53:2373-2398 — RMR equations in athletes.
-- Henry CJK. Public Health Nutr 2005;8:1133-1152 — Oxford equations.
+- O'Neill JER, et al. Sports Med 2023;53:2373-2398: RMR equations in athletes.
+- Henry CJK. Public Health Nutr 2005;8:1133-1152: Oxford equations.
 - National Academies. Dietary Reference Intakes for Energy. 2023. doi:10.17226/26818.
-- Hall KD, et al. Lancet 2011;378:826-837 (and web appendix) — dynamic weight-change model.
-- Hall KD, et al. Cell Metab 2019;30:67-77 — ultra-processed food, inpatient RCT.
-- Tasali E, et al. JAMA Intern Med 2022;182:365-374 — sleep extension and energy intake.
-- Nedeltcheva AV, et al. Ann Intern Med 2010;153:435-441 — sleep and the fat/lean split.
-- Lichtman SW, et al. N Engl J Med 1992;327:1893-1898 — reported vs actual intake.
-- Polidori D, et al. Obesity 2016;24:2289-2295 — appetite feedback.
-- Wei R, et al. Ann Hum Biol 2020;47:514-521 — CDC extended BMI method.
-- Rubino F, et al. Lancet Diabetes Endocrinol 2025;13:221-262 — clinical obesity.
-- Gallagher D, et al. Am J Clin Nutr 2000;72:694-701 — healthy body-fat ranges.
-- Woolcott OO, Bergman RN. Sci Rep 2018;8:10980 — Relative Fat Mass.
-- Jensen MD, et al. Circulation 2014;129(S2):S102-S138 — AHA/ACC/TOS guideline.
-- Hampl SE, et al. Pediatrics 2023;151:e2022060640 — AAP childhood obesity guideline.
-- Winter JE, et al. Am J Clin Nutr 2014;99:875-890 — BMI and mortality ≥ 65 y.
+- Hall KD, et al. Lancet 2011;378:826-837 (and web appendix): dynamic weight-change model.
+- Hall KD, et al. Cell Metab 2019;30:67-77: ultra-processed food, inpatient RCT.
+- Tasali E, et al. JAMA Intern Med 2022;182:365-374: sleep extension and energy intake.
+- Nedeltcheva AV, et al. Ann Intern Med 2010;153:435-441: sleep and the fat/lean split.
+- Lichtman SW, et al. N Engl J Med 1992;327:1893-1898: reported vs actual intake.
+- Polidori D, et al. Obesity 2016;24:2289-2295: appetite feedback.
+- Wei R, et al. Ann Hum Biol 2020;47:514-521: CDC extended BMI method.
+- Rubino F, et al. Lancet Diabetes Endocrinol 2025;13:221-262: clinical obesity.
+- Gallagher D, et al. Am J Clin Nutr 2000;72:694-701: healthy body-fat ranges.
+- Woolcott OO, Bergman RN. Sci Rep 2018;8:10980: Relative Fat Mass.
+- Jensen MD, et al. Circulation 2014;129(S2):S102-S138: AHA/ACC/TOS guideline.
+- Hampl SE, et al. Pediatrics 2023;151:e2022060640: AAP childhood obesity guideline.
+- Winter JE, et al. Am J Clin Nutr 2014;99:875-890: BMI and mortality ≥ 65 y.

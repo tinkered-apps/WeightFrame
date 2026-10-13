@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/icons/social-card.png" alt="The WeightFrame name next to a panel showing a daily intake of 1,860 kcal and a weight curve levelling off at the goal." width="760">
+</p>
+
 # WeightFrame
 
 An evidence-based, single-page dashboard for weight and energy: BMI (adults and children),

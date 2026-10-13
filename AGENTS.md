@@ -13,10 +13,10 @@ node scripts/check_refs.js         # needs network: every citation resolves to t
 python scripts/build_growth_data.py  # regenerate public/js/data/growth-refs.js from data-src/
 ```
 
-Workers Builds (Worker settings, Builds), to be connected once the GitHub repository exists:
-production branch `main`, empty build command, deploy command `npm run deploy`; other branches run
-`npm test`. Playwright is not part of the deploy gate: the Workers Builds image cannot start Chromium
-(no root, no system libraries). Run `npm run test:e2e` locally before pushing UI changes. Run
+Workers Builds (Worker settings, Builds) deploys every push to `main`: empty build command, deploy
+command `npm run deploy`; other branches run `npm test`. Playwright is not part of the deploy gate:
+the Workers Builds image cannot start Chromium (no root, no system libraries). Run
+`npm run test:e2e` locally before pushing any change to what the browser receives. Run
 `check_refs.js` after changing `refs.js`; it is not in `npm test` because it depends on Crossref and
 NCBI being reachable.
 
