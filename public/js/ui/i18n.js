@@ -474,8 +474,8 @@
     'Check these details': 'Sprawdź te dane',
     'Results appear as soon as the basics are valid.': 'Wyniki pojawią się, gdy podstawowe dane będą poprawne.',
     // Sources tab topic-group headings (FH.refs.orderedTopics)
-    'BMI': 'BMI', 'Children': 'Dzieci', 'BMR': 'PPM (BMR)', 'TDEE': 'TDEE', 'Dynamics': 'Dynamika',
-    'Body fat': 'Tkanka tłuszczowa', 'Adiposity': 'Otyłość centralna', 'Guidelines': 'Wytyczne',
+    'Children': 'Dzieci', 'BMR': 'PPM (BMR)', 'TDEE': 'TDEE', 'Dynamics': 'Dynamika',
+    'Adiposity': 'Otyłość centralna', 'Guidelines': 'Wytyczne',
     'Activity': 'Aktywność', 'Sleep & behaviour': 'Sen i zachowanie', 'Outcomes': 'Wyniki kliniczne',
 
     // .hint tooltip contents (data-tip)

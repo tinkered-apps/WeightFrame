@@ -92,7 +92,7 @@ test('a shared link opens the same profile in a fresh browser', async ({ page, b
   await fresh.close();
 });
 
-test('a link with inputs after "?" is ignored, not read', async ({ page, browser }, testInfo) => {
+test('a link with inputs after "?" is ignored, not read', async ({ browser }, testInfo) => {
   const fresh = await browser.newContext(testInfo.project.use);
   const other = await fresh.newPage();
   await other.goto('/?weightKg=91&heightCm=170&ageYears=40');

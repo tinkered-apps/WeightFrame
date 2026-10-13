@@ -48,8 +48,6 @@
     return { BW0, F0, L0, G0, EI0, delta, K, carb, CIb, kG, pal, rmr: o.rmr };
   }
 
-  function bodyWeight(m, y) { return y[0] + y[1] + y[2] * (1 + P.glycogenWater) + y[3]; }
-
   // Returns derivatives and diagnostic expenditure for state y = [F, L, G, dECF, AT].
   function derivs(m, y, EI, deltaExtra) {
     const [F, L, G, E, AT] = y;
