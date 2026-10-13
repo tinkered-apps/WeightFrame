@@ -283,14 +283,14 @@
     if (cen.waist) meas += line('Waist', fmt.circ(r.input.waistCm), cen.waist, cen.waist.refs);
     if (cen.whtr) meas += line('Waist ÷ height', fmt.n(cen.whtr.value, 2), cen.whtr, cen.whtr.refs);
     if (cen.whr) meas += line('Waist ÷ hip', fmt.n(cen.whr.value, 2), cen.whr, cen.whr.refs);
-    const left = `<h4 class="col-title">BMI <span class="col-title__value">${fmt.n(r.bmi, 1)}</span>${fmt.pill(r.bmiClass.label, r.bmiClass.level)}</h4>
+    const left = `<h3 class="col-title">BMI <span class="col-title__value">${fmt.n(r.bmi, 1)}</span>${fmt.pill(r.bmiClass.label, r.bmiClass.level)}</h3>
       ${bmiScale}
       ${r.bmiClass.olderNote ? `<p class="small">${esc(r.bmiClass.olderNote)} ${c(['winter2014'])}</p>` : ''}
-      <h4 class="col-title col-title--gap">Central fat</h4>
+      <h3 class="col-title col-title--gap">Central fat</h3>
       ${meas ? `<ul class="measures">${meas}</ul>` : '<p class="small muted">Add your waist (and hip) under <b>Measurements</b> to see central-fat risk.</p>'}`;
 
     const bf = r.bodyFat, comp = r.composition;
-    let right = '<h4 class="col-title">Body fat</h4>';
+    let right = '<h3 class="col-title">Body fat</h3>';
     if (bf.estimates.length) {
       const rows = bf.estimates.map((e) => ({ label: e.name.replace(/ \(.*\)$/, ''), value: e.value, primary: false, note: e.note }));
       if (r.input.bodyFatPct > 0) rows.unshift({ label: 'Your measurement', value: r.input.bodyFatPct, primary: true });
@@ -497,7 +497,7 @@
     </div>`;
     // Acceptable ranges drawn on one 0-100% axis, so the three overlap visibly.
     const share = (label, cls, [a, b]) => `<div class="share__row"><span class="share__k">${label}</span><span class="share__track"><i class="share__bar share__bar--${cls}" style="left:${a}%;width:${b - a}%"></i></span><span class="share__v">${a}–${b}%</span></div>`;
-    const shareBlock = `<div class="share"><h4 class="col-title">Share of energy ${c(['iom2005'])}</h4>
+    const shareBlock = `<div class="share"><h3 class="col-title">Share of energy ${c(['iom2005'])}</h3>
       ${share('Carbohydrate', 'carb', n.amdr.carbs.pct)}${share('Fat', 'fat', n.amdr.fat.pct)}${share('Protein', 'protein', n.amdr.protein.pct)}
       <div class="share__row share__row--axis"><span></span><span class="share__track">${[0, 25, 50, 75, 100].map((v) => `<b style="left:${v}%">${v}%</b>`).join('')}</span><span></span></div></div>`;
     const athlete = n.protein.athlete ? `<p class="small muted">Lean athletes in a deficit ${c(n.protein.athlete.refs)}: ${gv(n.protein.athlete.grams[0], n.protein.athlete.grams[1])} g.</p>` : '';
@@ -595,7 +595,7 @@
         { from: 0.3, to: 0.5, label: 'Healthy central adiposity', level: 0 },
         { from: 0.5, to: 0.8, label: 'Increased central adiposity', level: 2 },
       ];
-      body += `<h4 class="col-title">Waist ÷ height ${c(cen.whtr.refs)}</h4>`;
+      body += `<h3 class="col-title">Waist ÷ height ${c(cen.whtr.refs)}</h3>`;
       body += charts.scale(cen.whtr.value, segs, { min: 0.3, max: 0.8, format: (v) => fmt.n(v, 2) });
     }
     if (r.bodyFat.estimates.length) {
@@ -603,7 +603,7 @@
       if (r.input.bodyFatPct > 0) rows.unshift({ label: 'Your measurement', value: r.input.bodyFatPct, primary: true });
       const range = r.fatClass ? r.fatClass.range : null;
       const dp = charts.dotplot(rows, { band: range ? [range.low, range.overweight] : null, bandLabel: 'healthy range for your age & sex', marker: r.input.bodyFatPct > 0 ? null : r.bodyFat.consensus, markerLabel: 'best estimate', primaryLabel: 'your measurement', format: (v) => fmt.n(v, 0) + '%', minPad: 3, aria: 'Body-fat percentage by method' });
-      body += `<h4 class="col-title${cen.whtr ? ' col-title--gap' : ''}">Body fat</h4>${dp.html}`;
+      body += `<h3 class="col-title${cen.whtr ? ' col-title--gap' : ''}">Body fat</h3>${dp.html}`;
       body += `<p class="small muted">Methods: ${r.bodyFat.estimates.map((e) => esc(e.name.replace(/ \(.*\)$/, '')) + c(e.refs)).join(' · ')}</p>`;
     }
     body += '<p class="small muted">A waist under half the height is a simple screening message that works from about age 5; it is less discriminating during adolescence. Body-fat formulas for children are less precise than for adults.</p>';

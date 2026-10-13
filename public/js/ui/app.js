@@ -4,7 +4,7 @@
   const { fmt } = FH;
   const $ = (id) => document.getElementById(id);
   // Shown in the footer. public/sw.js names its cache after it; bump both together (see AGENTS.md).
-  const APP_VERSION = '1.02';
+  const APP_VERSION = '1.03';
   const STORE = 'weightframe.v1';
   const THEME_STORE = 'weightframe.theme';
   const DISCLAIMER_STORE = 'weightframe.disclaimerDismissed';
@@ -350,7 +350,9 @@
   const schedule = () => { clearTimeout(timer); timer = setTimeout(update, 180); };
   let shareBtnTimer = null;
 
-  /* ---------- tabs: Dashboard / Methods / Sources, all on one page ---------- */
+  /* ---------- sections: Dashboard / Methods / Sources, all on one page ----------
+   * The three buttons are a navigation, not an ARIA tablist: the Dashboard button also opens
+   * its section links, and a tablist may hold nothing but tabs. */
   const TABS = ['dashboard', 'methods', 'sources'];
   function setDashboardMenu(open) {
     const group = $('dashGroup'), tab = $('tab-dashboard');
@@ -366,8 +368,7 @@
     TABS.forEach((t) => {
       const active = t === name;
       const btn = $('tab-' + t), panel = $('panel-' + t);
-      btn.setAttribute('aria-selected', String(active));
-      btn.tabIndex = active ? 0 : -1;
+      if (active) btn.setAttribute('aria-current', 'page'); else btn.removeAttribute('aria-current');
       panel.hidden = !active;
     });
     document.body.dataset.tab = name;
@@ -460,10 +461,10 @@
       if (!e.target.closest('#dashGroup')) closeDashboardMenu();
     });
     document.addEventListener('click', (e) => {
-      const tab = e.target.closest('[role="tab"]');
+      const tab = e.target.closest('.tabs [data-tab]');
       if (tab) {
         if (tab.id === 'tab-dashboard' && compactNavMQ.matches) {
-          if (tab.getAttribute('aria-selected') !== 'true') activateTab(tab.dataset.tab);
+          if (!tab.hasAttribute('aria-current')) activateTab(tab.dataset.tab);
           toggleDashboardMenu();
         } else activateTab(tab.dataset.tab);
         return;
@@ -501,13 +502,12 @@
       if (e.key !== 'Escape' || !$('dashGroup').classList.contains('is-menu-open')) return;
       closeDashboardMenu(); $('tab-dashboard').focus(); e.preventDefault();
     });
-    // Arrow-key support inside radiogroups and the tablist alike.
+    // Arrow-key support inside radiogroups.
     document.addEventListener('keydown', (e) => {
       const t = e.target;
       if (!t.matches || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) return;
-      const isTab = t.matches('[role="tab"]'), isRadio = t.matches('[role="radio"]');
-      if (!isTab && !isRadio) return;
-      const group = [...t.closest(isTab ? '[role="tablist"]' : '[role="radiogroup"]').querySelectorAll(isTab ? '[role="tab"]' : '[role="radio"]')];
+      if (!t.matches('[role="radio"]')) return;
+      const group = [...t.closest('[role="radiogroup"]').querySelectorAll('[role="radio"]')];
       const i = group.indexOf(t) + (e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : -1);
       const next = group[(i + group.length) % group.length];
       next.focus(); next.click(); e.preventDefault();

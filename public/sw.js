@@ -4,11 +4,10 @@
 // network-first, so a deploy shows up at once and the cache is the offline
 // fallback. CACHE carries APP_VERSION from js/ui/app.js; bump both together
 // (see AGENTS.md). tests/pwa.test.js keeps SHELL in step with public/.
-const CACHE = "weightframe-v1.02";
+const CACHE = "weightframe-v1.03";
 const SHELL = [
   "./",
-  "index.html",
-  "privacy.html",
+  "privacy",
   "manifest.webmanifest",
   "screenshots/narrow.png",
   "screenshots/wide.png",
@@ -56,6 +55,14 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+// The host redirects index.html to ./ and privacy.html to privacy, and a
+// redirected response cannot answer a navigation. So SHELL lists pages by
+// their clean URLs, and an offline visit to the .html form is looked up there.
+function cleanUrl(url) {
+  const { origin, pathname } = new URL(url);
+  return origin + pathname.replace(/(^|\/)index\.html$/, "$1").replace(/\.html$/, "");
+}
+
 self.addEventListener("fetch", (event) => {
   const { request } = event;
   if (request.method !== "GET" || new URL(request.url).origin !== self.location.origin) return;
@@ -69,8 +76,10 @@ self.addEventListener("fetch", (event) => {
         }
         return response;
       })
-      .catch(() =>
-        caches.match(request, { ignoreSearch: true }).then((hit) => hit || (request.mode === "navigate" ? caches.match("index.html") : undefined))
-      )
+      .catch(async () => {
+        const hit = await caches.match(request, { ignoreSearch: true });
+        if (hit || request.mode !== "navigate") return hit;
+        return (await caches.match(cleanUrl(request.url))) || caches.match("./");
+      })
   );
 });

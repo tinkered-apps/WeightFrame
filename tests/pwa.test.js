@@ -13,19 +13,26 @@ function walk(dir) {
     e.isDirectory() ? walk(path.join(dir, e.name)) : [path.join(dir, e.name)]);
 }
 
+// The host serves index.html at ./ and privacy.html at privacy, and redirects the
+// .html forms there. A cached redirect cannot open a page offline, so SHELL lists
+// the served URL.
+const served = (f) => (f === "index.html" ? "./" : f.replace(/\.html$/, ""));
+
 test("every file in the offline shell exists", () => {
   for (const f of shell) {
+    assert.ok(!f.endsWith(".html"), `${f}: list the page in SHELL as "${served(f)}"`);
     if (f === "./") continue;
-    assert.ok(fs.existsSync(path.join(pub, f)), `${f} is in SHELL but missing from public/`);
+    assert.ok(fs.existsSync(path.join(pub, f)) || fs.existsSync(path.join(pub, `${f}.html`)), `${f} is in SHELL but missing from public/`);
   }
 });
 
 test("every deployed file is in the offline shell", () => {
-  // _headers is Cloudflare config and is never served.
-  const skip = new Set(["sw.js", "_headers"]);
+  // _headers is Cloudflare config and is never served. The social card is for link
+  // previews: crawlers fetch it, no page loads it.
+  const skip = new Set(["sw.js", "_headers", "icons/social-card.png"]);
   const files = walk(pub).map((f) => path.relative(pub, f).split(path.sep).join("/"))
     .filter((f) => !skip.has(f) && !f.endsWith(".txt"));
-  const missing = files.filter((f) => !shell.includes(f));
+  const missing = files.filter((f) => !shell.includes(served(f)));
   assert.deepStrictEqual(missing, [], `add to SHELL in public/sw.js: ${missing.join(", ")}`);
 });
 

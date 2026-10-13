@@ -3,11 +3,11 @@
 ## Commands
 
 ```bash
-npm install                        # dev dependencies only (wrangler, @playwright/test)
+npm install                        # dev dependencies only (wrangler, @playwright/test, @axe-core/playwright)
 npx playwright install chromium    # once, before the first e2e run
 npm start                          # wrangler dev on http://localhost:8770, with the production headers
 npm test                           # unit tests (node:test): engine, offline file list, version, no inline scripts
-npm run test:e2e                   # Playwright, desktop and mobile, against npm start
+npm run test:e2e                   # Playwright, desktop and mobile, against npm start; includes an axe scan and an offline run
 npm run deploy                     # unit tests, then wrangler deploy
 node scripts/check_refs.js         # needs network: every citation resolves to the intended paper
 python scripts/build_growth_data.py  # regenerate public/js/data/growth-refs.js from data-src/
@@ -85,5 +85,8 @@ e2e/                      Playwright tests
 - Every new metric or formula needs a verified, linked source added to `public/js/core/refs.js`; see [RESEARCH.md](RESEARCH.md) for the evidence behind existing formulas and which one wins in which scenario.
 - i18n is an English-keyed substring dictionary in `public/js/ui/i18n.js` applied to rendered HTML. Any English string added or changed in `board.js`, `methods.js`, or `index.html` needs an identical entry added to the dictionary. Citations and `.formula` blocks are shielded from translation, and class names must never contain dictionary keys.
 - Children (2–17): percentiles and guideline-based goals only, never calorie-deficit plans.
-- PWA: every file in `public/` except `sw.js`, `_headers` and the licence texts must be in `SHELL` in `public/sw.js`; `tests/pwa.test.js` checks this. Files are network-first with the cache as the offline fallback.
+- PWA: every file in `public/` except `sw.js`, `_headers`, the licence texts and the social card must be in `SHELL` in `public/sw.js`; `tests/pwa.test.js` checks this. Pages are listed by the URL the host serves (`./`, `privacy`), never the `.html` form: the host redirects that form, and a cached redirect cannot open a page offline. The fetch handler maps an offline `.html` visit to the clean URL. Files are network-first with the cache as the offline fallback.
+- Link preview: the `og:*` tags in `public/index.html` point to `public/icons/social-card.png` (1200×630), static English with absolute URLs because crawlers do not run scripts.
+- Page structure: the masthead holds the `h1` and a navigation of three buttons (`aria-current="page"` marks the open one). They are not an ARIA tablist, because the Dashboard button also opens its section links and a tablist may hold nothing but tabs. Each section is its own `<main>`, with the two closed ones `hidden`. Dashboard headings run `h2` (section), `h3` (card or column title), `h4`.
+- Colour: `--blue-ink` is the blue for text on `--blue-soft`; plain `--blue` on that tint is below 4.5:1 in the light theme.
 - Security headers: `public/_headers` sets a strict CSP (`script-src 'self'`): no inline scripts, no external origins. Inline styles are allowed (charts position elements with `style`).
