@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data and privacy · WeightFrame</title>
+  <meta name="robots" content="noindex">
+  <meta name="color-scheme" content="light dark">
+  <script src="js/ui/theme-init.js"></script>
+  <meta name="theme-color" content="#11284b">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" type="image/svg+xml" href="assets/weightframe-mark.svg">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-tab="privacy">
+  <header class="masthead">
+    <a class="brand" href="index.html">
+      <img class="brand__mark" src="assets/weightframe-mark.svg" alt="">
+      <span class="brand__name">WeightFrame</span>
+      <span class="brand__tag" data-i18n="Weight &amp; energy, grounded in science.">Weight &amp; energy, grounded in science.</span>
+    </a>
+    <nav class="tabs" aria-label="Sections">
+      <a class="tabs__link" href="index.html" data-i18n="Dashboard">Dashboard</a>
+      <a class="tabs__link" href="index.html#methods" data-i18n="Methods">Methods</a>
+      <a class="tabs__link" href="index.html#sources" data-i18n="Sources">Sources</a>
+    </nav>
+    <div class="masthead__tools">
+      <div class="seg seg--tool" role="radiogroup" aria-label="Language">
+        <button type="button" role="radio" data-lang-btn="en" aria-checked="true">EN</button>
+        <button type="button" role="radio" data-lang-btn="pl" aria-checked="false">PL</button>
+      </div>
+      <button type="button" class="icon-btn" id="themeBtn" aria-label="Theme"><span data-icon="auto"></span></button>
+    </div>
+  </header>
+
+  <main class="page privacy" id="main">
+    <article data-locale="en">
+      <header class="page-head">
+        <h1>Data and privacy</h1>
+        <p class="methods__lead">WeightFrame runs entirely in your browser. Everything you type is calculated on your device and is never sent to me or anyone else: there are no accounts, forms, analytics, ads or third-party scripts.</p>
+      </header>
+      <div class="methods__col">
+        <section class="method">
+          <h2>Who is responsible</h2>
+          <p>Kuba, <a href="mailto:kuba@tinkered.app">kuba@tinkered.app</a>. WeightFrame is a private, non-commercial hobby project.</p>
+        </section>
+        <section class="method">
+          <h2>What the host records</h2>
+          <p>The site is hosted by Cloudflare. Like any web host, Cloudflare processes your IP address, the time of the request, the page requested (its full address, including anything after a <code>?</code>) and your browser details to deliver the site and protect it from attacks. If a connection to the site fails, your browser may also send Cloudflare a short error report.</p>
+          <p>I can see a sample of these requests, including IP addresses, in the Cloudflare dashboard. I use it only to keep the site working and secure (legitimate interest, Art. 6(1)(f) GDPR). Cloudflare keeps these records for up to 7 days (security events: 24 hours) and then deletes them.</p>
+          <p>Cloudflare, Inc. is based in the United States and processes this data on my behalf under its data processing addendum. Transfers rely on the EU–US Data Privacy Framework, with standard contractual clauses as a fallback. <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare's privacy policy</a>.</p>
+        </section>
+        <section class="method">
+          <h2>If you email me</h2>
+          <p>Mail to kuba@tinkered.app is forwarded by Cloudflare Email Routing to my Gmail inbox (Google). I use your address and message only to reply (legitimate interest, Art. 6(1)(f) GDPR) and keep the conversation while it may still be useful for follow-up. Ask me to delete it at any time and I will. Google LLC, like Cloudflare, is certified under the EU–US Data Privacy Framework.</p>
+        </section>
+        <section class="method">
+          <h2>Your rights</h2>
+          <p>You can ask for access to your data, its correction or deletion, restriction of processing, or object to processing, by writing to kuba@tinkered.app. You can also complain to your data protection authority; in Poland that is the President of the Personal Data Protection Office (UODO).</p>
+          <p>The hosting records are not tied to names and expire within 7 days. To check whether any of them concern you, send your IP address and the time of your visit within that period.</p>
+        </section>
+        <section class="method">
+          <h2>What the app stores in your browser</h2>
+          <p>To remember your choices between visits, the app stores these items in your browser. They stay on your device and are not sent to me.</p>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Item</th><th>Type</th><th>Purpose</th><th>Kept until</th></tr></thead>
+            <tbody>
+              <tr><td data-label="Item"><code>weightframe.v1</code></td><td data-label="Type">localStorage</td><td data-label="Purpose">your last inputs (units, language, sex, age, height, weight, measurements, goal), so the form reopens where you left it</td><td data-label="Kept until">you press Clear (resets it to empty inputs) or clear site data</td></tr>
+              <tr><td data-label="Item"><code>weightframe.theme</code></td><td data-label="Type">localStorage</td><td data-label="Purpose">light or dark theme, if you picked one</td><td data-label="Kept until">you clear site data</td></tr>
+              <tr><td data-label="Item"><code>weightframe.disclaimerDismissed</code></td><td data-label="Type">localStorage</td><td data-label="Purpose">remembers that you closed the notice at the bottom</td><td data-label="Kept until">you clear site data</td></tr>
+              <tr><td data-label="Item"><code>weightframe-v…</code></td><td data-label="Type">Cache Storage (service worker)</td><td data-label="Purpose">copies of the app's own files, so it works offline</td><td data-label="Kept until">replaced by the next version</td></tr>
+            </tbody>
+          </table></div>
+          <p>Remove them at any time in your browser's site settings. A "Share" link carries your inputs after the <code>#</code> in the address, which browsers do not send to the server; anyone you give the link to can see them.</p>
+          <p>Only the <code>#</code> form is supported. An early development build, before the site was published, made links with the inputs after a <code>?</code>; the app ignores them now, but opening one still sends its contents to Cloudflare like any web address, as described above. If you hold such a link, do not open or pass it on. Share again to get a <code>#</code> link.</p>
+          <p>No analytics, advertising or profiling.</p>
+        </section>
+        <p class="privacy__updated">Last updated: 25 September 2026</p>
+      </div>
+    </article>
+
+    <article data-locale="pl" hidden>
+      <header class="page-head">
+        <h1>Dane i prywatność</h1>
+        <p class="methods__lead">WeightFrame działa w całości w Twojej przeglądarce. Wszystko, co wpisujesz, jest liczone na Twoim urządzeniu i nie trafia do mnie ani do nikogo innego: nie ma kont, formularzy, analityki, reklam ani zewnętrznych skryptów.</p>
+      </header>
+      <div class="methods__col">
+        <section class="method">
+          <h2>Kto odpowiada za dane</h2>
+          <p>Kuba, <a href="mailto:kuba@tinkered.app">kuba@tinkered.app</a>. WeightFrame to prywatny, niekomercyjny projekt hobbystyczny.</p>
+        </section>
+        <section class="method">
+          <h2>Co zapisuje hosting</h2>
+          <p>Stronę hostuje Cloudflare. Jak każdy hosting, Cloudflare przetwarza adres IP, czas żądania, adres strony (cały, łącznie z tym, co stoi po znaku <code>?</code>) i dane przeglądarki, żeby dostarczyć stronę i chronić ją przed atakami. Gdy połączenie ze stroną się nie powiedzie, przeglądarka może też wysłać do Cloudflare krótki raport o błędzie.</p>
+          <p>Próbkę tych żądań, z adresami IP, widzę w panelu Cloudflare. Korzystam z niej wyłącznie w celu utrzymania działania i bezpieczeństwa strony (prawnie uzasadniony interes, art. 6 ust. 1 lit. f RODO). Cloudflare przechowuje te zapisy do 7 dni (zdarzenia bezpieczeństwa: 24 godziny), po czym je usuwa.</p>
+          <p>Cloudflare, Inc. ma siedzibę w USA i przetwarza te dane w moim imieniu na podstawie umowy powierzenia. Transfer opiera się na ramach ochrony danych UE–USA (Data Privacy Framework), a pomocniczo na standardowych klauzulach umownych. <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Polityka prywatności Cloudflare</a>.</p>
+        </section>
+        <section class="method">
+          <h2>Jeśli do mnie napiszesz</h2>
+          <p>Poczta na kuba@tinkered.app jest przekazywana przez Cloudflare Email Routing do mojej skrzynki Gmail (Google). Twój adres i treść wiadomości wykorzystuję wyłącznie do odpowiedzi (prawnie uzasadniony interes, art. 6 ust. 1 lit. f RODO) i przechowuję korespondencję, dopóki może być potrzebna do dalszego kontaktu. Na Twoją prośbę usunę ją w każdej chwili. Google LLC, tak jak Cloudflare, ma certyfikację w ramach ochrony danych UE–USA (Data Privacy Framework).</p>
+        </section>
+        <section class="method">
+          <h2>Twoje prawa</h2>
+          <p>Możesz zażądać dostępu do danych, ich sprostowania lub usunięcia, ograniczenia przetwarzania albo wnieść sprzeciw, pisząc na kuba@tinkered.app. Przysługuje Ci też skarga do Prezesa Urzędu Ochrony Danych Osobowych.</p>
+          <p>Zapisy hostingu nie są przypisane do osób i wygasają w ciągu 7 dni. Żeby sprawdzić, czy któryś Cię dotyczy, podaj adres IP i czas wizyty z tego okresu.</p>
+        </section>
+        <section class="method">
+          <h2>Co aplikacja zapisuje w przeglądarce</h2>
+          <p>Żeby zapamiętać Twoje ustawienia między wizytami, aplikacja zapisuje w przeglądarce poniższe elementy. Zostają na Twoim urządzeniu i nie trafiają do mnie.</p>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Element</th><th>Rodzaj</th><th>Cel</th><th>Przechowywany do</th></tr></thead>
+            <tbody>
+              <tr><td data-label="Element"><code>weightframe.v1</code></td><td data-label="Rodzaj">localStorage</td><td data-label="Cel">ostatnio wpisane dane (jednostki, język, płeć, wiek, wzrost, masa ciała, obwody, cel), żeby formularz otworzył się z ostatnio wpisanymi danymi</td><td data-label="Przechowywany do">kliknięcia „Wyczyść” (przywraca puste pola) albo usunięcia danych witryny</td></tr>
+              <tr><td data-label="Element"><code>weightframe.theme</code></td><td data-label="Rodzaj">localStorage</td><td data-label="Cel">jasny lub ciemny motyw, jeśli go wybrano</td><td data-label="Przechowywany do">usunięcia danych witryny</td></tr>
+              <tr><td data-label="Element"><code>weightframe.disclaimerDismissed</code></td><td data-label="Rodzaj">localStorage</td><td data-label="Cel">informacja, że zamknięto komunikat na dole ekranu</td><td data-label="Przechowywany do">usunięcia danych witryny</td></tr>
+              <tr><td data-label="Element"><code>weightframe-v…</code></td><td data-label="Rodzaj">Cache Storage (service worker)</td><td data-label="Cel">kopie plików aplikacji do pracy offline</td><td data-label="Przechowywany do">zastąpienia przez następną wersję</td></tr>
+            </tbody>
+          </table></div>
+          <p>Usuniesz je w każdej chwili w ustawieniach witryny w przeglądarce. Link „Udostępnij” zawiera wpisane dane po znaku <code>#</code> w adresie; przeglądarka nie wysyła tej części do serwera, ale widzi je każdy, komu przekażesz link.</p>
+          <p>Obsługiwana jest tylko forma z <code>#</code>. Wczesna wersja robocza, sprzed opublikowania strony, tworzyła linki z danymi po znaku <code>?</code>; aplikacja już ich nie czyta, ale otwarcie takiego linku i tak wysyła jego treść do Cloudflare, jak każdy adres w sieci (patrz wyżej). Jeśli masz taki link, nie otwieraj go i nie przekazuj dalej. Udostępnij ponownie, żeby dostać link z <code>#</code>.</p>
+          <p>Bez analityki, reklam i profilowania.</p>
+        </section>
+        <p class="privacy__updated">Ostatnia aktualizacja: 25 września 2026</p>
+      </div>
+    </article>
+  </main>
+
+  <script src="js/ui/icons.js"></script>
+  <script src="js/ui/i18n.js"></script>
+  <script src="js/ui/privacy.js"></script>
+</body>
+</html>

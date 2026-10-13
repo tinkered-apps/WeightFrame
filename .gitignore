@@ -1,0 +1,13 @@
+.claude/settings.local.json
+node_modules/
+.wrangler/
+.impeccable/
+.audyt-prawny/
+__pycache__/
+.env
+.env.*.local
+.dev.vars*
+.DS_Store
+Thumbs.db
+test-results/
+playwright-report/

@@ -1,0 +1,26 @@
+{
+  "name": "weightframe",
+  "private": true,
+  "description": "Evidence-based BMI, BMR, TDEE and weight-change calculator for adults and children, with every number linked to its source.",
+  "author": {
+    "name": "Kuba",
+    "email": "kuba@tinkered.app"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "wrangler dev --port 8770",
+    "test": "node --test",
+    "test:e2e": "playwright test",
+    "deploy": "npm test && wrangler deploy"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "wrangler": "4.138.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true,
+    "workerd@1.20260921.1": true
+  }
+}

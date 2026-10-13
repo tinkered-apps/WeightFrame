@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WeightFrame: Weight &amp; energy, grounded in science.</title>
+  <meta name="description" content="Evidence-based BMI, BMR, TDEE and weight-change calculator for adults and children, with every number linked to its source.">
+  <meta name="color-scheme" content="light dark">
+  <script src="js/ui/theme-init.js"></script>
+  <meta name="theme-color" content="#11284b">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="icon" type="image/svg+xml" href="assets/weightframe-mark.svg">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-tab="dashboard">
+  <a class="skip" href="#board" data-i18n="Skip to results">Skip to results</a>
+
+  <header class="masthead">
+    <div class="brand">
+      <img class="brand__mark" src="assets/weightframe-mark.svg" alt="">
+      <span class="brand__name">WeightFrame</span>
+      <span class="brand__tag" data-i18n="Weight &amp; energy, grounded in science.">Weight &amp; energy, grounded in science.</span>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <div class="tabs__group" id="dashGroup">
+        <button type="button" role="tab" id="tab-dashboard" aria-controls="panel-dashboard boardNav" aria-haspopup="true" aria-expanded="false" aria-selected="true" data-tab="dashboard"><span data-i18n="Dashboard">Dashboard</span><span class="dash-menu__chevron"><span data-icon="chevron"></span></span></button>
+        <div class="board-nav" id="boardNav" aria-label="Dashboard sections"></div>
+      </div>
+      <button type="button" role="tab" id="tab-methods" aria-controls="panel-methods" aria-selected="false" tabindex="-1" data-tab="methods" data-i18n="Methods">Methods</button>
+      <button type="button" role="tab" id="tab-sources" aria-controls="panel-sources" aria-selected="false" tabindex="-1" data-tab="sources">
+        <span data-i18n="Sources">Sources</span><span class="tabs__count" id="sourcesCount"></span>
+      </button>
+    </nav>
+    <div class="masthead__tools">
+      <div class="seg seg--tool" role="radiogroup" aria-label="Language">
+        <button type="button" role="radio" data-lang-btn="en" aria-checked="true">EN</button>
+        <button type="button" role="radio" data-lang-btn="pl" aria-checked="false">PL</button>
+      </div>
+      <div class="seg seg--tool" role="radiogroup" aria-label="Units">
+        <button type="button" role="radio" data-units-btn="metric" aria-checked="true">kg · cm</button>
+        <button type="button" role="radio" data-units-btn="imperial" aria-checked="false">lb · in</button>
+      </div>
+      <button type="button" class="icon-btn" id="themeBtn" aria-label="Theme"><span data-icon="auto"></span></button>
+    </div>
+  </header>
+
+  <main class="layout" id="panel-dashboard" role="tabpanel" aria-labelledby="tab-dashboard">
+    <aside class="rail" aria-label="Your details">
+      <button type="button" class="rail__summary" id="railToggle" aria-expanded="false" aria-controls="form">
+        <span class="rail__summary-text"><span class="rail__summary-title" data-i18n="Your details">Your details</span><span class="rail__summary-values" id="railSummary"></span></span>
+        <span class="rail__summary-action"><span data-icon="edit"></span><span data-i18n="Edit">Edit</span></span>
+      </button>
+      <form id="form" class="form" novalidate autocomplete="off">
+        <div class="form__tools">
+          <button type="button" class="tool-btn" id="resetBtn"><span data-icon="refresh"></span><span data-i18n="Sample">Sample</span></button>
+          <button type="button" class="tool-btn" id="clearBtn"><span data-icon="trash"></span><span data-i18n="Clear">Clear</span></button>
+          <button type="button" class="tool-btn" id="shareBtn"><span data-icon="link"></span><span data-i18n="Share">Share</span></button>
+        </div>
+        <fieldset class="group">
+          <div class="field">
+            <span class="sr-only" id="sex-label" data-i18n="Sex">Sex</span>
+            <div class="field__row">
+              <div class="seg" role="radiogroup" aria-labelledby="sex-label">
+                <button type="button" role="radio" data-sex="female" aria-checked="true" data-i18n="Female">Female</button>
+                <button type="button" role="radio" data-sex="male" aria-checked="false" data-i18n="Male">Male</button>
+              </div>
+              <button type="button" class="hint" data-tip="Predictive equations are fitted separately for males and females because body composition and resting metabolic rate differ systematically between them." aria-label="Why sex?"><span data-icon="help"></span></button>
+            </div>
+          </div>
+
+          <div class="pair pair--age-height">
+            <div class="field">
+              <span class="field__label" id="age-label" data-i18n="Age">Age</span>
+              <div class="pair pair--age" role="group" aria-labelledby="age-label">
+                <label class="unit-input"><input id="ageYears" type="number" inputmode="numeric" min="2" max="100" step="1"><span data-i18n="yr">yr</span></label>
+                <label class="unit-input" id="ageMonthsWrap"><input id="ageMonths" type="number" inputmode="numeric" min="0" max="11" step="1" placeholder="0"><span data-i18n="mo">mo</span></label>
+              </div>
+            </div>
+            <div class="field">
+              <span class="field__label" id="height-label" data-i18n="Height">Height</span>
+              <div data-units="metric">
+                <label class="unit-input"><input id="heightCm" type="text" inputmode="decimal" aria-labelledby="height-label"><span>cm</span></label>
+              </div>
+              <div class="pair pair--tight" data-units="imperial" hidden>
+                <label class="unit-input"><input id="heightFt" type="number" inputmode="numeric" step="1" aria-label="Height, feet"><span>ft</span></label>
+                <label class="unit-input"><input id="heightIn" type="text" inputmode="decimal" aria-label="Height, inches"><span>in</span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="pair">
+            <div class="field">
+              <label class="field__label" for="weight" data-i18n="Weight">Weight</label>
+              <label class="unit-input"><input id="weight" type="text" inputmode="decimal"><span data-unit="mass">kg</span></label>
+            </div>
+            <div class="field">
+              <span class="field__label"><span data-i18n="Ethnic background">Ethnic background</span><button type="button" class="hint" data-tip="Adjusts BMI and waist thresholds: several populations carry more risk at a lower BMI." aria-label="Why ethnic background?"><span data-icon="help"></span></button></span>
+              <div class="select"><select id="ethnicity" aria-label="Ethnic background"></select></div>
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="field__label" id="activity-label" data-i18n="Daily activity">Daily activity</span>
+            <div class="seg seg--grid2" role="radiogroup" aria-labelledby="activity-label" id="activity"></div>
+            <p class="field__hint" id="activityHint"></p>
+          </div>
+
+          <div class="field" id="bmrGroup">
+            <span class="field__label"><label for="bmrChoice" data-i18n="Resting metabolism model">Resting metabolism model</label><button type="button" class="panel-btn" data-panel-trigger="bmr" aria-label="About resting metabolism models"><span data-icon="info"></span></button></span>
+            <div class="select">
+              <select id="bmrChoice">
+                <option value="" data-i18n="Auto (evidence-based choice)">Auto (evidence-based choice)</option>
+                <option value="median" data-i18n="Median of weight-based equations">Median of weight-based equations</option>
+                <option value="msj">Mifflin-St Jeor</option>
+                <option value="hb">Harris-Benedict 1919</option>
+                <option value="hbrs">H-B revised 1984</option>
+                <option value="owen">Owen</option>
+                <option value="schofield">Schofield / WHO</option>
+                <option value="henry">Henry / Oxford</option>
+                <option value="livingston">Livingston</option>
+                <option value="cunningham80">Cunningham 1980</option>
+                <option value="katch">Katch-McArdle</option>
+              </select>
+            </div>
+          </div>
+
+          <label class="check" id="pregnantWrap"><input id="pregnant" type="checkbox"> <span data-i18n="Pregnant or breastfeeding">Pregnant or breastfeeding</span></label>
+        </fieldset>
+
+        <details class="group group--optional" id="measure">
+          <summary class="group__title"><span data-icon="chevron" class="group__chev"></span><span data-i18n="Measurements">Measurements</span> <span class="group__aside" data-i18n="optional · sharper results">optional · sharper results</span></summary>
+          <p class="field__hint field__hint--block" data-i18n="Measure on bare skin, relaxed, after breathing out. Waist: midway between the lowest rib and hip bone (this is the site used for waist-risk, waist-to-height and waist-to-hip results). Hip: widest point. Neck: just below the larynx. The US Navy body-fat method wants a different waist site (men: at the navel; women: narrowest point) – see its note below if you use it, since the same number feeds both.">Measure on bare skin, relaxed, after breathing out. Waist: midway between the lowest rib and hip bone (this is the site used for waist-risk, waist-to-height and waist-to-hip results). Hip: widest point. Neck: just below the larynx. The US Navy body-fat method wants a different waist site (men: at the navel; women: narrowest point) - see its note below if you use it, since the same number feeds both.</p>
+          <div class="pair pair--3">
+            <div class="field"><label class="field__label" for="waist" data-i18n="Waist">Waist</label><label class="unit-input"><input id="waist" type="text" inputmode="decimal"><span data-unit="circ">cm</span></label></div>
+            <div class="field"><label class="field__label" for="hip" data-i18n="Hip">Hip</label><label class="unit-input"><input id="hip" type="text" inputmode="decimal"><span data-unit="circ">cm</span></label></div>
+            <div class="field"><label class="field__label" for="neck" data-i18n="Neck">Neck</label><label class="unit-input"><input id="neck" type="text" inputmode="decimal"><span data-unit="circ">cm</span></label></div>
+          </div>
+          <div class="pair pair--end">
+            <div class="field">
+              <span class="field__label"><label for="bodyFat" data-i18n="Measured body fat">Measured body fat</label><button type="button" class="hint" data-tip="Only if measured (DXA, BodPod, a clinical scan). Home scales are too imprecise to override the estimates." aria-label="About measured body fat"><span data-icon="help"></span></button></span>
+              <label class="unit-input"><input id="bodyFat" type="text" inputmode="decimal"><span>%</span></label>
+            </div>
+            <div class="field">
+              <label class="check check--field"><input id="athlete" type="checkbox"> <span data-i18n="Athlete equations">Athlete equations</span></label>
+            </div>
+          </div>
+        </details>
+
+        <fieldset class="group" id="goalGroup">
+          <legend class="group__title" data-i18n="Goal">Goal</legend>
+          <div class="pair">
+            <div class="field">
+              <label class="field__label" for="goal" data-i18n="Goal weight">Goal weight</label>
+              <label class="unit-input"><input id="goal" type="text" inputmode="decimal"><span data-unit="mass">kg</span></label>
+            </div>
+            <div class="field">
+              <span class="field__label"><label for="extra" data-i18n="Extra exercise">Extra exercise</label><button type="button" class="hint" data-tip="On top of today. E.g. a daily 30-min brisk walk ≈ 120–150 kcal for a 70–80 kg adult." aria-label="About extra exercise"><span data-icon="help"></span></button></span>
+              <label class="unit-input"><input id="extra" type="number" inputmode="numeric" min="0" max="1500" step="25" placeholder="0"><span>kcal</span></label>
+            </div>
+          </div>
+          <p class="field__hint field__hint--tight" id="goalHint"></p>
+          <div class="field" id="paceField">
+            <span class="field__label"><span id="pace-label" data-i18n="How to get there">How to get there</span><button type="button" class="panel-btn" data-panel-trigger="deficits" aria-label="What different deficits do"><span data-icon="info"></span></button></span>
+            <div class="seg seg--pace" role="radiogroup" aria-labelledby="pace-label" id="pace">
+              <button type="button" role="radio" data-pace="gentle" data-i18n="Gentle">Gentle</button>
+              <button type="button" role="radio" data-pace="moderate" data-i18n="Moderate">Moderate</button>
+              <button type="button" role="radio" data-pace="fast" data-i18n="Faster">Faster</button>
+              <button type="button" role="radio" data-pace="weeks" data-i18n="By a date">By a date</button>
+              <button type="button" role="radio" data-pace="intake" data-i18n="Set my intake">Set my intake</button>
+            </div>
+            <p class="field__hint" id="paceHint"></p>
+          </div>
+          <div class="field" id="weeksField" hidden>
+            <label class="field__label" for="weeks" data-i18n="Weeks to goal">Weeks to goal</label>
+            <label class="unit-input"><input id="weeks" type="number" inputmode="numeric" min="2" max="156" step="1"><span data-i18n="weeks">weeks</span></label>
+          </div>
+          <div class="field" id="intakeField" hidden>
+            <label class="field__label" for="intake" data-i18n="Daily intake">Daily intake</label>
+            <label class="unit-input"><input id="intake" type="number" inputmode="numeric" min="600" max="6000" step="10"><span>kcal</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="group" id="childGroup" hidden>
+          <legend class="group__title"><span data-i18n="Growth chart">Growth chart</span><button type="button" class="hint" data-tip="CDC 2000 charts are the US standard; WHO 2006/2007 references are used in most other countries. Both are shown in the results." aria-label="About growth charts"><span data-icon="help"></span></button></legend>
+          <div class="seg" role="radiogroup" aria-label="Growth reference">
+            <button type="button" role="radio" data-ref-btn="cdc" aria-checked="true" data-i18n="CDC (US)">CDC (US)</button>
+            <button type="button" role="radio" data-ref-btn="who" aria-checked="false" data-i18n="WHO (international)">WHO (international)</button>
+          </div>
+        </fieldset>
+
+      </form>
+      <button type="button" class="rail__more" id="railMore" tabindex="-1" aria-hidden="true"><span data-icon="chevron"></span><span data-i18n="More below">More below</span></button>
+      <footer class="site-footer">
+        <p class="footer-credit">WeightFrame <span id="app-version"></span> by <a href="mailto:kuba@tinkered.app">Kuba</a> · <a href="https://tinkered.app"><svg class="footer-logo" viewBox="79 180 1260 842" aria-hidden="true" focusable="false"><path class="footer-logo-t" fill-rule="evenodd" d="m 729.04769,199.78241 -621.00001,-1 -15.999996,3 -11,5 -13,9 -13,17 -5,13 -2,17.99999 1,68 3,11 7,12 15,14 20,7 H 277.04769 l 5,2 8,10 1,553 6,13 220.42051,-334.04584 -13.42051,-0.95416 -12,-6 -8,-8 -5,-12 -1,-200 2,-7 6,-7 7,-3 h 114 l 11,-4 6,-5 68,-103 38,-53.99999 1,-8 z"/><path class="footer-logo-a" fill-rule="evenodd" d="m 690.04769,623.7824 -5,-4 h -168 l -198,298 -24,34 5,9 12,11 9,4 10,2 h 200 l 15,-3 12,-6 6,-5 13,-17 157,-239 v -7 z m 95,-69 -7,9 -36,59 v 6 l 40,68 5,2 h 76 l 4,-2 41,-68 v -5 l -28,-50 -10,-17 -5,-3 z m 2,-352.99999 -15,17 -218,336.99999 -11,20 166,-1 7,-5 35,-57 8,-7 137,-1 7,3 7,8 57,103 1,9 -4,10 -66,103 -9,4 -124,1 -7,5 -33,51 -6,14 3,3 h 197 l 8,3 8,8 70.00001,125 12,13 15.9999,8 10,2 h 199 l 23,-8 15,-15 7,-16 1,-16 -4,-16 -357.99991,-675.99999 -17,-19 -11,-7 -15,-5 -87,-1 z"/></svg>tinkered.app</a> · <a href="privacy.html" data-i18n="Privacy">Privacy</a></p>
+      </footer>
+    </aside>
+
+    <div class="board-wrap">
+      <section id="board" class="board" aria-live="polite"></section>
+    </div>
+  </main>
+
+  <div class="page" id="panel-methods" role="tabpanel" aria-labelledby="tab-methods" hidden>
+    <section id="methodsContent" class="methods"></section>
+  </div>
+
+  <div class="page" id="panel-sources" role="tabpanel" aria-labelledby="tab-sources" hidden>
+    <section id="sourcesContent" class="sources"></section>
+  </div>
+
+  <div class="disclaimer-bar" id="disclaimerBar" role="note" hidden>
+    <p data-i18n="WeightFrame gives population-based estimates, not medical advice. Individual energy needs vary by roughly ±10–15% around any equation. Children, pregnancy, breastfeeding, eating disorders, diabetes medication and chronic illness need individual clinical advice.">WeightFrame gives population-based estimates, not medical advice. Individual energy needs vary by roughly ±10–15% around any equation. Children, pregnancy, breastfeeding, eating disorders, diabetes medication and chronic illness need individual clinical advice.</p>
+    <button type="button" class="icon-btn disclaimer-bar__close" id="disclaimerClose" aria-label="Close"><span data-icon="close"></span></button>
+  </div>
+
+  <div class="tooltip" id="tooltip" role="status" hidden></div>
+
+  <div class="sheet" id="detailPanel" hidden>
+    <div class="sheet__backdrop" data-panel-close></div>
+    <div class="sheet__panel" role="dialog" aria-modal="true" aria-labelledby="detailPanelTitle">
+      <header class="sheet__head">
+        <h2 id="detailPanelTitle"></h2>
+        <button type="button" class="icon-btn" id="detailPanelClose" data-panel-close aria-label="Close"><span data-icon="close"></span></button>
+      </header>
+      <div class="sheet__body" id="detailPanelBody"></div>
+    </div>
+  </div>
+
+  <script src="js/data/growth-refs.js"></script>
+  <script src="js/core/refs.js"></script>
+  <script src="js/core/i18n-text.js"></script>
+  <script src="js/core/stats.js"></script>
+  <script src="js/core/anthro.js"></script>
+  <script src="js/core/growth.js"></script>
+  <script src="js/core/energy.js"></script>
+  <script src="js/core/hall.js"></script>
+  <script src="js/core/assess.js"></script>
+  <script src="js/ui/icons.js"></script>
+  <script src="js/ui/format.js"></script>
+  <script src="js/ui/i18n.js"></script>
+  <script src="js/ui/charts.js"></script>
+  <script src="js/ui/methods.js"></script>
+  <script src="js/ui/board.js"></script>
+  <script src="js/ui/app.js"></script>
+</body>
+</html>

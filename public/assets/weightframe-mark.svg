@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">WeightFrame</title>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="#11284b"/>
+  <path d="M13 18h10.5L34 46H25a6 6 0 0 1-5.6-3.9L10.8 21.7A2.7 2.7 0 0 1 13 18Z" fill="#72a7e3"/>
+  <path d="M27 18h10.5L48 46h-9a6 6 0 0 1-5.6-3.9l-8.6-20.4A2.7 2.7 0 0 1 27 18Z" fill="#41c5b6"/>
+  <path d="M41 22h8.2a5 5 0 0 1 4.4 2.6l4.2 7.8a5 5 0 0 1 0 4.8l-4.2 7.8a5 5 0 0 1-4.4 2.6H47L37.8 25.7A2.7 2.7 0 0 1 41 22Z" fill="#f7f9fc"/>
+  <circle cx="52" cy="17" r="5" fill="#ffb547"/>
+</svg>

@@ -1,0 +1,22 @@
+{
+  "name": "WeightFrame",
+  "short_name": "WeightFrame",
+  "description": "Evidence-based BMI, BMR, TDEE and weight-change calculator for adults and children, with every number linked to its source. Works offline.",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "id": "./",
+  "display": "standalone",
+  "background_color": "#11284b",
+  "theme_color": "#11284b",
+  "categories": ["health", "utilities"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
+    { "src": "screenshots/narrow.png", "sizes": "824x1830", "type": "image/png", "form_factor": "narrow", "label": "View your weight and energy outlook" },
+    { "src": "screenshots/wide.png", "sizes": "2400x1350", "type": "image/png", "form_factor": "wide", "label": "Explore the dashboard and weight projection" }
+  ]
+}
