@@ -236,6 +236,7 @@ p { text-wrap: pretty; }
 /* ============================== Footer ============================== */
 /* Sits at the foot of the input rail, under the form. */
 .site-footer { flex: none; padding: 8px 20px 9px; border-top: 1px solid var(--line); text-align: center; }
+.footer-note { margin: 0 0 3px; font-size: 11px; color: var(--ink-3); }
 .footer-credit { margin: 0; font-size: 11px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
 .footer-credit a { display: inline-flex; align-items: center; gap: 4px; color: inherit; text-decoration: none; }
 .footer-credit a:hover, .footer-credit a:focus-visible { color: var(--ink); text-decoration: underline; }
@@ -609,6 +610,7 @@ select:focus-visible { outline: none; border-color: var(--blue); box-shadow: 0 0
 .fact__sub { display: block; font-size: 12.5px; font-weight: 500; color: var(--on-sky-3); }
 .outlook__chart { min-width: 0; }
 .outlook__foot { margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--sky-line); font-size: 14px; color: var(--on-sky-2); max-width: 110ch; }
+.outlook__note { margin: 12px 0 0; font-size: 13px; color: var(--on-sky-2); max-width: 110ch; }
 
 /* On the night-sky panel, controls and citations take the panel's own tints. */
 .outlook .hint { color: var(--on-sky-3); }

@@ -189,6 +189,25 @@ test('assess(): child gets guidance, not a deficit plan', () => {
   assert.equal(r.central.whtr.key, 'increased');
 });
 
+test('assess(): no loss plan toward an underweight goal, but maintenance still plans', () => {
+  const r = assess({ sex: 'female', ageYears: 22, heightCm: 168, weightKg: 55, goalWeightKg: 45, activity: 'inactive' });
+  assert.equal(r.ok, true);
+  assert.equal(r.plan, undefined);
+  assert.equal(r.planBlocked, 'underweight');
+  assert.ok(r.warnings.some((w) => w.level === 'danger' && /does not plan weight loss/.test(w.text)));
+  const ok = assess({ sex: 'female', ageYears: 22, heightCm: 168, weightKg: 55, goalWeightKg: 53, activity: 'inactive' });
+  assert.ok(ok.plan && ok.plan.intake > 0);
+  const thin = assess({ sex: 'female', ageYears: 22, heightCm: 168, weightKg: 50, activity: 'inactive' });
+  assert.equal(thin.plan.mode, 'maintain');
+});
+
+test('under-5 activity cites WHO 2019, older children WHO 2020', () => {
+  const small = assess({ sex: 'female', ageYears: 3, heightCm: 95, weightKg: 14 });
+  assert.deepEqual(small.nutrition.activity.refs, ['who2019u5']);
+  const older = assess({ sex: 'female', ageYears: 8, heightCm: 128, weightKg: 26 });
+  assert.deepEqual(older.nutrition.activity.refs, ['who2020pa']);
+});
+
 test('every referenced citation id exists', () => {
   const r = assess({ sex: 'male', ageYears: 70, heightCm: 172, weightKg: 88, activity: 'inactive', waistCm: 104, goalWeightKg: 80, paceMode: 'fast' });
   const seen = new Set();

@@ -154,6 +154,7 @@
         <div class="outlook__chart">${chart.html}</div>
       </div>
       ${foot ? `<p class="outlook__foot">${foot}${c(['hall2011'])}</p>` : ''}
+      <p class="outlook__note">An estimate from population equations, not medical advice. Talk to a doctor before a large change, or if you have a health condition or take medication.</p>
     </article>`;
   }
 

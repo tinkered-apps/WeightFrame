@@ -24,6 +24,9 @@
     'Skip to results': 'Przejdź do wyników',
     'WeightFrame gives population-based estimates for education, not medical advice or a diagnosis.': 'WeightFrame podaje szacunki populacyjne w celach edukacyjnych, a nie poradę medyczną ani rozpoznanie.',
     'Privacy': 'Prywatność',
+    'Estimates for information only, not medical advice.': 'Szacunki wyłącznie informacyjne, nie porada medyczna.',
+    'An estimate from population equations, not medical advice. Talk to a doctor before a large change, or if you have a health condition or take medication.':
+      'Szacunek z równań populacyjnych, nie porada medyczna. Porozmawiaj z lekarzem przed dużą zmianą albo jeśli chorujesz lub przyjmujesz leki.',
 
     // Form: You
     'Sex': 'Płeć',
