@@ -48,6 +48,8 @@
 
     bmiOlderNote: () => 'For adults 65+, mortality is lowest at a BMI of roughly 23-30 and rises below 23; a BMI in the "overweight" band is not linked to higher mortality at this age (Winter 2014).',
     pregnancyWarning: () => "Pregnancy or breastfeeding changes your energy needs, and weight-loss targets do not apply. BMI classification, body-fat and nutrition targets below are also hidden, because they're derived from and validated on non-pregnant adults. Talk to your midwife or doctor instead.",
+    pregnancyTeenWarning: () => 'Pregnancy or breastfeeding changes energy needs, and the growth charts and targets below do not account for it. Please talk to your midwife or doctor.',
+    childImplausible: () => 'This BMI is further from the median than growth-chart software treats as plausible for this age (more than 5 standard deviations). Please check the height and weight.',
 
     // ---- anthro.js: excess-adiposity verdict -------------------------------------------
     adiposityFlag: { waist: 'waist circumference', whtr: 'waist-to-height ratio', whr: 'waist-to-hip ratio' },
@@ -80,6 +82,20 @@
       leanShare: (pct) => 'About ' + pct + '% of the projected loss is lean tissue. Higher protein and resistance training help preserve it.',
       goalUnderweight: (bmiStr) => 'Goal BMI of ' + bmiStr + ' is below 18.5 (underweight).',
       lossToUnderweight: (bmiStr) => 'A goal BMI of ' + bmiStr + ' is below 18.5 (underweight), so the app does not plan weight loss toward it. Losing weight from here can harm your health. If you are worried about your weight or your eating, please talk to a doctor.',
+      severeThinness: (bmiStr) => 'Your BMI of ' + bmiStr + ' is in the severe thinness range (below 16), so the app does not plan any weight change. Please see a doctor: regaining weight from here should be medically supervised, because eating much more too quickly can be dangerous (refeeding syndrome).',
+      currentUnderweight: (bmiStr) => 'Your BMI of ' + bmiStr + ' is in the underweight range (below 18.5). It is worth checking with a doctor, especially if you lost weight without trying.',
+      gainToObesity: (bmiStr, obese) => 'A goal BMI of ' + bmiStr + ' is in the obesity range (' + obese + ' or more), so the app does not plan weight gain toward it.',
+      gainToOverweight: (bmiStr) => 'A goal BMI of ' + bmiStr + ' is above the healthy range. Gaining into it raises health risks, so consider a lower goal.',
+      vlcdTyped: () => 'Below 800 kcal/day is a very-low-calorie diet: use only as part of a clinically supervised programme. The app does not project it.',
+      modelRange: () => 'At this intake the projection would take weight far below a healthy range or run body-fat stores almost empty, which is outside what the weight model was built for, so no projection is shown.',
+      gainSurplusTyped: (surplusStr) => 'This intake is about ' + surplusStr + ' above your current expenditure, more than the 500 kcal/day surplus the app would plan.',
+      wrongDirection: (maintStr, plateauStr, isLoss) => isLoss
+        ? 'This intake is at or above your estimated maintenance (' + maintStr + '), so the model predicts weight rising toward about ' + plateauStr + ' instead of falling.'
+        : 'This intake is at or below your estimated maintenance (' + maintStr + '), so the model predicts weight falling toward about ' + plateauStr + ' instead of rising.',
+      gainPlateau: (plateauStr, goalStr) => 'At the largest surplus the app plans (500 kcal/day), weight levels off around ' + plateauStr + ', short of ' + goalStr + '.',
+      deadlineExtendedGain: (reqDays, actDays) => 'Your chosen timeframe (' + Math.round(reqDays / 7) + ' weeks) would need a larger surplus than the app plans (at most 500 kcal/day). At that surplus, reaching the goal takes about ' + Math.round(actDays / 7) + ' weeks.',
+      gainCapped: () => 'For weight gain the app plans at most a 500 kcal/day surplus over your current expenditure; no guideline sets a pace for gaining.',
+      bodyFatClampedEstimate: (estStr, usedStr) => 'The weight-projection model only supports body fat from 5% to 60%; the estimated ' + estStr + ' was set to ' + usedStr + ' for that calculation only.',
       goalLowOlder: () => 'For adults 65+, a BMI below about 23 is associated with higher mortality. Consider a higher goal.',
       isGain: () => 'Your goal is above your current weight, so the plan shows a weight-gain scenario.',
       plateau: (kgStr) => 'At this intake the model predicts weight levelling off around ' + kgStr + ', so the goal is not reached within 3 years.',
@@ -136,8 +152,10 @@
       compositionTitle: () => 'What the lost weight is made of',
       compositionValue: (pct) => pct + '% fat',
       compositionText: (totStr, fatStr, leanStr, waterStr) => 'Of the ' + totStr + ' projected, ≈' + fatStr + ' is fat, ' + leanStr + ' lean tissue and ' + waterStr + ' glycogen-bound water and fluid. The lean share is smaller when you start with more body fat (Forbes curve).',
+      compositionTextWaterUp: (totStr, fatStr, leanStr, waterStr) => 'Of the ' + totStr + ' projected, ≈' + fatStr + ' is fat and ' + leanStr + ' lean tissue, while glycogen-bound water and fluid rise by about ' + waterStr + ', because you eat more carbohydrate than before.',
       firstweekTitle: () => 'The fast first week',
       firstweekText: (fatStr) => 'Expect a quick early drop, only ≈' + fatStr + ' of it fat. Most is water, released as glycogen stores shrink and sodium balance shifts. It comes back once you eat more carbohydrate, so do not judge your progress on week one.',
+      firstweekTextUp: (fatStr) => 'The scale may rise in the first week even as you lose ≈' + fatStr + ' of fat: with more carbohydrate than before, glycogen stores refill and hold water. Do not judge your progress on week one.',
       energyTitle: () => 'Energy from projected fat loss',
       energyValue: (kcalStr) => kcalStr + ' kcal',
       energyText: () => 'Fat mass means stored fat, not the whole adipose tissue. The model uses ≈9,440 kcal per kg of fat mass lost and ≈1,820 kcal per kg of lean mass lost. Their changing mix, plus water, makes energy per kg lost on the scale variable.',
@@ -196,6 +214,8 @@
 
     bmiOlderNote: () => 'U dorosłych 65+ śmiertelność jest najniższa przy BMI ok. 23-30 i rośnie poniżej 23; kategoria „nadwaga” nie wiąże się w tym wieku z wyższą śmiertelnością (Winter 2014).',
     pregnancyWarning: () => 'Ciąża lub karmienie piersią zmieniają Twoje zapotrzebowanie energetyczne, a cele odchudzania w tym czasie nie mają zastosowania. Poniżej ukryte są też klasyfikacja BMI oraz cele dotyczące tkanki tłuszczowej i odżywiania, ponieważ są wyliczane i zwalidowane dla dorosłych, którzy nie są w ciąży. Porozmawiaj o tym z położną lub lekarzem.',
+    pregnancyTeenWarning: () => 'Ciąża lub karmienie piersią zmieniają zapotrzebowanie energetyczne, a siatki centylowe i cele poniżej tego nie uwzględniają. Porozmawiaj z położną lub lekarzem.',
+    childImplausible: () => 'To BMI odbiega od mediany bardziej, niż oprogramowanie do siatek centylowych uznaje za wiarygodne dla tego wieku (o ponad 5 odchyleń standardowych). Sprawdź wzrost i masę ciała.',
 
     adiposityFlag: { waist: 'obwód pasa', whtr: 'stosunek pasa do wzrostu', whr: 'stosunek pasa do bioder' },
     adiposityJoin(words) {
@@ -226,6 +246,20 @@
       leanShare: (pct) => 'Około ' + pct + '% przewidywanego ubytku to masa beztłuszczowa. Więcej białka i trening oporowy pomagają ją zachować.',
       goalUnderweight: (bmiStr) => 'Docelowe BMI wynoszące ' + bmiStr.replace('.', ',') + ' jest poniżej 18,5 (niedowaga).',
       lossToUnderweight: (bmiStr) => 'Docelowe BMI wynoszące ' + bmiStr.replace('.', ',') + ' jest poniżej 18,5 (niedowaga), więc aplikacja nie planuje redukcji masy ciała do tej wartości. Dalsze chudnięcie może zaszkodzić zdrowiu. Jeśli martwisz się swoją masą ciała lub sposobem jedzenia, porozmawiaj z lekarzem.',
+      severeThinness: (bmiStr) => 'Twoje BMI wynoszące ' + bmiStr.replace('.', ',') + ' oznacza ciężkie wychudzenie (poniżej 16), więc aplikacja nie planuje żadnej zmiany masy ciała. Skonsultuj się z lekarzem: odbudowa masy ciała od tego poziomu powinna przebiegać pod nadzorem medycznym, ponieważ zbyt szybkie zwiększenie jedzenia może być niebezpieczne (zespół ponownego odżywienia).',
+      currentUnderweight: (bmiStr) => 'Twoje BMI wynoszące ' + bmiStr.replace('.', ',') + ' oznacza niedowagę (poniżej 18,5). Warto skonsultować to z lekarzem, zwłaszcza jeśli masa ciała spadła bez Twojego starania.',
+      gainToObesity: (bmiStr, obese) => 'Docelowe BMI wynoszące ' + bmiStr.replace('.', ',') + ' mieści się w zakresie otyłości (' + String(obese).replace('.', ',') + ' lub więcej), więc aplikacja nie planuje przybierania masy ciała do tej wartości.',
+      gainToOverweight: (bmiStr) => 'Docelowe BMI wynoszące ' + bmiStr.replace('.', ',') + ' jest powyżej prawidłowego zakresu. Przybranie do tej wartości zwiększa ryzyko zdrowotne, więc rozważ niższy cel.',
+      vlcdTyped: () => 'Poniżej 800 kcal/dzień to dieta bardzo niskokaloryczna: stosuj wyłącznie pod nadzorem klinicznym. Aplikacja nie pokazuje dla niej prognozy.',
+      modelRange: () => 'Przy tej podaży prognoza sprowadziłaby masę ciała daleko poniżej prawidłowego zakresu lub niemal wyczerpałaby zapasy tkanki tłuszczowej, a na to model masy ciała nie jest przygotowany, więc prognoza nie jest pokazywana.',
+      gainSurplusTyped: (surplusStr) => 'Ta podaż jest o ok. ' + surplusStr + ' wyższa od obecnego wydatku energetycznego, czyli więcej niż nadwyżka 500 kcal/dzień, jaką zaplanowałaby aplikacja.',
+      wrongDirection: (maintStr, plateauStr, isLoss) => isLoss
+        ? 'Ta podaż jest równa szacowanemu zapotrzebowaniu (' + maintStr + ') lub wyższa, więc model przewiduje wzrost masy ciała do ok. ' + plateauStr + ' zamiast spadku.'
+        : 'Ta podaż jest równa szacowanemu zapotrzebowaniu (' + maintStr + ') lub niższa, więc model przewiduje spadek masy ciała do ok. ' + plateauStr + ' zamiast wzrostu.',
+      gainPlateau: (plateauStr, goalStr) => 'Przy największej nadwyżce, jaką planuje aplikacja (500 kcal/dzień), masa ciała stabilizuje się w okolicy ' + plateauStr + ', poniżej celu ' + goalStr + '.',
+      deadlineExtendedGain: (reqDays, actDays) => 'Wybrany czas (' + Math.round(reqDays / 7) + ' tyg.) wymagałby większej nadwyżki, niż planuje aplikacja (najwyżej 500 kcal/dzień). Przy tej nadwyżce osiągnięcie celu zajmie ok. ' + Math.round(actDays / 7) + ' tyg.',
+      gainCapped: () => 'Przy przybieraniu masy ciała aplikacja planuje nadwyżkę najwyżej 500 kcal/dzień ponad obecny wydatek energetyczny; żadne wytyczne nie określają tempa przybierania.',
+      bodyFatClampedEstimate: (estStr, usedStr) => 'Model prognozy masy ciała obsługuje zawartość tkanki tłuszczowej od 5% do 60%; szacowane ' + estStr.replace('.', ',') + ' ustawiono na ' + usedStr + ' tylko na potrzeby tego obliczenia.',
       goalLowOlder: () => 'U dorosłych 65+ BMI poniżej ok. 23 wiąże się z wyższą śmiertelnością. Rozważ wyższy cel.',
       isGain: () => 'Twój cel jest wyższy niż obecna masa ciała, więc plan przedstawia scenariusz przyrostu masy.',
       plateau: (kgStr) => 'Przy tej podaży kalorii model przewiduje ustabilizowanie masy ciała w okolicach ' + kgStr + ', więc cel nie zostanie osiągnięty w ciągu 3 lat.',
@@ -278,8 +312,10 @@
       compositionTitle: () => 'Z czego składa się utracona masa',
       compositionValue: (pct) => pct + '% tłuszczu',
       compositionText: (totStr, fatStr, leanStr, waterStr) => 'Z przewidywanych ' + totStr + ' to ≈' + fatStr + ' tłuszczu, ' + leanStr + ' masy beztłuszczowej i ' + waterStr + ' wody związanej z glikogenem i płynów. Udział masy beztłuszczowej jest mniejszy, gdy zaczynasz z wyższą zawartością tłuszczu (krzywa Forbesa).',
+      compositionTextWaterUp: (totStr, fatStr, leanStr, waterStr) => 'Z przewidywanych ' + totStr + ' to ≈' + fatStr + ' tłuszczu i ' + leanStr + ' masy beztłuszczowej, a woda związana z glikogenem i płyny rosną o ok. ' + waterStr + ', ponieważ jesz więcej węglowodanów niż wcześniej.',
       firstweekTitle: () => 'Szybki pierwszy tydzień',
       firstweekText: (fatStr) => 'Spodziewaj się szybkiego początkowego spadku, z czego tylko ≈' + fatStr + ' to tłuszcz. Reszta to woda, uwalniana wraz z kurczeniem się zapasów glikogenu i zmianami bilansu sodu. Wraca, gdy zjesz więcej węglowodanów, więc nie oceniaj postępów po pierwszym tygodniu.',
+      firstweekTextUp: (fatStr) => 'W pierwszym tygodniu waga może wzrosnąć, choć tracisz ≈' + fatStr + ' tłuszczu: przy większej ilości węglowodanów niż wcześniej zapasy glikogenu się uzupełniają i wiążą wodę. Nie oceniaj postępów po pierwszym tygodniu.',
       energyTitle: () => 'Energia związana z utratą masy tłuszczu',
       energyValue: (kcalStr) => kcalStr + ' kcal',
       energyText: () => 'Masa tłuszczu oznacza zapas tłuszczu, a nie całą tkankę tłuszczową. Model przyjmuje około 9440 kcal na kg utraconej masy tłuszczu i około 1820 kcal na kg utraconej masy beztłuszczowej. Ich zmienne proporcje oraz woda sprawiają, że kilogram utraconej masy ciała nie ma stałej wartości energetycznej.',

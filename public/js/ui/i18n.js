@@ -497,6 +497,8 @@
     'Height must be between 80 and 250 cm.': 'Wzrost musi wynosić od 80 do 250 cm.',
     'Weight must be between 10 and 350 kg.': 'Masa ciała musi wynosić od 10 do 350 kg.',
     'Select sex.': 'Wybierz płeć.',
+    'Daily intake must be above 0 and at most 6,000 kcal.': 'Dzienna podaż musi być większa od 0 i wynosić najwyżej 6000 kcal.',
+    'Weeks must be between 2 and 156.': 'Liczba tygodni musi wynosić od 2 do 156.',
 
     // Footer
     'WeightFrame gives population-based estimates, not medical advice. Individual energy needs vary by roughly ±10–15% around any equation. Children, pregnancy, breastfeeding, eating disorders, diabetes medication and chronic illness need individual clinical advice.':
@@ -514,6 +516,10 @@
     'Your outlook': 'Twoja prognoza',
     // Without the trailing space the old key (above) never matched the hero's sentence.
     'Weight-loss planning is switched off.': 'Planowanie redukcji masy ciała jest wyłączone.',
+    'No weight-change plan is shown. The notice below explains why.': 'Plan zmiany masy ciała nie jest pokazywany. Wyjaśnia to komunikat poniżej.',
+    'At this BMI the formulas disagree widely, so treat each one as a rough guide.': 'Przy tym BMI wzory dają bardzo różne wyniki, więc traktuj każdy z nich jako przybliżenie.',
+    'Glycogen and its water rise by ': 'Glikogen i związana z nim woda rosną o ',
+    ', because you eat more carbohydrate than before, so the scale drops less than this.': ', ponieważ jesz więcej węglowodanów niż wcześniej, więc waga spada mniej, niż wynika z tych liczb.',
     'healthy BMI range': 'prawidłowy zakres BMI',
     'Starting surplus': 'Nadwyżka startowa',
     'Where you stand today': 'Gdzie jesteś dziś',

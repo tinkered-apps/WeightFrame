@@ -5,7 +5,7 @@ evidence favours in which situation, what the app implements, and how each coeff
 verified. The same content, condensed, is in the app under **Methods** and **Sources**, and every
 number on the dashboard carries a numbered citation linking to its source.
 
-Research date: September 2026. All 79 cited sources were checked: DOIs resolved through
+Research date: September 2026. All 81 cited sources were checked: DOIs resolved through
 Crossref and PubMed IDs through NCBI E-utilities, with titles matched to the intended paper.
 
 ---
@@ -322,6 +322,22 @@ meta-analysis (Ashwell 2012).
 - Rapid loss raises gallstone risk (NIDDK); flagged above 1.5 kg (3.3 lb) per week.
 - No weight-loss plan is made toward a goal BMI below 18.5 (WHO 2000 underweight); the app shows
   a warning instead. Maintenance and gain projections still run.
+- Below BMI 16 (severe thinness) no plan of any kind is made: NICE CG32 lists BMI < 16 as a
+  high-risk criterion for refeeding problems, so regaining weight from there belongs under
+  medical supervision. BMI 16–18.5 gets a notice to check with a doctor.
+- Weight gain has no guideline pace. The app's own choices are capped at a 500 kcal/day surplus
+  over current expenditure (a judgment call, not a published figure); a typed intake above that
+  is shown with a warning. A goal in the overweight range gets a warning, and no gain plan is
+  made toward the obesity range (both use the ethnicity-adjusted thresholds).
+- A typed intake below 800 kcal/day gets no projection, only the very-low-calorie notice.
+  Typed intakes above 6,000 kcal/day and deadlines outside 2–156 weeks are rejected as input
+  errors.
+- The Hall model is not shown when a projection would take fat mass below 2% of today's weight
+  or BMI below 15; the model was not built for that range and its numbers stop meaning anything.
+- Body-fat estimates outside 3–65% are dropped rather than clamped, and Gallagher is not shown
+  above BMI 35, where it was not derived. For children, a WHO BMI-for-age z-score beyond ±5
+  (the WHO cut-off for biologically implausible values, as used in CDC's SAS program) asks the
+  reader to check the measurements.
 - Milestones: 5% (metabolic benefits), 10% (e.g. NASH resolution in most patients losing ≥ 10%,
   Vilar-Gomez 2015), ≥ 15 kg (type 2 diabetes remission in 86% in DiRECT, Lean 2018).
 
@@ -494,7 +510,7 @@ verified bands, but could not be cross-checked independently.
 
 ## References
 
-The full, clickable reference list (79 sources, grouped by topic) is rendered in the app's
+The full, clickable reference list (81 sources, grouped by topic) is rendered in the app's
 **Sources** tab, generated from `public/js/core/refs.js`. Key sources:
 
 - Frankenfield D, et al. J Am Diet Assoc 2005;105:775-789: RMR equations systematic review.
