@@ -5,7 +5,7 @@ evidence favours in which situation, what the app implements, and how each coeff
 verified. The same content, condensed, is in the app under **Methods** and **Sources**, and every
 number on the dashboard carries a numbered citation linking to its source.
 
-Research date: September 2026. All 78 cited sources were checked: DOIs resolved through
+Research date: September 2026. All 79 cited sources were checked: DOIs resolved through
 Crossref and PubMed IDs through NCBI E-utilities, with titles matched to the intended paper.
 
 ---
@@ -320,6 +320,8 @@ meta-analysis (Ashwell 2012).
   0.75 and 1.0% of body weight per week, converted to an intake by the dynamic model.
 - Below 800 kcal/day = very-low-calorie diet, only under clinical supervision (NICE NG246).
 - Rapid loss raises gallstone risk (NIDDK); flagged above 1.5 kg (3.3 lb) per week.
+- No weight-loss plan is made toward a goal BMI below 18.5 (WHO 2000 underweight); the app shows
+  a warning instead. Maintenance and gain projections still run.
 - Milestones: 5% (metabolic benefits), 10% (e.g. NASH resolution in most patients losing ≥ 10%,
   Vilar-Gomez 2015), ≥ 15 kg (type 2 diabetes remission in 86% in DiRECT, Lean 2018).
 
@@ -328,7 +330,8 @@ BMI ≥ 30), ≥ 1.0–1.2 g/kg for older adults (PROT-AGE), 2.3–3.1 g/kg FFM 
 deficit (Helms 2014); AMDRs carbohydrate 45–65%, fat 20–35% (children 25–35%), protein 10–35%;
 fibre 14 g/1,000 kcal and age/sex Adequate Intakes (IOM 2005); total water 2.0 L women / 2.5 L men
 (EFSA 2010). **Activity:** 150–300 min/week moderate (WHO 2020), 200–300 min/week helps prevent
-regain (ACSM 2009); children 60 min/day.
+regain (ACSM 2009); children 5–17 y 60 min/day (WHO 2020); under 5, 180 min/day of any
+intensity, with at least 60 min moderate-to-vigorous from age 3 (WHO 2019).
 
 ---
 
@@ -491,7 +494,7 @@ verified bands, but could not be cross-checked independently.
 
 ## References
 
-The full, clickable reference list (78 sources, grouped by topic) is rendered in the app's
+The full, clickable reference list (79 sources, grouped by topic) is rendered in the app's
 **Sources** tab, generated from `public/js/core/refs.js`. Key sources:
 
 - Frankenfield D, et al. J Am Diet Assoc 2005;105:775-789: RMR equations systematic review.

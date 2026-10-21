@@ -102,8 +102,15 @@
     }
 
     // ---- Plan (adults) / guidance (children) -------------------------------------------
+    // No weight-loss plan toward an underweight goal: an intake and a date for that would read
+    // as an endorsement, whatever warning sits next to it. Maintenance and gain still plan.
+    const goalBmi = p.goalWeightKg > 0 ? anthro.bmi(p.goalWeightKg, p.heightCm) : b;
+    const underweightLoss = !isChild && p.goalWeightKg > 0 && p.weightKg - p.goalWeightKg >= 0.25 && goalBmi < 18.5;
     if (isChild) {
       res.pediatric = pediatricGuidance(p, res, T);
+    } else if (underweightLoss && !p.pregnant) {
+      res.planBlocked = 'underweight';
+      res.warnings.push({ level: 'danger', text: T.flags.lossToUnderweight(goalBmi.toFixed(1)), refs: ['who2000'] });
     } else if (!p.pregnant) {
       res.plan = adultPlan(p, res, F, T);
     }
@@ -404,9 +411,7 @@
     if (a < 18) {
       const rda = a < 4 ? 1.05 : a < 14 ? 0.95 : 0.85;
       out.protein = { gPerKg: [rda, rda], grams: [rda * p.weightKg, rda * p.weightKg], basis: T.nutrition.proteinRda(), refs: ['iom2005'] };
-      // Secondary sources quote the 2005 IOM figure for this exact band (1-3y) inconsistently
-      // (1.0-1.1 g/kg depending on which table/edition is consulted); 1.05 is their average,
-      // not a value read off one confirmed primary-source cell - said so rather than staying silent.
+      // IOM 2005 gives 1.05 g/kg for 1-3 y; some summary tables round it to 1.1, so say so.
       if (a < 4) out.protein.note = T.nutrition.proteinToddlerNote();
     } else {
       const goalW = res.plan && res.plan.goalKg > 0 ? Math.min(res.plan.goalKg, p.weightKg) : p.weightKg;
@@ -445,12 +450,11 @@
     else if (a < 14) water = p.sex === 'male' ? 2.1 : 1.9;
     else water = p.sex === 'male' ? 2.5 : 2.0;
     out.water = { litres: water, refs: ['efsa2010water'] };
-    // Physical activity. WHO 2020 sets separate targets for under-5s (total minutes of activity
-    // at any intensity, with a moderate-to-vigorous floor only from age 3) than for 5-17y (a
-    // moderate-to-vigorous average plus muscle-strengthening days) - one blanket sentence for
-    // every child from age 2 misstated the youngest band.
-    out.activity = a < 3 ? { text: T.nutrition.activityToddler(), refs: ['who2020pa'] }
-      : a < 5 ? { text: T.nutrition.activityPreschool(), refs: ['who2020pa'] }
+    // Physical activity. Under-5s follow WHO 2019 (total minutes of activity at any intensity,
+    // with a moderate-to-vigorous floor only from age 3); 5 y and older follow WHO 2020 (a
+    // moderate-to-vigorous average plus muscle-strengthening days).
+    out.activity = a < 3 ? { text: T.nutrition.activityToddler(), refs: ['who2019u5'] }
+      : a < 5 ? { text: T.nutrition.activityPreschool(), refs: ['who2019u5'] }
       : a < 18 ? { text: T.nutrition.activityChild(), refs: ['who2020pa'] }
       : { text: T.nutrition.activityAdult(), refs: ['who2020pa', 'donnelly2009'] };
     return out;
