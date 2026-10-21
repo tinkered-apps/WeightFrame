@@ -59,6 +59,17 @@ test('the intake explanation follows the selected weight units', async ({ page }
   await expect(intakeHint).toHaveAttribute('data-tip', /7,700 kcal-per-kilogram rule/);
 });
 
+test('"More below" scrolls the desktop form to its end and then hides', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop');
+  await page.setViewportSize({ width: 1920, height: 945 });
+  await page.goto('/');
+  const more = page.locator('#railMore');
+  await expect(more).toBeVisible();
+  for (let i = 0; i < 4 && await more.isVisible(); i++) await more.click({ force: true });
+  await expect.poll(() => page.locator('#form').evaluate((f) => f.scrollTop)).toBeGreaterThan(0);
+  await expect(more).toBeHidden();
+});
+
 test('the opened mobile form lets the page scroll to its lower controls', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile');
   await page.setViewportSize({ width: 375, height: 667 });

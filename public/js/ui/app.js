@@ -4,7 +4,7 @@
   const { fmt } = FH;
   const $ = (id) => document.getElementById(id);
   // Shown in the footer. public/sw.js names its cache after it; bump both together (see AGENTS.md).
-  const APP_VERSION = '1.02';
+  const APP_VERSION = '1.03';
   const STORE = 'weightframe.v1';
   const THEME_STORE = 'weightframe.theme';
   const DISCLAIMER_STORE = 'weightframe.disclaimerDismissed';
@@ -456,7 +456,13 @@
     $('railToggle').addEventListener('click', () => setRailOpen(!document.querySelector('.rail').classList.contains('is-open')));
     $('form').addEventListener('scroll', syncRailCue, { passive: true });
     $('measure').addEventListener('toggle', syncRailCue);
-    $('railMore').addEventListener('click', () => { const f = $('form'); f.scrollBy({ top: f.clientHeight * 0.7, behavior: 'smooth' }); });
+    $('railMore').addEventListener('click', () => {
+      const f = $('form'), top = f.clientHeight * 0.7, start = f.scrollTop;
+      f.scrollBy({ top, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      // Some Chromium setups never start a smooth element scroll, which left the button doing
+      // nothing; jump instead when the form has not moved.
+      setTimeout(() => { if (f.scrollTop === start) f.scrollBy({ top }); }, 200);
+    });
     $('themeBtn').addEventListener('click', () => {
       theme = THEMES[(THEMES.indexOf(theme) + 1) % THEMES.length];
       try { localStorage.setItem(THEME_STORE, theme); } catch (e) { /* ignore */ }
