@@ -188,10 +188,13 @@
   function bodyFat(p) {
     const b = bmi(p.weightKg, p.heightCm);
     const input = Object.assign({}, p, { bmi: b, age: p.ageYears });
+    // A formula pushed far outside its data returns values no body has (below 3% or above 65%):
+    // leave it out rather than clamping it to a number that looks like a real reading. Gallagher
+    // was derived in adults with BMI ≤ 35, so it is left out above that.
     const estimates = ESTIMATORS.map((e) => {
-      const v = e.fn(input);
+      const v = e.id === 'gallagher' && b > 35 ? null : e.fn(input);
       return { id: e.id, name: e.name, kind: e.kind, refs: e.refs, note: e.note,
-        value: v != null && Number.isFinite(v) ? Math.max(2, Math.min(70, v)) : null };
+        value: v != null && Number.isFinite(v) && v >= 3 && v <= 65 ? v : null };
     }).filter((e) => e.value != null);
 
     let consensus = null, basis;

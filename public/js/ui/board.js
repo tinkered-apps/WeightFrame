@@ -81,7 +81,7 @@
       const maintHint = 'From the National Academies 2023 equation, fitted to about 6,500 doubly labelled-water measurements – the gold-standard method for free-living energy expenditure.';
       return `<article class="outlook outlook--solo" aria-labelledby="outlook-h">${head(`Energy balance ${c(['nasem2023'])}`)}
         <div class="outlook__now">${numeral('Maintenance', maintHint, e.tdee.primary, 'kcal/day')}
-        <p class="outlook__lead">Weight-loss planning is switched off.</p></div></article>`;
+        <p class="outlook__lead">${r.planBlocked ? 'No weight-change plan is shown. The notice below explains why.' : 'Weight-loss planning is switched off.'}</p></div></article>`;
     }
 
     const intakeHint = fmt.units === 'metric'
@@ -241,10 +241,13 @@
       { k: 'Glycogen & water', v: -d.water, cls: 'water' },
     ].filter((x) => x.v > 0.01);
     const shown = roundParts(parts.map((x) => fmt.massVal(x.v)), 1);
-    const pcts = roundParts(parts.map((x) => x.v / tot * 100), 0);
+    // Shares of what is shown, so they add up to 100% even when water rises instead of falling.
+    const shownTot = parts.reduce((a, x) => a + x.v, 0) || tot;
+    const pcts = roundParts(parts.map((x) => x.v / shownTot * 100), 0);
+    const waterUp = d.water > 0.05 ? `<p class="small">Glycogen and its water rise by ${fmt.mass(d.water)}, because you eat more carbohydrate than before, so the scale drops less than this.</p>` : '';
     const bar = `<div class="stackbar" role="img" aria-label="Composition of projected loss">${parts.map((x) => `<span class="stackbar__${x.cls}" style="flex:${x.v} 0 0" title="${x.k}: ${fmt.mass(x.v)}"></span>`).join('')}</div>`;
     const rows = parts.map((x, i) => `<li><i class="lg lg--${x.cls}"></i><span class="split__k">${x.k}</span><b class="split__v">${fmt.n(shown[i], 1)} ${fmt.massUnit()}</b><span class="split__p">${fmt.n(pcts[i])}%</span></li>`).join('');
-    const body = `<p class="big-stat">${fmt.n(shown.reduce((a, b) => a + b, 0), 1)} ${fmt.massUnit()}</p>${bar}<ul class="split">${rows}</ul>
+    const body = `<p class="big-stat">${fmt.n(shown.reduce((a, b) => a + b, 0), 1)} ${fmt.massUnit()}</p>${bar}<ul class="split">${rows}</ul>${waterUp}
       <p class="small muted">The lean share depends on how much fat you start with (Forbes' curve): the leaner you are, the more of each kilogram comes from lean tissue. ${c(['hall2007', 'hall2011'])}</p>`;
     return surface({ title: 'What you will lose' }, body);
   }
@@ -299,6 +302,7 @@
       const dp = charts.dotplot(rows, { band: range ? [range.low, range.overweight] : null, bandLabel: 'healthy range for your age & sex', marker: r.input.bodyFatPct > 0 ? null : bf.consensus, markerLabel: 'best estimate', primaryLabel: 'your measurement', format: (v) => fmt.n(v, 0) + '%', minPad: 3, aria: 'Body-fat percentage by method' });
       right += dp.html;
       right += `<p class="small muted">Methods: ${bf.estimates.map((e) => esc(e.name.replace(/ \(.*\)$/, '')) + c(e.refs)).join(' · ')}. Healthy band: ${c(['gallagher2000'])}</p>`;
+      if (bf.spread && bf.spread[1] - bf.spread[0] > 15) right += '<p class="small">At this BMI the formulas disagree widely, so treat each one as a rough guide.</p>';
       if (!r.input.waistCm) right += '<p class="small">Add waist (and neck; women also hip) under <b>Measurements</b>: circumference methods beat BMI-only formulas.</p>';
     } else right += '<p class="muted">Not enough data.</p>';
 

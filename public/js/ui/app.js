@@ -4,7 +4,7 @@
   const { fmt } = FH;
   const $ = (id) => document.getElementById(id);
   // Shown in the footer. public/sw.js names its cache after it; bump both together (see AGENTS.md).
-  const APP_VERSION = '1.01';
+  const APP_VERSION = '1.02';
   const STORE = 'weightframe.v1';
   const THEME_STORE = 'weightframe.theme';
   const DISCLAIMER_STORE = 'weightframe.disclaimerDismissed';
@@ -206,6 +206,7 @@
     return state.ageYears == null ? null : state.ageYears + (state.ageYears < 18 ? Math.min(11, state.ageMonths || 0) / 12 : 0);
   }
 
+  const PACE_PRESETS = ['gentle', 'moderate', 'fast'];
   function syncVisibility() {
     const age = ageDecimal();
     const child = age != null && age < 18;
@@ -213,7 +214,7 @@
     $('goalGroup').hidden = child;
     $('bmrGroup').hidden = child;
     $('childGroup').hidden = !child;
-    $('pregnantWrap').hidden = state.sex !== 'female' || child;
+    $('pregnantWrap').hidden = state.sex !== 'female' || (age != null && age < 10);
     $('weeksField').hidden = state.paceMode !== 'weeks';
     $('intakeField').hidden = state.paceMode !== 'intake';
     const actT = FH.i18nText.get(state.locale).activity[state.activity];
@@ -225,7 +226,12 @@
       gentle: 'About 0.5% of body weight per week.', moderate: 'About 0.75% of body weight per week.', fast: 'About 1% of body weight per week – the upper end of guideline pace.',
       weeks: 'The model finds the intake that reaches your goal in this many weeks.', intake: 'The model shows where this intake takes you, and when.',
     };
-    $('paceHint').textContent = hints[state.paceMode] || '';
+    // No guideline pace exists for gaining weight, so the presets do not claim one there.
+    const gain = !child && state.goalWeightKg > 0 && state.weightKg > 0 && state.goalWeightKg - state.weightKg >= 0.25;
+    const gainHint = state.locale === 'pl'
+      ? 'Przy przybieraniu masy ciała aplikacja planuje nadwyżkę najwyżej 500 kcal dziennie; nie ma zalecanego tempa przybierania.'
+      : 'For weight gain the app plans at most a 500 kcal/day surplus; there is no guideline pace for gaining.';
+    $('paceHint').textContent = gain && PACE_PRESETS.includes(state.paceMode) ? gainHint : hints[state.paceMode] || '';
   }
 
   function toInput() {
@@ -234,7 +240,7 @@
       activity: state.activity, ethnicity: state.ethnicity,
       waistCm: state.waistCm || null, hipCm: state.hipCm || null, neckCm: state.neckCm || null,
       bodyFatPct: state.bodyFatPct > 0 ? state.bodyFatPct : null, athlete: state.athlete,
-      pregnant: state.sex === 'female' && state.pregnant && ageDecimal() >= 18,
+      pregnant: state.sex === 'female' && state.pregnant && ageDecimal() >= 10,
       childReference: state.childReference,
       goalWeightKg: state.goalWeightKg, paceMode: state.paceMode, weeks: state.weeks, intakeKcal: state.intakeKcal,
       extraActivityKcal: state.extraActivityKcal, bmrChoice: state.bmrChoice,

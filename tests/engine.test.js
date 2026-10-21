@@ -201,6 +201,86 @@ test('assess(): no loss plan toward an underweight goal, but maintenance still p
   assert.equal(thin.plan.mode, 'maintain');
 });
 
+test('assess(): severe thinness gets no plan of any kind, only a doctor notice', () => {
+  for (const goalWeightKg of [null, 75, 45]) {
+    const r = assess({ sex: 'male', ageYears: 35, heightCm: 180, weightKg: 50, goalWeightKg, paceMode: 'fast', activity: 'low' });
+    assert.equal(r.plan, undefined);
+    assert.equal(r.planBlocked, 'severeThinness');
+    assert.ok(r.warnings.some((w) => w.level === 'danger' && /severe thinness/.test(w.text) && w.refs.includes('nice2006')));
+  }
+});
+
+test('assess(): underweight without a goal gets a current-BMI notice, not a goal flag', () => {
+  const r = assess({ sex: 'female', ageYears: 30, heightCm: 168, weightKg: 50, activity: 'inactive' });
+  assert.equal(r.plan.mode, 'maintain');
+  assert.ok(r.warnings.some((w) => w.level === 'warn' && /Your BMI of 17.7/.test(w.text)));
+  assert.ok(!r.plan.flags.some((f) => /Goal BMI/.test(f.text)));
+});
+
+test('assess(): weight gain is capped at a 500 kcal surplus and stops at the obesity range', () => {
+  const capped = assess({ sex: 'male', ageYears: 35, heightCm: 180, weightKg: 62, goalWeightKg: 70, paceMode: 'fast', activity: 'low' });
+  assert.ok(capped.plan.intake - capped.energy.tdee.primary <= 500 + 1e-6);
+  assert.ok(capped.plan.flags.some((f) => /at most a 500 kcal\/day surplus/.test(f.text)));
+  const weeks = assess({ sex: 'female', ageYears: 30, heightCm: 165, weightKg: 60, goalWeightKg: 66, paceMode: 'weeks', weeks: 4 });
+  assert.ok(weeks.plan.flags.some((f) => /would need a larger surplus/.test(f.text)));
+  assert.ok(!weeks.plan.flags.some((f) => /lowest intake/.test(f.text)));
+  const over = assess({ sex: 'female', ageYears: 30, heightCm: 165, weightKg: 60, goalWeightKg: 75, paceMode: 'gentle' });
+  assert.ok(over.plan.flags.some((f) => f.level === 'warn' && /above the healthy range/.test(f.text)));
+  const obese = assess({ sex: 'female', ageYears: 30, heightCm: 165, weightKg: 60, goalWeightKg: 90, paceMode: 'gentle' });
+  assert.equal(obese.plan, undefined);
+  assert.equal(obese.planBlocked, 'gainToObesity');
+  const typed = assess({ sex: 'female', ageYears: 30, heightCm: 165, weightKg: 60, goalWeightKg: 66, paceMode: 'intake', intakeKcal: 4000 });
+  assert.ok(typed.plan.flags.some((f) => /more than the 500 kcal\/day surplus/.test(f.text)));
+});
+
+test('assess(): typed intake and weeks are range-checked', () => {
+  const base = { sex: 'female', ageYears: 30, heightCm: 165, weightKg: 80, goalWeightKg: 65 };
+  assert.equal(assess({ ...base, paceMode: 'intake', intakeKcal: 20000 }).ok, false);
+  assert.equal(assess({ ...base, paceMode: 'weeks', weeks: 0.5 }).ok, false);
+  assert.equal(assess({ ...base, paceMode: 'weeks', weeks: -5 }).ok, false);
+  // Values for the mode not in use are kept by the form and must not block the result.
+  assert.equal(assess({ ...base, paceMode: 'moderate', weeks: 0.5, intakeKcal: 20000 }).ok, true);
+  const vlcd = assess({ ...base, paceMode: 'intake', intakeKcal: 600 });
+  assert.equal(vlcd.plan, undefined);
+  assert.equal(vlcd.planBlocked, 'vlcd');
+});
+
+test('assess(): the projection is withheld when it leaves the model range', () => {
+  const r = assess({ sex: 'male', ageYears: 30, heightCm: 145, weightKg: 34.7, goalWeightKg: 39.9, paceMode: 'intake', intakeKcal: 900 });
+  assert.equal(r.plan, undefined);
+  assert.equal(r.planBlocked, 'modelRange');
+  const small = assess({ sex: 'male', ageYears: 100, heightCm: 145, weightKg: 40, activity: 'inactive' });
+  for (const s of small.plan.scenarios) {
+    assert.ok(s.deficit === 0 || s.intake >= 1500);
+    assert.ok([s.w12, s.w26, s.w52].every(Number.isFinite));
+  }
+});
+
+test('assess(): wrong-direction intake and water gain are described as such', () => {
+  const up = assess({ sex: 'male', ageYears: 30, heightCm: 175, weightKg: 80, goalWeightKg: 75, paceMode: 'intake', intakeKcal: 4000 });
+  assert.ok(up.plan.flags.some((f) => /predicts weight rising/.test(f.text)));
+  const water = assess({ sex: 'male', ageYears: 30, heightCm: 175, weightKg: 80, goalWeightKg: 70, paceMode: 'moderate', activity: 'active', bodyFatPct: 3, extraActivityKcal: 1500 });
+  const texts = water.story.map((s) => s.value + ' ' + s.text).join(' ');
+  assert.ok(!/(^|\s)-\d/.test(texts), texts);
+});
+
+test('assess(): estimated body fat is not called "your" value, and wild estimates are dropped', () => {
+  const r = assess({ sex: 'male', ageYears: 18, heightCm: 145, weightKg: 34.7, goalWeightKg: 39.9, paceMode: 'gentle' });
+  const clamp = r.plan.flags.find((f) => /5% to 60%/.test(f.text));
+  assert.ok(clamp && /the estimated/.test(clamp.text) && !/your /.test(clamp.text));
+  const big = assess({ sex: 'male', ageYears: 70, heightCm: 165, weightKg: 163 });
+  assert.ok(big.bodyFat.estimates.every((e) => e.value >= 3 && e.value <= 65));
+  assert.ok(!big.bodyFat.estimates.some((e) => e.id === 'gallagher'));
+});
+
+test('assess(): implausible child values and teen pregnancy get a notice', () => {
+  const implausible = assess({ sex: 'male', ageYears: 2, heightCm: 80, weightKg: 25.6, childReference: 'who' });
+  assert.ok(implausible.warnings.some((w) => /check the height and weight/.test(w.text)));
+  const teen = assess({ sex: 'female', ageYears: 16, heightCm: 165, weightKg: 60, pregnant: true });
+  assert.equal(teen.warnings.filter((w) => /Pregnancy/.test(w.text)).length, 1);
+  assert.equal(teen.plan, undefined);
+});
+
 test('under-5 activity cites WHO 2019, older children WHO 2020', () => {
   const small = assess({ sex: 'female', ageYears: 3, heightCm: 95, weightKg: 14 });
   assert.deepEqual(small.nutrition.activity.refs, ['who2019u5']);

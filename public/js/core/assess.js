@@ -14,6 +14,9 @@
   };
   const KCAL_PER_KG_FAT = hall.P.rhoF;
   const ALPERT_KCAL_PER_KG_FAT = 290 / 4.184; // 290 kJ per kg fat per day
+  const GAIN_SURPLUS_MAX = 500; // kcal/day; the most the app picks on its own for weight gain
+  const MIN_FAT_SHARE = 0.02; // a projection whose fat mass drops below 2% of today's weight is not shown
+  const MIN_PROJECTED_BMI = 15; // nor one that takes BMI below 15
 
   function validate(p) {
     const errors = [];
@@ -29,6 +32,9 @@
     if (p.neckCm != null && !(p.neckCm >= 15 && p.neckCm <= 80)) errors.push('Neck must be between 15 and 80 cm.');
     if (p.goalWeightKg != null && !(p.goalWeightKg >= 10 && p.goalWeightKg <= 350)) errors.push('Goal weight must be between 10 and 350 kg.');
     if (p.extraActivityKcal != null && !(p.extraActivityKcal >= 0 && p.extraActivityKcal <= 3000)) errors.push('Extra activity must be between 0 and 3,000 kcal/day.');
+    // Intake and weeks only count in the pace mode that uses them (the form keeps both values).
+    if (p.paceMode === 'intake' && p.intakeKcal != null && !(p.intakeKcal > 0 && p.intakeKcal <= 6000)) errors.push('Daily intake must be above 0 and at most 6,000 kcal.');
+    if (p.paceMode === 'weeks' && p.weeks != null && !(p.weeks >= 2 && p.weeks <= 156)) errors.push('Weeks must be between 2 and 156.');
     return errors;
   }
 
@@ -97,22 +103,51 @@
     const tdee = energy.tdee(p, bmr.primary.value);
     res.energy = { bmr, tdee, ffmMeasured: p.bodyFatPct > 0 };
 
-    if (p.pregnant) {
+    if (p.pregnant && !isChild) {
       res.warnings.push({ level: 'danger', text: T.pregnancyWarning(), refs: ['nasem2023'] });
     }
 
     // ---- Plan (adults) / guidance (children) -------------------------------------------
     // No weight-loss plan toward an underweight goal: an intake and a date for that would read
     // as an endorsement, whatever warning sits next to it. Maintenance and gain still plan.
+    // Same for severe thinness (any plan), gain into the obesity range, and a typed intake in
+    // very-low-calorie territory, which needs clinical supervision rather than a timeline.
     const goalBmi = p.goalWeightKg > 0 ? anthro.bmi(p.goalWeightKg, p.heightCm) : b;
-    const underweightLoss = !isChild && p.goalWeightKg > 0 && p.weightKg - p.goalWeightKg >= 0.25 && goalBmi < 18.5;
+    const change = p.goalWeightKg > 0 ? p.weightKg - p.goalWeightKg : 0; // > 0 is a loss
+    let blocked = null;
+    if (!isChild) {
+      if (b < 16) {
+        res.warnings.push({ level: 'danger', text: T.flags.severeThinness(b.toFixed(1)), refs: ['nice2006', 'who2000'] });
+        blocked = 'severeThinness';
+      } else if (b < 18.5) {
+        res.warnings.push({ level: 'warn', text: T.flags.currentUnderweight(b.toFixed(1)), refs: ['who2000'] });
+      }
+      if (blocked) { /* already explained */ } else if (change >= 0.25 && goalBmi < 18.5) {
+        res.warnings.push({ level: 'danger', text: T.flags.lossToUnderweight(goalBmi.toFixed(1)), refs: ['who2000'] });
+        blocked = 'underweight';
+      } else if (change <= -0.25 && goalBmi >= res.bmiClass.thresholds.obese) {
+        res.warnings.push({ level: 'warn', text: T.flags.gainToObesity(goalBmi.toFixed(1), res.bmiClass.thresholds.obese), refs: res.bmiClass.refs });
+        blocked = 'gainToObesity';
+      } else if (Math.abs(change) >= 0.25 && p.paceMode === 'intake' && p.intakeKcal > 0 && p.intakeKcal < 800) {
+        res.warnings.push({ level: 'danger', text: T.flags.vlcdTyped(), refs: ['nice2025'] });
+        blocked = 'vlcd';
+      }
+    }
     if (isChild) {
       res.pediatric = pediatricGuidance(p, res, T);
-    } else if (underweightLoss && !p.pregnant) {
-      res.planBlocked = 'underweight';
-      res.warnings.push({ level: 'danger', text: T.flags.lossToUnderweight(goalBmi.toFixed(1)), refs: ['who2000'] });
-    } else if (!p.pregnant) {
-      res.plan = adultPlan(p, res, F, T);
+      const who = res.child.primary && res.child.primary.reference === 'who' ? res.child.primary : res.child.other;
+      if (who && Math.abs(who.z) > 5) res.warnings.push({ level: 'warn', text: T.childImplausible(), refs: ['cdcWhoSas'] });
+      if (p.pregnant) res.warnings.push({ level: 'danger', text: T.pregnancyTeenWarning(), refs: ['nasem2023'] });
+    } else if (p.pregnant) {
+      // Pregnancy switches planning off; the notice is added above.
+    } else if (blocked) {
+      res.planBlocked = blocked;
+    } else {
+      const plan = adultPlan(p, res, F, T);
+      if (plan.outOfRange) {
+        res.planBlocked = 'modelRange';
+        res.warnings.push({ level: 'warn', text: T.flags.modelRange(), refs: ['hall2011'] });
+      } else res.plan = plan;
     }
 
     res.nutrition = nutrition(p, res, T);
@@ -140,7 +175,8 @@
     // The Hall model is only validated across a plausible body-fat range; flag it when the
     // measured/estimated value fed to it (not the body-fat display elsewhere) had to be capped.
     if (Math.abs(fatPctRaw - fatPctForModel) > 0.5) {
-      out.flags.push({ level: 'info', text: T.flags.bodyFatClamped(Math.round(fatPctRaw * 10) / 10 + '%', fatPctForModel + '%'), refs: ['hall2011'] });
+      const clampText = fatSource === 'measured' ? T.flags.bodyFatClamped : T.flags.bodyFatClampedEstimate;
+      out.flags.push({ level: 'info', text: clampText(Math.round(fatPctRaw * 10) / 10 + '%', fatPctForModel + '%'), refs: ['hall2011'] });
     }
 
     out.timeConstantDays = hall.timeConstant(model);
@@ -174,6 +210,13 @@
       const floor = p.sex === 'female' ? 1200 : 1500;
       if (intake < floor) intake = floor;
     }
+    // No guideline sets a pace for gaining weight, so the app never picks more than a modest
+    // surplus over today's expenditure (including extra exercise) on its own.
+    let gainCapped = false;
+    if (mode !== 'intake' && mode !== 'maintain' && lossKg < 0 && intake > EI0 + extra + GAIN_SURPLUS_MAX) {
+      intake = EI0 + extra + GAIN_SURPLUS_MAX;
+      gainCapped = true;
+    }
     out.mode = mode;
     out.intake = intake;
     out.deficit = EI0 - intake;
@@ -204,16 +247,22 @@
       days = reached(diet) ? diet.day[diet.day.length - 1] : null;
       if (days == null) {
         out.plateauKg = diet.weight[diet.weight.length - 1];
-        out.flags.push({
-          level: 'warn',
-          text: solverChose ? T.flags.unreachable(F.mass(out.plateauKg), F.mass(goal)) : T.flags.plateau(F.mass(out.plateauKg)),
-          refs: ['hall2011'],
-        });
-      } else if (requestedDays != null && days > requestedDays * 1.1 + 3) {
+        // A typed intake on the wrong side of maintenance moves weight away from the goal.
+        const maint0 = hall.maintenanceIntake(model, model.F0, model.L0, extra);
+        const wrongWay = !solverChose && (lossKg > 0 ? intake >= maint0 : intake <= maint0);
+        let text;
+        if (wrongWay) text = T.flags.wrongDirection(F.kcal(maint0) + ' kcal/day', F.mass(out.plateauKg), lossKg > 0);
+        else if (gainCapped) text = T.flags.gainPlateau(F.mass(out.plateauKg), F.mass(goal));
+        else if (solverChose) text = T.flags.unreachable(F.mass(out.plateauKg), F.mass(goal));
+        else text = T.flags.plateau(F.mass(out.plateauKg));
+        out.flags.push({ level: 'warn', text, refs: ['hall2011'] });
+      } else if (requestedDays != null && days > requestedDays * 1.1 + 3 && (lossKg > 0 || mode === 'weeks')) {
         // The goal itself is reachable at this intake, just not by the deadline that was asked
         // for (e.g. bisection was pushed to ~0 kcal/day trying to hit a too-tight deadline).
-        out.flags.push({ level: 'warn', text: T.flags.deadlineExtended(requestedDays, days), refs: ['hall2011'] });
+        const text = lossKg > 0 ? T.flags.deadlineExtended(requestedDays, days) : T.flags.deadlineExtendedGain(requestedDays, days);
+        out.flags.push({ level: 'warn', text, refs: ['hall2011'] });
       }
+      if (gainCapped && mode !== 'weeks') out.flags.push({ level: 'info', text: T.flags.gainCapped(), refs: [] });
     }
     out.days = days;
 
@@ -224,6 +273,11 @@
     const maintainDays = 182;
     const cont = continueSim(model, diet, out.maintenanceAtGoal, maintainDays, extra);
     out.series = cont;
+    // The model is not built for running fat stores close to empty or for bodies far below a
+    // healthy weight; past that point its numbers (plateaus of a few kilograms, NaN) mean
+    // nothing, so show no projection.
+    const h2 = (p.heightCm / 100) ** 2;
+    if (Math.min(...cont.fat) < MIN_FAT_SHARE * p.weightKg || Math.min(...cont.weight) / h2 < MIN_PROJECTED_BMI) return { outOfRange: true };
 
     // How sure: replay exactly the same intake schedule as if true maintenance sat at either end
     // of the NASEM 2023 individual prediction error (±1 RMSE, ~2 in 3 people). Only the baseline
@@ -278,12 +332,15 @@
     out.milestones = milestones(p, res, cont, lossKg, T);
 
     // Intake comparison table (what different deficits do).
-    out.scenarios = [0, 250, 500, 750, 1000].map((def) => {
+    // Rows below the guideline floor are left out: for a small body they reach intakes near zero
+    // and push the model out of its range.
+    const scenarioFloor = p.sex === 'female' ? 1200 : 1500;
+    out.scenarios = [0, 250, 500, 750, 1000].filter((def) => def === 0 || EI0 - def >= scenarioFloor).map((def) => {
       const s = hall.simulate(model, { intake: hall.constant(EI0 - def), days: 365, extraActivity: extra, dt: 1 });
       const at = (dd) => s.weight[Math.min(dd, s.weight.length - 1)];
       const hit = lossKg > 0 ? s.weight.findIndex((w) => w <= goal) : -1;
       return { deficit: def, intake: EI0 - def, w12: at(84), w26: at(182), w52: at(365), goalDay: hit > 0 ? hit : null };
-    });
+    }).filter((s) => [s.w12, s.w26, s.w52].every(Number.isFinite));
 
     out.flags = out.flags.concat(safetyFlags(p, res, out, model, F, T));
     return out;
@@ -343,9 +400,8 @@
     const f = [];
     const floor = p.sex === 'female' ? 1200 : 1500;
     if (out.lossKg > 0.25) {
-      if (out.intake < 800) {
-        f.push({ level: 'danger', text: T.flags.vlcd(), refs: ['nice2025'] });
-      } else if (out.intake < floor) {
+      // Typed intakes below 800 kcal/day never get this far (see vlcdTyped in assess()).
+      if (out.intake < floor) {
         f.push({ level: 'warn', text: T.flags.belowFloor(F.kcal(floor) + ' kcal/day', p.sex), refs: ['jensen2014'] });
       }
       const pctRate = out.steadyRateKgPerWeek / p.weightKg * 100;
@@ -366,13 +422,20 @@
         f.push({ level: 'info', text: T.flags.leanShare(Math.round(leanShare * 100)), refs: ['hall2007', 'leidy2015'] });
       }
     }
+    // Goal flags only when a goal was entered: without one the "goal" is today's weight, which
+    // the current-BMI notices in assess() already cover.
     const goalBmi = out.goalKg / (p.heightCm / 100) ** 2;
-    if (goalBmi < 18.5) {
+    if (!(p.goalWeightKg > 0)) { /* no goal entered */ } else if (goalBmi < 18.5) {
       f.push({ level: 'danger', text: T.flags.goalUnderweight(goalBmi.toFixed(1)), refs: ['who2000'] });
     } else if (p.ageYears >= 65 && goalBmi < 23) {
       f.push({ level: 'warn', text: T.flags.goalLowOlder(), refs: ['winter2014'] });
     }
-    if (out.lossKg < -0.25) f.push({ level: 'info', text: T.flags.isGain(), refs: [] });
+    if (out.lossKg < -0.25) {
+      f.push({ level: 'info', text: T.flags.isGain(), refs: [] });
+      // A typed intake is shown as typed, but a surplus beyond what the app would plan is named.
+      if (out.mode === 'intake' && -out.deficit - out.extraActivity > GAIN_SURPLUS_MAX) f.push({ level: 'warn', text: T.flags.gainSurplusTyped(F.kcal(-out.deficit - out.extraActivity) + ' kcal/day'), refs: [] });
+      if (goalBmi >= res.bmiClass.thresholds.overweight) f.push({ level: 'warn', text: T.flags.gainToOverweight(goalBmi.toFixed(1)), refs: res.bmiClass.refs });
+    }
     return f;
   }
 
@@ -469,11 +532,17 @@
       const tot = -c.total;
       s.push({ id: 'composition', title: T.story.compositionTitle(),
         value: T.story.compositionValue(Math.round(-c.fat / tot * 100)),
-        text: T.story.compositionText(F.mass(tot), F.mass(-c.fat), F.mass(-c.lean), F.mass(-c.water)),
+        // Eating more carbohydrate than before (e.g. alongside extra exercise) refills glycogen,
+        // so water can rise while tissue is lost; say that instead of printing a negative loss.
+        text: c.water > 0.05 ? T.story.compositionTextWaterUp(F.mass(tot), F.mass(-c.fat), F.mass(-c.lean), F.mass(c.water))
+          : T.story.compositionText(F.mass(tot), F.mass(-c.fat), F.mass(Math.max(0, -c.lean)), F.mass(Math.max(0, -c.water))),
         refs: ['hall2011', 'hall2007'] });
+      // With more carbohydrate than before (e.g. extra exercise eaten back) glycogen refills
+      // and the scale can rise in week one even while fat falls.
+      const weekUp = plan.firstWeek.total > 0.05;
       s.push({ id: 'firstweek', title: T.story.firstweekTitle(),
-        value: F.mass(-plan.firstWeek.total),
-        text: T.story.firstweekText(F.mass(-plan.firstWeek.fat, 2)),
+        value: weekUp ? '+' + F.mass(plan.firstWeek.total) : F.mass(Math.abs(plan.firstWeek.total)),
+        text: weekUp ? T.story.firstweekTextUp(F.mass(-plan.firstWeek.fat, 2)) : T.story.firstweekText(F.mass(-plan.firstWeek.fat, 2)),
         refs: ['hall2011'] });
       s.push({ id: 'energy', title: T.story.energyTitle(),
         value: T.story.energyValue(F.kcal(plan.fatEnergyKcal)),
