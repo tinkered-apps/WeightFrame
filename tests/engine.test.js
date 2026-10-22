@@ -288,6 +288,27 @@ test('under-5 activity cites WHO 2019, older children WHO 2020', () => {
   assert.deepEqual(older.nutrition.activity.refs, ['who2020pa']);
 });
 
+test('assess(): a pace the app picks stays under the gallstone rate and is not called a chosen date', () => {
+  const big = assess({ sex: 'male', ageYears: 45, heightCm: 180, weightKg: 200, goalWeightKg: 100, paceMode: 'fast' });
+  assert.ok(big.plan.steadyRateKgPerWeek <= 1.5 + 1e-6);
+  assert.ok(!big.plan.flags.some((f) => /gallstones/.test(f.text)));
+  assert.ok(big.plan.flags.some((f) => /^This pace would reach the goal/.test(f.text)));
+  assert.ok(!big.plan.flags.some((f) => /chosen timeframe/.test(f.text)));
+  const dated = assess({ sex: 'female', ageYears: 30, heightCm: 165, weightKg: 70, goalWeightKg: 55, paceMode: 'weeks', weeks: 4 });
+  assert.ok(dated.plan.flags.some((f) => /^Your chosen timeframe \(4 weeks\)/.test(f.text)));
+  // A typed intake is shown as typed, so the gallstone notice still appears for it.
+  const typed = assess({ sex: 'male', ageYears: 45, heightCm: 180, weightKg: 200, goalWeightKg: 100, paceMode: 'intake', intakeKcal: 1000 });
+  assert.ok(typed.plan.flags.some((f) => /gallstones/.test(f.text)));
+});
+
+test('assess(): the below-BMR note mentions obesity only for BMI in the obesity range', () => {
+  const below = (r) => r.plan.flags.find((f) => /resting metabolic rate/.test(f.text)).text;
+  const over = assess({ sex: 'female', ageYears: 30, heightCm: 165, weightKg: 70, goalWeightKg: 55, paceMode: 'weeks', weeks: 4 });
+  assert.doesNotMatch(below(over), /obesity/);
+  const obese = assess({ sex: 'male', ageYears: 45, heightCm: 180, weightKg: 200, goalWeightKg: 100, paceMode: 'fast' });
+  assert.match(below(obese), /obesity/);
+});
+
 test('every referenced citation id exists', () => {
   const r = assess({ sex: 'male', ageYears: 70, heightCm: 172, weightKg: 88, activity: 'inactive', waistCm: 104, goalWeightKg: 80, paceMode: 'fast' });
   const seen = new Set();

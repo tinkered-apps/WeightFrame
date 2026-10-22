@@ -374,36 +374,36 @@
       { k: 'Past about 500 kcal a day, training stops adding lean mass', v: '500', unit: 'kcal/day',
         design: 'Meta-analysis and meta-regression · randomised trials of 3 weeks or more of resistance training in a deficit',
         t: 'Lifting while in a deficit keeps your strength, no differently from lifting with full energy available. But the meta-regression puts the deficit where resistance training stops adding lean mass at about 500 kcal a day – it is about lean-mass gains stalling, not about losing what training would otherwise have protected. It works alongside the protein target in Nutrition, not instead of it.',
-        q: 'An energy deficit of ~500 kcal/day prevented gains in lean mass.',
+        q: '…an energy deficit of ~500 kcal · day⁻¹ prevented gains in LM [lean mass].',
         refs: ['murphy2022'], dyn: 'deficit' },
     ] },
     { title: 'What you burn without trying', items: [
       { k: 'Moving about without calling it exercise', v: '10×', unit: 'difference in fat gained',
         design: 'Overfeeding study · 16 adults of healthy weight · 1,000 kcal/day surplus for 8 weeks',
         t: 'Fed the same surplus for the same eight weeks, some people burned much of it off by moving more without deciding to: posture, walking about, fidgeting. That swing ran from 98 kcal/day less to 692 kcal/day more, and it explained a ten-fold spread in how much fat they actually put on. The channel runs in reverse on a diet, where eating less quietly makes you move less.',
-        q: 'Changes in NEAT accounted for the 10-fold differences in fat storage.',
+        q: 'Changes in NEAT accounted for the 10-fold differences in fat storage that occurred…',
         refs: ['levine1999'] },
       { k: 'The same meals, four hours later', v: '4 h', unit: 'later, nothing else changed',
         design: 'Randomised crossover · 16 adults with overweight or obesity · meals, sleep, light and activity held identical',
         t: 'Shifting identical meals about four hours later raised hunger, tilted the ghrelin-to-leptin ratio towards appetite, lowered waking energy expenditure and 24-hour core temperature, and moved fat-tissue gene expression away from releasing fat and towards storing it.',
-        q: 'Late eating increased hunger and decreased waketime energy expenditure.',
+        q: 'Late eating increased hunger… Furthermore, late eating decreased waketime energy expenditure…',
         refs: ['vujovic2022'] },
     ] },
     { title: 'Whether you can see where you are', items: [
       { k: 'Self-reported intake often runs below actual intake', v: '47%', unit: 'under-reported',
         design: 'Metabolic study · 10 adults who could not lose weight on a reported 1,200 kcal/day · 14 days of calorimetry and doubly labelled water',
         t: "This small group's metabolism turned out to be ordinary: total expenditure sat within 5% of what the equations predicted. Their food and activity records were the thing that was wrong, with intake under-reported by 47% and activity over-reported by 51%. It is one of the reasons a plan and a bathroom scale can disagree, alongside water, timing and measurement noise – a 10-person study does not establish how often it explains any given gap.",
-        q: 'Underreported their actual food intake by an average of 47 ± 16 percent.',
+        q: '…underreported their actual food intake by an average (± SD) of 47 ± 16 percent…',
         refs: ['lichtman1992'] },
       { k: 'Logging often tracks with success more than logging carefully', v: '2.7', unit: 'vs 1.7 entries a day',
         design: '24-week online behavioural programme · 142 adults',
         t: "Minutes spent recording did not separate the successful from the rest in this programme; how often they came back did. People who lost a tenth of their body weight or more opened their diary 2.7 times a day against 1.7 for everyone else – an association, not a controlled test of one against the other. It also gets cheaper with practice: 23 minutes a day in month one, 15 by month six.",
-        q: 'The frequency of self-monitoring is significantly related to weight loss.',
+        q: 'The frequency of self-monitoring is significantly related to weight loss…',
         refs: ['harvey2019'] },
       { k: 'Weigh yourself often, but read the trend', v: '1.7 kg', unit: 'added to a programme',
         design: 'Meta-analysis of randomised trials · 4 adding self-weighing to an existing programme',
         t: 'Adding self-weighing and self-regulation to a weight-loss programme was worth an extra 1.7 kg (95% CI 0.8 to 2.6). On its own it did nothing measurable, so the scale is a feedback signal rather than a treatment. Day to day it mostly tracks water, as the first week above shows, which is why the weekly average is the number to read.',
-        q: 'Four trials added self-weighing to multi-component programmes: a difference of −1.7 kg.',
+        q: 'Four trials added self-weighing/self-regulation techniques to multi-component programmes and resulted in a significant difference of −1.7 kg…',
         refs: ['madigan2015'] },
     ] },
   ];
@@ -491,7 +491,9 @@
     // Some targets collapse to a single number rather than a real range - always sort low/high
     // and drop the dash when they coincide, instead of printing "87–87 g" or "42–26 g".
     const gv = (lo, hi) => { const a = Math.min(lo, hi), b = Math.max(lo, hi); return a === b ? fmt.n(a) : fmt.n(a) + '–' + fmt.n(b); };
-    const proteinNote = `${fmt.n(n.protein.gPerKg[0], 2)}${n.protein.gPerKg[1] !== n.protein.gPerKg[0] ? '–' + fmt.n(n.protein.gPerKg[1], 1) : ''} g/kg ${esc(n.protein.basis)}${n.protein.note ? '. ' + esc(n.protein.note) : ''} ${c(n.protein.refs)}`;
+    // One decimal unless a value needs two (children's RDAs such as 0.95), and the same for both ends.
+    const pd = n.protein.gPerKg.some((v) => Math.abs(v * 10 - Math.round(v * 10)) > 1e-9) ? 2 : 1;
+    const proteinNote = `${fmt.n(n.protein.gPerKg[0], pd)}${n.protein.gPerKg[1] !== n.protein.gPerKg[0] ? '–' + fmt.n(n.protein.gPerKg[1], pd) : ''} g/kg ${esc(n.protein.basis)}${n.protein.note ? '. ' + esc(n.protein.note) : ''} ${c(n.protein.refs)}`;
     const cell = (label, value, unit, note) => `<div class="strip__cell"><span class="strip__label">${label}</span><span class="strip__value">${value}<small>${unit}</small></span><span class="strip__note">${note}</span></div>`;
     const cells = `<div class="strip strip--5">
       ${cell('Protein', gv(n.protein.grams[0], n.protein.grams[1]), 'g', proteinNote)}

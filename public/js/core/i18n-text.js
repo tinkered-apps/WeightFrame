@@ -78,7 +78,9 @@
       gallstoneRisk: (rateStr) => 'Projected loss of ' + rateStr + ' per week after the first fortnight. Losing more than 1.5 kg (3.3 lb) per week raises the risk of gallstones.',
       fastPace: (pctStr) => 'This projects ≈' + pctStr + ' of body weight per week, faster than the usual 0.5-1% (roughly 0.5-1 kg) per week. Faster loss tends to cost more lean mass.',
       alpertCeiling: (deficitStr, maxStr) => 'The starting deficit (' + deficitStr + ') exceeds the theoretical maximum energy your fat stores can release (~' + maxStr + ', 290 kJ per kg fat). Beyond it, the shortfall is covered more by lean tissue.',
-      belowBmr: () => 'Planned intake is below your estimated resting metabolic rate. That is common for guideline diets in people with obesity and not dangerous in itself, but protein and micronutrient quality matter more.',
+      belowBmr: (obese) => 'Planned intake is below your estimated resting metabolic rate. ' + (obese
+        ? 'That is common for guideline diets in people with obesity and not dangerous in itself, but protein and micronutrient quality matter more.'
+        : 'Guideline diets can go below it, but protein and micronutrient quality then matter more.'),
       leanShare: (pct) => 'About ' + pct + '% of the projected loss is lean tissue. Higher protein and resistance training help preserve it.',
       goalUnderweight: (bmiStr) => 'Goal BMI of ' + bmiStr + ' is below 18.5 (underweight).',
       lossToUnderweight: (bmiStr) => 'A goal BMI of ' + bmiStr + ' is below 18.5 (underweight), so the app does not plan weight loss toward it. Losing weight from here can harm your health. If you are worried about your weight or your eating, please talk to a doctor.',
@@ -100,7 +102,8 @@
       isGain: () => 'Your goal is above your current weight, so the plan shows a weight-gain scenario.',
       plateau: (kgStr) => 'At this intake the model predicts weight levelling off around ' + kgStr + ', so the goal is not reached within 3 years.',
       unreachable: (plateauStr, goalStr) => "This goal isn't reachable by your chosen date – not even at the model's most extreme intake. At that pace, the model instead predicts levelling off around " + plateauStr + ', short of ' + goalStr + '. Try a later date, a smaller goal, or set the intake yourself to see where it leads.',
-      deadlineExtended: (reqDays, actDays) => 'Your chosen timeframe (' + Math.round(reqDays / 7) + ' weeks) is not reachable at a safe intake. Even pushed to the lowest intake the model will try, reaching the goal actually takes about ' + Math.round(actDays / 7) + ' weeks.',
+      deadlineExtended: (reqDays, actDays) => 'Your chosen timeframe (' + Math.round(reqDays / 7) + ' weeks) is not reachable at a safe intake. At the lowest intake the app plans on its own (the guideline minimum, and no faster than 1.5 kg or 3.3 lb a week), reaching the goal takes about ' + Math.round(actDays / 7) + ' weeks.',
+      paceExtended: (reqDays, actDays) => 'This pace would reach the goal in about ' + Math.round(reqDays / 7) + ' weeks, but only with an intake below the guideline minimum or a loss faster than 1.5 kg (3.3 lb) a week, which the app does not plan. Within those limits it takes about ' + Math.round(actDays / 7) + ' weeks.',
       bodyFatClamped: (enteredStr, usedStr) => 'The weight-projection model only supports body-fat inputs from 5% to 60%; your ' + enteredStr + ' was capped to ' + usedStr + ' for that calculation only (other results on this page still use what you entered).',
     },
 
@@ -136,9 +139,9 @@
 
     // ---- assess.js: nutrition ------------------------------------------------------------
     nutrition: {
-      proteinRda: () => 'RDA for age (per kg body weight)',
-      proteinGoalWeight: () => 'per kg of goal weight (common convention when BMI ≥ 30; needs track lean mass, not fat)',
-      proteinCurrentWeight: () => 'per kg of current body weight',
+      proteinRda: () => 'body weight, the RDA for age',
+      proteinGoalWeight: () => 'of goal weight (common convention when BMI ≥ 30; needs track lean mass, not fat)',
+      proteinCurrentWeight: () => 'of current body weight',
       proteinOlderNote: () => 'PROT-AGE advises at least 1.0-1.2 g/kg for healthy older adults, more with illness.',
       proteinToddlerNote: () => 'The IOM 2005 RDA for ages 1-3 is usually given as 1.05 g/kg; some tables round it to 1.1 g/kg.',
       activityToddler: () => 'At least 180 minutes a day of varied physical activity at any intensity, spread across the day – more is better. No specific moderate-to-vigorous target applies yet at this age.',
@@ -242,7 +245,9 @@
       gallstoneRisk: (rateStr) => 'Przewidywany ubytek ' + rateStr + ' na tydzień po pierwszych dwóch tygodniach. Utrata ponad 1,5 kg (3,3 funta) tygodniowo zwiększa ryzyko kamicy żółciowej.',
       fastPace: (pctStr) => 'To przewiduje ubytek ≈' + pctStr + ' masy ciała na tydzień, szybciej niż typowe 0,5-1% (mniej więcej 0,5-1 kg) na tydzień. Szybsza utrata masy zwykle kosztuje więcej masy beztłuszczowej.',
       alpertCeiling: (deficitStr, maxStr) => 'Początkowy deficyt (' + deficitStr + ') przekracza teoretyczne maksimum energii, jakie mogą uwolnić zapasy tłuszczu (~' + maxStr + ', 290 kJ na kg tłuszczu). Powyżej tego poziomu brakującą energię pokrywa w większym stopniu masa beztłuszczowa.',
-      belowBmr: () => 'Planowana podaż kalorii jest niższa niż szacowana spoczynkowa przemiana materii. To częste w zalecanych dietach przy otyłości i samo w sobie nie jest niebezpieczne, ale tym bardziej liczy się jakość białka i mikroskładników.',
+      belowBmr: (obese) => 'Planowana podaż kalorii jest niższa niż szacowana spoczynkowa przemiana materii. ' + (obese
+        ? 'To częste w zalecanych dietach przy otyłości i samo w sobie nie jest niebezpieczne, ale tym bardziej liczy się jakość białka i mikroskładników.'
+        : 'Zalecane diety mogą schodzić poniżej niej, ale wtedy tym bardziej liczy się jakość białka i mikroskładników.'),
       leanShare: (pct) => 'Około ' + pct + '% przewidywanego ubytku to masa beztłuszczowa. Więcej białka i trening oporowy pomagają ją zachować.',
       goalUnderweight: (bmiStr) => 'Docelowe BMI wynoszące ' + bmiStr.replace('.', ',') + ' jest poniżej 18,5 (niedowaga).',
       lossToUnderweight: (bmiStr) => 'Docelowe BMI wynoszące ' + bmiStr.replace('.', ',') + ' jest poniżej 18,5 (niedowaga), więc aplikacja nie planuje redukcji masy ciała do tej wartości. Dalsze chudnięcie może zaszkodzić zdrowiu. Jeśli martwisz się swoją masą ciała lub sposobem jedzenia, porozmawiaj z lekarzem.',
@@ -264,7 +269,8 @@
       isGain: () => 'Twój cel jest wyższy niż obecna masa ciała, więc plan przedstawia scenariusz przyrostu masy.',
       plateau: (kgStr) => 'Przy tej podaży kalorii model przewiduje ustabilizowanie masy ciała w okolicach ' + kgStr + ', więc cel nie zostanie osiągnięty w ciągu 3 lat.',
       unreachable: (plateauStr, goalStr) => 'Ten cel nie jest osiągalny w wybranym terminie – nawet przy najbardziej skrajnej podaży kalorii, jaką dopuszcza model. Przy tym tempie model przewiduje ustabilizowanie się w okolicach ' + plateauStr + ', czyli poniżej celu ' + goalStr + '. Wybierz późniejszy termin, mniejszy cel albo ustaw podaż kalorii samodzielnie, aby zobaczyć, dokąd prowadzi.',
-      deadlineExtended: (reqDays, actDays) => 'Wybrany termin (' + Math.round(reqDays / 7) + ' tyg.) nie jest osiągalny przy bezpiecznej podaży kalorii. Nawet przy najniższej podaży, jaką próbuje model, osiągnięcie celu zajmuje faktycznie około ' + Math.round(actDays / 7) + ' tyg.',
+      deadlineExtended: (reqDays, actDays) => 'Wybrany termin (' + Math.round(reqDays / 7) + ' tyg.) nie jest osiągalny przy bezpiecznej podaży kalorii. Przy najniższej podaży, jaką aplikacja sama planuje (minimum z wytycznych i nie szybciej niż 1,5 kg tygodniowo), osiągnięcie celu zajmie około ' + Math.round(actDays / 7) + ' tyg.',
+      paceExtended: (reqDays, actDays) => 'Przy tym tempie cel zostałby osiągnięty w około ' + Math.round(reqDays / 7) + ' tyg., ale tylko przy podaży kalorii poniżej minimum z wytycznych lub utracie szybszej niż 1,5 kg tygodniowo, czego aplikacja nie planuje. W tych granicach zajmie to około ' + Math.round(actDays / 7) + ' tyg.',
       bodyFatClamped: (enteredStr, usedStr) => 'Model prognozy masy ciała obsługuje tylko zawartość tkanki tłuszczowej w zakresie 5-60%; Twoje ' + enteredStr + ' zostało ograniczone do ' + usedStr + ' wyłącznie na potrzeby tego obliczenia (pozostałe wyniki na tej stronie nadal używają podanej przez Ciebie wartości).',
     },
 
@@ -297,9 +303,9 @@
     },
 
     nutrition: {
-      proteinRda: () => 'zalecana norma dla wieku (na kg masy ciała)',
-      proteinGoalWeight: () => 'na kg docelowej masy ciała (typowa konwencja przy BMI ≥ 30; trzeba śledzić masę beztłuszczową, nie tłuszczową)',
-      proteinCurrentWeight: () => 'na kg obecnej masy ciała',
+      proteinRda: () => 'masy ciała, zalecana norma dla wieku',
+      proteinGoalWeight: () => 'docelowej masy ciała (typowa konwencja przy BMI ≥ 30; trzeba śledzić masę beztłuszczową, nie tłuszczową)',
+      proteinCurrentWeight: () => 'obecnej masy ciała',
       proteinOlderNote: () => 'PROT-AGE zaleca co najmniej 1,0-1,2 g/kg dla zdrowych starszych dorosłych, więcej w chorobie.',
       proteinToddlerNote: () => 'Zalecane spożycie (RDA) IOM z 2005 r. dla wieku 1-3 lata podaje się zwykle jako 1,05 g/kg; niektóre tabele zaokrąglają je do 1,1 g/kg.',
       activityToddler: () => 'Co najmniej 180 minut dziennie zróżnicowanej aktywności fizycznej o dowolnej intensywności, rozłożonej w ciągu dnia – im więcej, tym lepiej. W tym wieku nie obowiązuje jeszcze konkretny próg aktywności umiarkowanej do dużej intensywności.',

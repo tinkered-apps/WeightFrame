@@ -257,7 +257,7 @@ ${table(['Ratio', 'Threshold'], [
 <li>Guideline diets: a deficit of ≥ 500 kcal/day, typically 1,200–1,500 kcal/day for women and 1,500–1,800 for men; 5–10% loss already brings meaningful health benefits. ${c(['jensen2014'])}</li>
 <li>Usual pace 0.5–1 kg (≈ 0.5–1% of body weight) per week; faster loss costs more lean mass. ${c(['nhlbi1998', 'helms2014'])}</li>
 <li>Below 800 kcal/day is a very-low-calorie diet: only with clinical supervision. ${c(['nice2025'])}</li>
-<li>Rapid loss raises gallstone risk; the app flags more than 1.5 kg (3.3 lb) per week. ${c(['niddkGallstones', 'weinsier1995'])}</li>
+<li>Rapid loss raises gallstone risk; the app flags more than 1.5 kg (3.3 lb) per week and never plans a faster pace on its own. ${c(['niddkGallstones', 'weinsier1995'])}</li>
 <li>Theoretical ceiling on energy released from fat: ~290 kJ (69 kcal) per kg of fat per day. Larger deficits draw more on lean tissue. ${c(['alpert2005'])}</li>
 <li>Milestones: 5% (metabolic benefits), 10% (e.g. fatty-liver resolution), ≥ 15 kg (type 2 diabetes remission in 86% in DiRECT). ${c(['jensen2014', 'vilargomez2015', 'lean2018'])}</li>
 </ul>`,

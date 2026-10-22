@@ -427,8 +427,8 @@
       'Metaanaliza i metaregresja · randomizowane badania trwające co najmniej 3 tygodnie, dotyczące treningu oporowego w deficycie',
     'Lifting while in a deficit keeps your strength, no differently from lifting with full energy available. But the meta-regression puts the deficit where resistance training stops adding lean mass at about 500 kcal a day – it is about lean-mass gains stalling, not about losing what training would otherwise have protected. It works alongside the protein target in Nutrition, not instead of it.':
       'Trening oporowy podczas deficytu pomaga utrzymać siłę, podobnie jak przy pełnej dostępności energii. Metaregresja wskazuje jednak, że przy deficycie około 500 kcal dziennie trening oporowy przestaje zwiększać masę beztłuszczową. Chodzi o zatrzymanie przyrostu, a nie o utratę tego, co trening w innych warunkach pomógłby zachować. Trening uzupełnia cel białkowy w sekcji „Odżywianie”, ale go nie zastępuje.',
-    'An energy deficit of ~500 kcal/day prevented gains in lean mass.':
-      'Deficyt energetyczny rzędu 500 kcal/dobę uniemożliwiał przyrost masy beztłuszczowej.',
+    '…an energy deficit of ~500 kcal · day⁻¹ prevented gains in LM [lean mass].':
+      '…deficyt energetyczny rzędu ~500 kcal/dobę uniemożliwiał przyrost LM [masy beztłuszczowej].',
 
     'What you burn without trying': 'Co spalasz bez dodatkowych ćwiczeń',
     'Moving about without calling it exercise': 'Codzienny ruch poza ćwiczeniami',
@@ -437,16 +437,16 @@
       'Badanie nad przekarmianiem · 16 dorosłych z prawidłową masą ciała · nadwyżka 1000 kcal na dobę przez 8 tygodni',
     'Fed the same surplus for the same eight weeks, some people burned much of it off by moving more without deciding to: posture, walking about, fidgeting. That swing ran from 98 kcal/day less to 692 kcal/day more, and it explained a ten-fold spread in how much fat they actually put on. The channel runs in reverse on a diet, where eating less quietly makes you move less.':
       'Podczas tych samych ośmiu tygodni z taką samą nadwyżką kalorii niektórzy spalali jej dużą część, nie planując dodatkowego ruchu: zmieniali postawę, chodzili i wiercili się. Różnica wynosiła od 98 kcal mniej do 692 kcal więcej na dobę i wyjaśniała dziesięciokrotną różnicę w faktycznym przyroście tłuszczu. Na diecie działa to w drugą stronę: mniejsze spożycie kalorii może po cichu ograniczać ruch.',
-    'Changes in NEAT accounted for the 10-fold differences in fat storage.':
-      'Zmiany NEAT odpowiadały za dziesięciokrotne różnice w odkładaniu tłuszczu.',
+    'Changes in NEAT accounted for the 10-fold differences in fat storage that occurred…':
+      'Zmiany NEAT odpowiadały za dziesięciokrotne różnice w odkładaniu tłuszczu, które wystąpiły…',
     'The same meals, four hours later': 'Te same posiłki, cztery godziny później',
     'later, nothing else changed': 'później, przy niezmienionych pozostałych warunkach',
     'Randomised crossover · 16 adults with overweight or obesity · meals, sleep, light and activity held identical':
       'Randomizowane badanie krzyżowe · 16 dorosłych z nadwagą lub otyłością · identyczne posiłki, czas snu, oświetlenie i aktywność',
     'Shifting identical meals about four hours later raised hunger, tilted the ghrelin-to-leptin ratio towards appetite, lowered waking energy expenditure and 24-hour core temperature, and moved fat-tissue gene expression away from releasing fat and towards storing it.':
       'Przesunięcie identycznych posiłków o około cztery godziny zwiększyło głód, przesunęło stosunek greliny do leptyny w stronę większego apetytu, obniżyło wydatek energetyczny podczas czuwania i dobową temperaturę głęboką ciała oraz zmieniło ekspresję genów tkanki tłuszczowej: zamiast uwalniania tłuszczu sprzyjała ona jego magazynowaniu.',
-    'Late eating increased hunger and decreased waketime energy expenditure.':
-      'Późniejsze jedzenie zwiększyło głód i obniżyło wydatek energetyczny podczas czuwania.',
+    'Late eating increased hunger… Furthermore, late eating decreased waketime energy expenditure…':
+      'Późne jedzenie zwiększyło głód… Ponadto późne jedzenie obniżyło wydatek energetyczny podczas czuwania…',
 
     'Whether you can see where you are': 'Czy wiesz, na czym stoisz',
     'Self-reported intake often runs below actual intake': 'Deklarowane spożycie kalorii często jest niższe od rzeczywistego',
@@ -455,23 +455,23 @@
       'Badanie metaboliczne · 10 dorosłych, którzy nie chudli przy raportowanych 1200 kcal na dobę · 14 dni kalorymetrii i wody podwójnie znakowanej',
     "This small group's metabolism turned out to be ordinary: total expenditure sat within 5% of what the equations predicted. Their food and activity records were the thing that was wrong, with intake under-reported by 47% and activity over-reported by 51%. It is one of the reasons a plan and a bathroom scale can disagree, alongside water, timing and measurement noise – a 10-person study does not establish how often it explains any given gap.":
       'Metabolizm tej niewielkiej grupy nie odbiegał od normy: całkowity wydatek energetyczny mieścił się w granicach 5% wartości przewidywanej przez równania. Błąd tkwił w zapisach jedzenia i aktywności: spożycie zaniżono o 47%, a aktywność zawyżono o 51%. To jeden z powodów, dla których plan i wskazania wagi łazienkowej mogą się nie zgadzać, obok wpływu wody, pory pomiaru i szumu pomiarowego. Badanie na 10 osobach nie pokazuje jednak, jak często to wyjaśnia konkretną rozbieżność.',
-    'Underreported their actual food intake by an average of 47 ± 16 percent.':
-      'Zaniżali w deklaracjach rzeczywiste spożycie jedzenia średnio o 47 ± 16%.',
+    '…underreported their actual food intake by an average (± SD) of 47 ± 16 percent…':
+      '…zaniżali w deklaracjach rzeczywiste spożycie jedzenia średnio (± SD) o 47 ± 16%…',
     'Logging often tracks with success more than logging carefully': 'Sukces wiąże się bardziej z częstotliwością zapisywania niż z dokładnością zapisów',
     'vs 1.7 entries a day': 'w porównaniu z 1,7 wpisu dziennie',
     '24-week online behavioural programme · 142 adults': '24-tygodniowy internetowy program zmiany zachowania · 142 osoby dorosłe',
     "Minutes spent recording did not separate the successful from the rest in this programme; how often they came back did. People who lost a tenth of their body weight or more opened their diary 2.7 times a day against 1.7 for everyone else – an association, not a controlled test of one against the other. It also gets cheaper with practice: 23 minutes a day in month one, 15 by month six.":
       'W tym programie liczba minut poświęconych na zapisywanie nie odróżniała osób, którym się udało, od pozostałych. Decydowało to, jak często wracały do dzienniczka. Osoby, które straciły co najmniej 10% masy ciała, otwierały go 2,7 raza dziennie, a pozostali 1,7 raza. To związek zaobserwowany w badaniu, a nie kontrolowane porównanie obu zachowań. Z czasem zapisywanie zajmowało też mniej czasu: 23 minuty dziennie w pierwszym miesiącu i 15 w szóstym.',
-    'The frequency of self-monitoring is significantly related to weight loss.':
-      'Częstość samokontroli wiąże się istotnie z utratą masy ciała.',
+    'The frequency of self-monitoring is significantly related to weight loss…':
+      'Częstość samokontroli wiąże się istotnie z utratą masy ciała…',
     'Weigh yourself often, but read the trend': 'Waż się często, ale obserwuj trend',
     'added to a programme': 'dołączone do programu',
     'Meta-analysis of randomised trials · 4 adding self-weighing to an existing programme':
       'Metaanaliza randomizowanych badań · 4 badania, w których do istniejącego programu dodano samodzielne ważenie',
     'Adding self-weighing and self-regulation to a weight-loss programme was worth an extra 1.7 kg (95% CI 0.8 to 2.6). On its own it did nothing measurable, so the scale is a feedback signal rather than a treatment. Day to day it mostly tracks water, as the first week above shows, which is why the weekly average is the number to read.':
       'Dodanie samodzielnego ważenia i samoregulacji do programu odchudzania wiązało się z dodatkową utratą 1,7 kg (95% CI 0,8–2,6). Samo ważenie nie dało mierzalnego efektu, więc waga jest sygnałem zwrotnym, a nie metodą leczenia. Wahania z dnia na dzień odzwierciedlają głównie wodę, jak pokazuje pierwszy tydzień powyżej. Dlatego warto obserwować średnią tygodniową.',
-    'Four trials added self-weighing to multi-component programmes: a difference of −1.7 kg.':
-      'W czterech badaniach do programów wieloskładnikowych dodano samodzielne ważenie; różnica wyniosła −1,7 kg.',
+    'Four trials added self-weighing/self-regulation techniques to multi-component programmes and resulted in a significant difference of −1.7 kg…':
+      'W czterech badaniach do programów wieloskładnikowych dodano techniki samodzielnego ważenia/samoregulacji, co dało istotną różnicę −1,7 kg…',
 
     // Errors
     'Check these details': 'Sprawdź te dane',
@@ -724,8 +724,8 @@
       'Typowe tempo to 0,5–1 kg (około 0,5–1% masy ciała) tygodniowo; szybsze tempo oznacza większą utratę masy beztłuszczowej. ',
     'Below 800 kcal/day is a very-low-calorie diet: only with clinical supervision. ':
       'Dieta poniżej 800 kcal dziennie jest dietą bardzo niskokaloryczną i wymaga nadzoru klinicznego. ',
-    'Rapid loss raises gallstone risk; the app flags more than 1.5 kg (3.3 lb) per week. ':
-      'Szybka utrata masy ciała zwiększa ryzyko kamicy żółciowej; aplikacja sygnalizuje tempo przekraczające 1,5 kg (3,3 funta) tygodniowo. ',
+    'Rapid loss raises gallstone risk; the app flags more than 1.5 kg (3.3 lb) per week and never plans a faster pace on its own. ':
+      'Szybka utrata masy ciała zwiększa ryzyko kamicy żółciowej; aplikacja sygnalizuje tempo przekraczające 1,5 kg (3,3 funta) tygodniowo i sama nigdy nie planuje szybszego. ',
     'Theoretical ceiling on energy released from fat: ~290 kJ (69 kcal) per kg of fat per day. Larger deficits draw more on lean tissue. ':
       'Teoretyczna granica energii uwalnianej z tłuszczu wynosi około 290 kJ (69 kcal) na kilogram tłuszczu dziennie. Większy deficyt w większym stopniu czerpie energię z masy beztłuszczowej. ',
     'Milestones: 5% (metabolic benefits), 10% (e.g. fatty-liver resolution), ≥ 15 kg (type 2 diabetes remission in 86% in DiRECT). ':
