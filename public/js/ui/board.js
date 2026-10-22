@@ -23,15 +23,7 @@
   const roll = (key, v, d, text) => `<span class="num" data-roll="${key}" data-v="${v}" data-d="${d}">${text}</span>`;
 
   const r10 = (v) => Math.round(v / 10) * 10;
-  /** Largest-remainder rounding: parts rounded to `d` decimals that still add up to the rounded
-   *  total shown beside them (10.1 + 2.9 + 1.0 = 14.0, never 13.9 or 14.1). */
-  function roundParts(values, d) {
-    const k = Math.pow(10, d), total = Math.round(values.reduce((a, b) => a + b, 0) * k);
-    const raw = values.map((v) => v * k), out = raw.map(Math.floor);
-    let left = total - out.reduce((a, b) => a + b, 0);
-    raw.map((v, i) => [v - Math.floor(v), i]).sort((a, b) => b[0] - a[0]).forEach(([, i]) => { if (left > 0) { out[i]++; left--; } });
-    return out.map((v) => v / k);
-  }
+  const roundParts = FH.stats.roundParts;
 
   const surface = (o, body) => `<article class="surface${o.cls ? ' ' + o.cls : ''}"${o.span ? ` data-span="${o.span}"` : ''}>${o.title ? `<header class="surface__head"><h3 class="surface__title">${o.title}</h3>${o.aside ? `<span class="surface__aside">${o.aside}</span>` : ''}</header>` : ''}${body}</article>`;
   const duo = (...parts) => { const p = parts.filter(Boolean); return p.length ? `<div class="duo${p.length === 1 ? ' duo--single' : ''}">${p.join('')}</div>` : ''; };

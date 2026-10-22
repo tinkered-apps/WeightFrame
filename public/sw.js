@@ -4,7 +4,7 @@
 // network-first, so a deploy shows up at once and the cache is the offline
 // fallback. CACHE carries APP_VERSION from js/ui/app.js; bump both together
 // (see AGENTS.md). tests/pwa.test.js keeps SHELL in step with public/.
-const CACHE = "weightframe-v1.05";
+const CACHE = "weightframe-v1.06";
 const SHELL = [
   "./",
   "privacy",

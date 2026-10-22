@@ -45,7 +45,10 @@
     kcal: (v) => Math.round(v).toLocaleString('en-GB'),
   };
 
-  /** @param opts.format  {mass(kg, digits), kcal(v)} used for any text the engine writes.
+  /** Fat, lean and water as text that adds up to the total, like the "What you will lose" card. */
+  const lossParts = (F, kgs) => (F.massParts ? F.massParts(kgs) : kgs.map((v) => F.mass(v)));
+
+  /** @param opts.format  {mass(kg, digits), massParts(kgs)?, kcal(v), units?} used for any text the engine writes.
    *  @param opts.t  locale text bundle from i18n-text.js (js/core/i18n-text.js); defaults to English. */
   function assess(input, opts = {}) {
     const F = opts.format || DEFAULT_FORMAT;
@@ -556,7 +559,7 @@
         // Eating more carbohydrate than before (e.g. alongside extra exercise) refills glycogen,
         // so water can rise while tissue is lost; say that instead of printing a negative loss.
         text: c.water > 0.05 ? T.story.compositionTextWaterUp(F.mass(tot), F.mass(-c.fat), F.mass(-c.lean), F.mass(c.water))
-          : T.story.compositionText(F.mass(tot), F.mass(-c.fat), F.mass(Math.max(0, -c.lean)), F.mass(Math.max(0, -c.water))),
+          : T.story.compositionText(F.mass(tot), ...lossParts(F, [-c.fat, Math.max(0, -c.lean), Math.max(0, -c.water)])),
         refs: ['hall2011', 'hall2007'] });
       // With more carbohydrate than before (e.g. extra exercise eaten back) glycogen refills
       // and the scale can rise in week one even while fat falls.
@@ -583,7 +586,7 @@
         refs: ['hall2011'] });
       if (plan.rule3500) {
         const diff = plan.days - plan.rule3500.daysToGoal;
-        s.push({ id: 'rule', title: T.story.ruleTitle(),
+        s.push({ id: 'rule', title: T.story.ruleTitle(F.units === 'imperial'),
           value: T.story.ruleValue(diff >= 0 ? '+' : '', Math.round(diff / 7)),
           text: T.story.ruleText(Math.round(plan.rule3500.daysToGoal / 7), Math.round(plan.days / 7)),
           refs: ['thomas2014', 'hall2011'] });

@@ -17,8 +17,8 @@
     // ---- energy.js: activity levels, BMR equation choice & summaries -------------------
     activity: {
       inactive: { label: 'Inactive', desc: 'Daily living only; mostly sitting, no regular exercise.' },
-      low: { label: 'Low active', desc: 'About 1 h of moderate activity (e.g. brisk walking) on top of daily living.' },
-      active: { label: 'Active', desc: 'Roughly 1-2 h of moderate activity or ~1 h including vigorous exercise daily.' },
+      low: { label: 'Low active', desc: 'About 30–60 min of moderate activity (e.g. brisk walking) on top of daily living.' },
+      active: { label: 'Active', desc: 'Roughly 1–2 h of moderate activity or ~1 h including vigorous exercise daily.' },
       veryActive: { label: 'Very active', desc: 'Physically demanding job or 2+ h of daily vigorous training.' },
     },
     bmrSummary: {
@@ -147,7 +147,7 @@
       activityToddler: () => 'At least 180 minutes a day of varied physical activity at any intensity, spread across the day – more is better. No specific moderate-to-vigorous target applies yet at this age.',
       activityPreschool: () => 'At least 180 minutes a day of varied physical activity, of which at least 60 minutes should be moderate-to-vigorous, spread across the day.',
       activityChild: () => 'An average of 60 minutes a day of moderate-to-vigorous activity, with vigorous and muscle-strengthening activity on at least 3 days a week.',
-      activityAdult: () => '150-300 min/week moderate or 75-150 min/week vigorous activity plus muscle-strengthening on 2+ days. For weight-loss maintenance, 200-300 min/week is associated with less regain.',
+      activityAdult: () => '150–300 min/week moderate or 75–150 min/week vigorous activity plus muscle-strengthening on 2+ days. For weight-loss maintenance, 200–300 min/week is associated with less regain.',
     },
 
     // ---- assess.js: "what to expect" insight cards ----------------------------------------
@@ -171,7 +171,7 @@
       maintenanceTitle: () => 'Your new maintenance intake',
       maintenanceValue: (kcalStr) => kcalStr + ' kcal/day',
       maintenanceText: (goalStr, deltaStr, todayStr) => 'To stay at ' + goalStr + ' you will need ≈' + deltaStr + ' kcal/day less than today\'s maintenance (' + todayStr + ' kcal).',
-      ruleTitle: () => 'Why "3500 kcal = 1 lb" misleads',
+      ruleTitle: (imperial) => (imperial ? 'Why "3,500 kcal = 1 lb" misleads' : 'Why "7,700 kcal = 1 kg" misleads'),
       ruleValue: (sign, weeks) => sign + weeks + ' weeks',
       ruleText: (ruleWeeks, modelWeeks) => 'The static rule predicts reaching goal in ' + ruleWeeks + ' weeks; the dynamic model says ' + modelWeeks + ' weeks, because expenditure falls as you lose weight. For long diets the rule badly over-promises.',
       halflifeTitle: () => 'Weight responds slowly',
@@ -186,8 +186,8 @@
   const PL = {
     activity: {
       inactive: { label: 'Mało aktywny', desc: 'Tylko codzienne czynności; głównie siedzenie, bez regularnych ćwiczeń.' },
-      low: { label: 'Lekko aktywny', desc: 'Około 1 godz. umiarkowanej aktywności (np. szybki spacer) ponad codzienne czynności.' },
-      active: { label: 'Aktywny', desc: 'Około 1-2 godz. umiarkowanej aktywności lub ~1 godz. z intensywnym wysiłkiem dziennie.' },
+      low: { label: 'Lekko aktywny', desc: 'Około 30–60 min umiarkowanej aktywności (np. szybki spacer) ponad codzienne czynności.' },
+      active: { label: 'Aktywny', desc: 'Około 1–2 godz. umiarkowanej aktywności lub ~1 godz. z intensywnym wysiłkiem dziennie.' },
       veryActive: { label: 'Bardzo aktywny', desc: 'Praca fizyczna lub 2+ godz. intensywnego treningu dziennie.' },
     },
     bmrSummary: {
@@ -311,7 +311,7 @@
       activityToddler: () => 'Co najmniej 180 minut dziennie zróżnicowanej aktywności fizycznej o dowolnej intensywności, rozłożonej w ciągu dnia – im więcej, tym lepiej. W tym wieku nie obowiązuje jeszcze konkretny próg aktywności umiarkowanej do dużej intensywności.',
       activityPreschool: () => 'Co najmniej 180 minut dziennie zróżnicowanej aktywności fizycznej, z czego co najmniej 60 minut powinno mieć umiarkowaną do dużej intensywność, rozłożonej w ciągu dnia.',
       activityChild: () => 'Średnio 60 minut dziennie aktywności o umiarkowanej do dużej intensywności, w tym intensywny wysiłek i ćwiczenia wzmacniające mięśnie co najmniej 3 dni w tygodniu.',
-      activityAdult: () => '150-300 min/tydzień umiarkowanej lub 75-150 min/tydzień intensywnej aktywności plus ćwiczenia wzmacniające mięśnie w 2+ dni. Dla utrzymania efektu odchudzania 200-300 min/tydzień wiąże się z mniejszym nawrotem masy.',
+      activityAdult: () => '150–300 min/tydzień umiarkowanej lub 75–150 min/tydzień intensywnej aktywności plus ćwiczenia wzmacniające mięśnie w 2+ dni. Dla utrzymania efektu odchudzania 200–300 min/tydzień wiąże się z mniejszym nawrotem masy.',
     },
 
     story: {
@@ -334,7 +334,7 @@
       maintenanceTitle: () => 'Twoja nowa podaż utrzymująca masę ciała',
       maintenanceValue: (kcalStr) => kcalStr + ' kcal/dzień',
       maintenanceText: (goalStr, deltaStr, todayStr) => 'Aby utrzymać ' + goalStr + ', będziesz potrzebować ≈' + deltaStr + ' kcal/dzień mniej niż dzisiejsza podaż utrzymująca (' + todayStr + ' kcal).',
-      ruleTitle: () => 'Dlaczego reguła „3500 kcal = 1 funt” myli',
+      ruleTitle: (imperial) => (imperial ? 'Dlaczego reguła „3500 kcal = 1 funt” myli' : 'Dlaczego reguła „7700 kcal = 1 kg” myli'),
       ruleValue: (sign, weeks) => sign + weeks + ' tyg.',
       ruleText: (ruleWeeks, modelWeeks) => 'Statyczna reguła przewiduje osiągnięcie celu w ' + ruleWeeks + ' tyg.; model dynamiczny mówi o ' + modelWeeks + ' tyg., ponieważ wydatek energetyczny spada wraz z utratą masy. Przy długich dietach reguła znacząco zawyża obietnicę.',
       halflifeTitle: () => 'Masa ciała reaguje powoli',
