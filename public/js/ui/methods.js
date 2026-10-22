@@ -81,7 +81,7 @@ ${formula(
     },
     {
       title: 'Resting metabolic rate: which equation when',
-      body: `<p>Every equation below predicts resting metabolic rate ("PPM" in Polish) from a handful of easy-to-measure inputs – the table shows exactly which inputs each one uses.</p>
+      body: `<p>Every equation below predicts resting metabolic rate (RMR) from a handful of easy-to-measure inputs – the table shows exactly which inputs each one uses.</p>
 ${formula(
   [
     ['W', 'weight, kg'],
@@ -115,7 +115,7 @@ ${formula(
 <li><b>Obesity</b>: use actual weight, not an "adjusted" weight, in these equations. ${c(['frankenfield2011'])} FFM-based equations are only as good as the body-fat number feeding them.</li>
 <li><b>Children → Schofield weight + height</b> (ESPGHAN/ESPEN, grade B). Harris-Benedict is unsuitable under 10 years. ${c(['espghan2005', 'schofield1985'])}</li>
 </ul>
-<p class="verdict">Every equation is shown side by side; you choose which one leads (median of all of them by default), and the reason it's a good fit is printed next to it. Expect ±10% individual error from any of them.</p>`,
+<p class="verdict">Every equation is shown side by side, and you choose which one leads. By default, Auto picks the equation the evidence supports for your profile and prints the reason next to it. Expect ±10% individual error from any of them.</p>`,
     },
     {
       title: 'Total daily energy expenditure (TDEE)',
@@ -206,7 +206,8 @@ ${formula(
   [
     ['B', 'BMI, kg/m²'],
     ['A', 'age, years'],
-    ['S (or s)', 'sex: 1 = male, 0 = female'],
+    ['S', 'sex in CUN-BAE: 1 = female, 0 = male'],
+    ['s', 'sex in Gallagher and Deurenberg: 1 = male, 0 = female'],
   ],
   [
     ['CUN-BAE', '−44.988 + 0.503A + 10.689S + 3.172B − 0.026B² + 0.181BS − 0.02BA − 0.005B²S + 0.00021B²A'],

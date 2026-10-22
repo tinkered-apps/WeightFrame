@@ -637,8 +637,8 @@
       'Obie referencje obliczamy, a Ty wybierasz, która ma być główna. Progi wskazówek klinicznych stosujemy na skali CDC, ponieważ wytyczne leczenia posługują się percentylami CDC.',
 
     'Resting metabolic rate: which equation when': 'Spoczynkowa przemiana materii: które równanie wybrać',
-    'Every equation below predicts resting metabolic rate ("PPM" in Polish) from a handful of easy-to-measure inputs – the table shows exactly which inputs each one uses.':
-      'Każde z poniższych równań szacuje spoczynkową przemianę materii (po polsku „PPM”) na podstawie kilku łatwych do zmierzenia danych. Tabela pokazuje dokładnie, których danych używa każde równanie.',
+    'Every equation below predicts resting metabolic rate (RMR) from a handful of easy-to-measure inputs – the table shows exactly which inputs each one uses.':
+      'Każde z poniższych równań szacuje spoczynkową przemianę materii (PPM) na podstawie kilku łatwych do zmierzenia danych. Tabela pokazuje dokładnie, których danych używa każde równanie.',
     'General adults, including obesity → Mifflin-St Jeor.</b> It predicted within ±10% of measured RMR in more non-obese and obese adults than Harris-Benedict, Owen or WHO, with the narrowest error range. ':
       'Dorośli, także osoby z otyłością → Mifflin-St Jeor.</b> Równanie to przewidywało PPM z dokładnością do ±10% u większej liczby dorosłych bez otyłości i z otyłością niż równania Harris-Benedicta, Owena i WHO; miało też najwęższy zakres błędu. ',
     'Athletes with measured body composition → Cunningham.</b> In a 2023 meta-analysis (29 studies, 1,430 athletes) Cunningham, Harris-Benedict and ten Haaf were unbiased; Mifflin-St Jeor, Owen and WHO under- or over-predicted. ':
@@ -653,8 +653,8 @@
       'Równania oparte na FFM są tak wiarygodne, jak podany wynik tkanki tłuszczowej.',
     'Children → Schofield weight + height</b> (ESPGHAN/ESPEN, grade B). Harris-Benedict is unsuitable under 10 years. ':
       'Dzieci → Schofield (masa ciała + wzrost)</b> (ESPGHAN/ESPEN, poziom B). Harris-Benedict nie nadaje się do stosowania u dzieci poniżej 10. roku życia. ',
-    "Every equation is shown side by side; you choose which one leads (median of all of them by default), and the reason it's a good fit is printed next to it. Expect ±10% individual error from any of them.":
-      'Wszystkie równania pokazujemy obok siebie; Ty wybierasz, które ma być główne (domyślnie mediana wszystkich), a powód, dla którego pasuje, wyświetlamy obok. Każde z nich może dawać indywidualny błąd rzędu ±10%.',
+    "Every equation is shown side by side, and you choose which one leads. By default, Auto picks the equation the evidence supports for your profile and prints the reason next to it. Expect ±10% individual error from any of them.":
+      'Wszystkie równania pokazujemy obok siebie, a Ty wybierasz, które ma być główne. Domyślnie tryb Automatycznie wybiera równanie najlepiej uzasadnione badaniami dla Twojego profilu i wyświetla obok powód tego wyboru. Każde z nich może dawać indywidualny błąd rzędu ±10%.',
 
     'Total daily energy expenditure (TDEE)': 'Całkowity dzienny wydatek energetyczny (TDEE)',
     'Primary estimate: the <b>National Academies 2023</b> equations, fitted directly to doubly-labelled-water measurements of free-living energy expenditure. ':

@@ -30,6 +30,8 @@
     massVal(kg) { return units === 'metric' ? kg : kg / LB; },
     massUnit() { return units === 'metric' ? 'kg' : 'lb'; },
     mass(kg, d = 1) { return fmt.n(fmt.massVal(kg), d) + ' ' + fmt.massUnit(); },
+    // parts of one total, rounded so they add up to it (see stats.roundParts)
+    massParts(kgs, d = 1) { return FH.stats.roundParts(kgs.map(fmt.massVal), d).map((v) => fmt.n(v, d) + ' ' + fmt.massUnit()); },
     massDelta(kg, d = 1) { return (kg > 0 ? '+' : kg < 0 ? '−' : '') + fmt.n(Math.abs(fmt.massVal(kg)), d) + ' ' + fmt.massUnit(); },
     circ(cm, d = 1) { return units === 'metric' ? fmt.n(cm, d) + ' cm' : fmt.n(cm / IN, d) + ' in'; },
     height(cm) {

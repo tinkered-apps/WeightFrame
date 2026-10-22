@@ -134,8 +134,8 @@
 
   const ACTIVITY = {
     inactive: { label: 'Inactive', desc: 'Daily living only; mostly sitting, no regular exercise.' },
-    low: { label: 'Low active', desc: 'About 1 h of moderate activity (e.g. brisk walking) on top of daily living.' },
-    active: { label: 'Active', desc: 'Roughly 1-2 h of moderate activity or ~1 h including vigorous exercise daily.' },
+    low: { label: 'Low active', desc: 'About 30–60 min of moderate activity (e.g. brisk walking) on top of daily living.' },
+    active: { label: 'Active', desc: 'Roughly 1–2 h of moderate activity or ~1 h including vigorous exercise daily.' },
     veryActive: { label: 'Very active', desc: 'Physically demanding job or 2+ h of daily vigorous training.' },
   };
 

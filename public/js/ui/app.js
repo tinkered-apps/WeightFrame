@@ -4,7 +4,7 @@
   const { fmt } = FH;
   const $ = (id) => document.getElementById(id);
   // Shown in the footer. public/sw.js names its cache after it; bump both together (see AGENTS.md).
-  const APP_VERSION = '1.05';
+  const APP_VERSION = '1.06';
   const STORE = 'weightframe.v1';
   const THEME_STORE = 'weightframe.theme';
   const DISCLAIMER_STORE = 'weightframe.disclaimerDismissed';
@@ -325,7 +325,7 @@
     syncVisibility();
     FH.charts.hideTip();
     const input = toInput();
-    const r = FH.assess.assess(input, { format: { mass: fmt.mass, kcal: fmt.kcal }, t: FH.i18nText.get(state.locale) });
+    const r = FH.assess.assess(input, { format: { mass: fmt.mass, massParts: fmt.massParts, kcal: fmt.kcal, units: fmt.units }, t: FH.i18nText.get(state.locale) });
     lastResult = r;
     const board = $('board');
     FH.chartWidth = board.clientWidth - 40;

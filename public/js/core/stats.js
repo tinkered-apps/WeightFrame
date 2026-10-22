@@ -91,5 +91,15 @@
     return v.length % 2 ? v[m] : (v[m - 1] + v[m]) / 2;
   }
 
-  return { normCdf, normInv, lmsZ, lmsValue, interpRows, clamp, median };
+  /** Largest-remainder rounding: parts rounded to `d` decimals that still add up to the rounded
+   *  total shown beside them (10.1 + 2.9 + 1.0 = 14.0, never 13.9 or 14.1). */
+  function roundParts(values, d) {
+    const k = Math.pow(10, d), total = Math.round(values.reduce((a, b) => a + b, 0) * k);
+    const raw = values.map((v) => v * k), out = raw.map(Math.floor);
+    let left = total - out.reduce((a, b) => a + b, 0);
+    raw.map((v, i) => [v - Math.floor(v), i]).sort((a, b) => b[0] - a[0]).forEach(([, i]) => { if (left > 0) { out[i]++; left--; } });
+    return out.map((v) => v / k);
+  }
+
+  return { normCdf, normInv, lmsZ, lmsValue, interpRows, clamp, median, roundParts };
 });
