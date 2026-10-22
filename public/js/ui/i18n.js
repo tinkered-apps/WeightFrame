@@ -246,8 +246,8 @@
     'Muscle, organs, bone, water': 'Mięśnie, narządy, kości, woda',
     'Fat mass index': 'Wskaźnik masy tłuszczowej',
     'Fat-free mass index': 'Wskaźnik masy beztłuszczowej',
-    'Fat-free mass index (height-normalised) rarely exceeds ~25 in drug-free men; typical values are ~17–21 for men and ~14–17 for women.':
-      'Wskaźnik masy beztłuszczowej (znormalizowany względem wzrostu) rzadko przekracza ~25 u mężczyzn nieprzyjmujących środków dopingujących; typowe wartości to ~17–21 u mężczyzn i ~14–17 u kobiet.',
+    'Fat-free mass index (height-normalised) rarely exceeds ~25 in drug-free men.':
+      'Wskaźnik masy beztłuszczowej (znormalizowany względem wzrostu) rzadko przekracza ~25 u mężczyzn nieprzyjmujących środków dopingujących.',
     'Not enough data.': 'Za mało danych.',
     // Body-fat estimator names/notes (anthro.js ESTIMATORS, static regardless of locale)
     'US Navy (circumferences)': 'US Navy (obwody)',

@@ -150,10 +150,16 @@
     </article>`;
   }
 
+  /** Sources of the body-fat value used across the page: the estimators its median came from,
+   *  none when the person entered a measurement. */
+  const bodyFatRefs = (r) => r.bodyFat.basis === 'measured' ? []
+    : r.bodyFat.estimates.filter((e) => e.kind === r.bodyFat.basis).flatMap((e) => e.refs);
+
   /** "Where you stand today": body composition then energy needs, always the same 4 readings. */
   function conditionsAdult(r) {
     const e = r.energy, b = e.bmr, t = r.bmiClass.thresholds;
     const bf = r.bodyFat.consensus;
+    const bfRefs = bodyFatRefs(r).concat(r.fatClass ? r.fatClass.refs : []);
     const bfBasis = bf ? (r.bodyFat.basis === 'measured' ? 'Measured' : r.bodyFat.basis === 'circumference' ? 'Estimated from your measurements' : 'Estimated from BMI, age & sex') : 'Add waist and neck for an estimate';
     const maintHint = 'From the National Academies 2023 equation, fitted to about 6,500 doubly labelled-water measurements – the gold-standard method for free-living energy expenditure.';
 
@@ -174,7 +180,7 @@
       cond({ label: 'BMI', value: roll('bmi', +r.bmi.toFixed(1), 1, fmt.n(r.bmi, 1)), unit: 'kg/m²', level: r.bmiClass.level, gauge: bmiGauge,
         note: fmt.pill(r.bmiClass.label, r.bmiClass.level) + ' ' + c(r.bmiClass.refs) }),
       cond({ label: 'Body fat', value: bf ? roll('bf', +bf.toFixed(1), 1, fmt.n(bf, 1)) : '–', unit: bf ? '%' : '', level: r.fatClass ? r.fatClass.level : null, gauge: bfGauge,
-        note: (r.fatClass ? fmt.pill(r.fatClass.label, r.fatClass.level) + ' ' : '') + `<span class="cond__basis">${bfBasis}</span>` }),
+        note: (r.fatClass ? fmt.pill(r.fatClass.label, r.fatClass.level) + ' ' : '') + `<span class="cond__basis">${bfBasis}</span> ${c(bfRefs)}` }),
       cond({ label: 'Resting burn', value: roll('bmr', Math.round(b.primary.value / 10) * 10, 0, fmt.kcal(b.primary.value)), unit: 'kcal/day', panel: 'bmr', gauge: restGauge,
         note: `<span><b>${fmt.n(restShare)}%</b> of your daily burn · ${esc(b.primary.name)} ${c(b.primary.refs)}</span>` }),
       cond({ label: 'Maintenance', value: roll('tdee', Math.round(e.tdee.primary / 10) * 10, 0, fmt.kcal(e.tdee.primary)), unit: 'kcal/day', tip: maintHint, gauge: maintGauge,
@@ -301,16 +307,17 @@
     let strip = '';
     if (comp) {
       const cell = (label, value, unit, note) => `<div class="strip__cell"><span class="strip__label">${label}</span><span class="strip__value">${value}${unit ? `<small>${unit}</small>` : ''}</span>${note ? `<span class="strip__note">${note}</span>` : ''}</div>`;
+      const bfCite = c(bodyFatRefs(r));
       const cells = [
-        cell('Fat mass', fmt.n(fmt.massVal(comp.fatMassKg), 1), fmt.massUnit()),
-        cell('Fat-free mass', fmt.n(fmt.massVal(comp.fatFreeMassKg), 1), fmt.massUnit(), 'Muscle, organs, bone, water'),
+        cell('Fat mass', fmt.n(fmt.massVal(comp.fatMassKg), 1), fmt.massUnit(), bfCite),
+        cell('Fat-free mass', fmt.n(fmt.massVal(comp.fatFreeMassKg), 1), fmt.massUnit(), 'Muscle, organs, bone, water ' + bfCite),
       ];
       if (comp.fmiClass) cells.push(cell('Fat mass index', fmt.n(comp.fmi, 1), 'kg/m²', fmt.pill(comp.fmiClass.label, comp.fmiClass.level) + ' ' + c(['kelly2009'])));
       cells.push(cell('Fat-free mass index', fmt.n(comp.ffmiNormalized, 1), 'kg/m²', c(['kouri1995'])));
       const hr = r.healthyRange, range = r.story.find((x) => x.id === 'range');
       if (hr && range) cells.push(cell(esc(range.title), `${fmt.n(fmt.massVal(hr.minKg), 1)}–${fmt.n(fmt.massVal(hr.maxKg), 1)}`, fmt.massUnit(), c(range.refs)));
       strip = `<div class="strip">${cells.join('')}</div>
-        <p class="small muted">Fat-free mass index (height-normalised) rarely exceeds ~25 in drug-free men; typical values are ~17–21 for men and ~14–17 for women.</p>`;
+        <p class="small muted">Fat-free mass index (height-normalised) rarely exceeds ~25 in drug-free men. ${c(['kouri1995'])}</p>`;
     }
     const verdict = `<div class="verdict">${I('target', 'verdict__icon')}<div><p><b>Excess body fat?</b> ${esc(r.adiposity.text)} ${c(r.adiposity.refs)}</p>
       <p class="small muted">The 2025 Lancet Commission on clinical obesity asks for BMI to be confirmed by a waist-based measure or body-fat measurement before calling it obesity.</p></div></div>`;
