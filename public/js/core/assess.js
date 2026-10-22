@@ -17,6 +17,7 @@
   const GAIN_SURPLUS_MAX = 500; // kcal/day; the most the app picks on its own for weight gain
   const MIN_FAT_SHARE = 0.02; // a projection whose fat mass drops below 2% of today's weight is not shown
   const MIN_PROJECTED_BMI = 15; // nor one that takes BMI below 15
+  const MAX_LOSS_RATE = 1.5; // kg/week; faster loss raises gallstone risk (Weinsier 1995)
 
   function validate(p) {
     const errors = [];
@@ -209,6 +210,20 @@
     if (mode !== 'intake' && mode !== 'maintain' && lossKg > 0) {
       const floor = p.sex === 'female' ? 1200 : 1500;
       if (intake < floor) intake = floor;
+      // Nor a pace the app would then flag for gallstone risk: raise the intake until the steady
+      // rate (days 14-56, as in safetyFlags) stays at or under MAX_LOSS_RATE.
+      const rate = (ei) => {
+        const s = hall.simulate(model, { intake: hall.constant(ei), days: 56, extraActivity: extra, stopWhen: (o) => o.weight[o.weight.length - 1] <= goal });
+        return steadyRate(s.weight, s.weight.length - 1);
+      };
+      if (rate(intake) > MAX_LOSS_RATE) {
+        let lo = intake, hi = EI0 + extra;
+        for (let i = 0; i < 30; i++) {
+          const mid = (lo + hi) / 2;
+          if (rate(mid) > MAX_LOSS_RATE) lo = mid; else hi = mid;
+        }
+        intake = hi;
+      }
     }
     // No guideline sets a pace for gaining weight, so the app never picks more than a modest
     // surplus over today's expenditure (including extra exercise) on its own.
@@ -259,7 +274,9 @@
       } else if (requestedDays != null && days > requestedDays * 1.1 + 3 && (lossKg > 0 || mode === 'weeks')) {
         // The goal itself is reachable at this intake, just not by the deadline that was asked
         // for (e.g. bisection was pushed to ~0 kcal/day trying to hit a too-tight deadline).
-        const text = lossKg > 0 ? T.flags.deadlineExtended(requestedDays, days) : T.flags.deadlineExtendedGain(requestedDays, days);
+        // Only 'weeks' mode has a date the person chose; a pace mode only implied one.
+        const text = lossKg <= 0 ? T.flags.deadlineExtendedGain(requestedDays, days)
+          : mode === 'weeks' ? T.flags.deadlineExtended(requestedDays, days) : T.flags.paceExtended(requestedDays, days);
         out.flags.push({ level: 'warn', text, refs: ['hall2011'] });
       }
       if (gainCapped && mode !== 'weeks') out.flags.push({ level: 'info', text: T.flags.gainCapped(), refs: [] });
@@ -320,12 +337,7 @@
     // First week & rates.
     const w7 = Math.min(7, endIdx);
     out.firstWeek = { total: diet.weight[w7] - p.weightKg, fat: diet.fat[w7] - model.F0 };
-    // Window for the "steady" rate: day 14-56, skipping the water-heavy first fortnight. A plan
-    // that ends at or before day 14 (e.g. an unreachable goal cut short) has no such window -
-    // fall back to its whole span rather than silently reporting zero.
-    const a = Math.min(14, endIdx), bIdx = Math.min(56, endIdx);
-    out.steadyRateKgPerWeek = bIdx > a ? (diet.weight[a] - diet.weight[bIdx]) / ((bIdx - a) / 7)
-      : endIdx > 0 ? (diet.weight[0] - diet.weight[endIdx]) / (endIdx / 7) : 0;
+    out.steadyRateKgPerWeek = steadyRate(diet.weight, endIdx);
     out.avgRateKgPerWeek = days ? (p.weightKg - diet.weight[endIdx]) / (days / 7) : null;
 
     // Milestones.
@@ -344,6 +356,15 @@
 
     out.flags = out.flags.concat(safetyFlags(p, res, out, model, F, T));
     return out;
+  }
+
+  // Loss rate in kg/week over day 14-56, skipping the water-heavy first fortnight. A plan that
+  // ends at or before day 14 (e.g. an unreachable goal cut short) has no such window - fall
+  // back to its whole span rather than silently reporting zero.
+  function steadyRate(weight, endIdx) {
+    const a = Math.min(14, endIdx), b = Math.min(56, endIdx);
+    return b > a ? (weight[a] - weight[b]) / ((b - a) / 7)
+      : endIdx > 0 ? (weight[0] - weight[endIdx]) / (endIdx / 7) : 0;
   }
 
   function continueSim(model, diet, maintIntake, extraDays, extra) {
@@ -405,7 +426,7 @@
         f.push({ level: 'warn', text: T.flags.belowFloor(F.kcal(floor) + ' kcal/day', p.sex), refs: ['jensen2014'] });
       }
       const pctRate = out.steadyRateKgPerWeek / p.weightKg * 100;
-      if (out.steadyRateKgPerWeek > 1.5) {
+      if (out.steadyRateKgPerWeek > MAX_LOSS_RATE) {
         f.push({ level: 'danger', text: T.flags.gallstoneRisk(F.mass(out.steadyRateKgPerWeek, 2)), refs: ['niddkGallstones', 'weinsier1995'] });
       } else if (pctRate > 1.0) {
         f.push({ level: 'warn', text: T.flags.fastPace(pctRate.toFixed(1) + '%'), refs: ['nhlbi1998', 'helms2014'] });
@@ -415,7 +436,7 @@
         f.push({ level: 'info', text: T.flags.alpertCeiling(F.kcal(out.deficit) + ' kcal/day', F.kcal(alpertMax) + ' kcal/day'), refs: ['alpert2005'] });
       }
       if (out.intake < res.energy.bmr.primary.value) {
-        f.push({ level: 'info', text: T.flags.belowBmr(), refs: ['jensen2014'] });
+        f.push({ level: 'info', text: T.flags.belowBmr(res.bmi >= res.bmiClass.thresholds.obese), refs: ['jensen2014'] });
       }
       const leanShare = out.change.lean / out.change.total;
       if (leanShare > 0.3) {

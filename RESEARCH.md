@@ -319,7 +319,9 @@ meta-analysis (Ashwell 2012).
 - Pace: 0.5–1 kg (≈ 0.5–1% of body weight) per week (NHLBI 1998); the app's presets are 0.5,
   0.75 and 1.0% of body weight per week, converted to an intake by the dynamic model.
 - Below 800 kcal/day = very-low-calorie diet, only under clinical supervision (NICE NG246).
-- Rapid loss raises gallstone risk (NIDDK); flagged above 1.5 kg (3.3 lb) per week.
+- Rapid loss raises gallstone risk (NIDDK); flagged above 1.5 kg (3.3 lb) per week. When the app
+  picks the intake itself (a pace preset or a date), it raises the intake until the steady rate
+  stays at or under that, as it does for the 1,200 / 1,500 kcal guideline minimum.
 - No weight-loss plan is made toward a goal BMI below 18.5 (WHO 2000 underweight); the app shows
   a warning instead. Maintenance and gain projections still run.
 - Below BMI 16 (severe thinness) no plan of any kind is made: NICE CG32 lists BMI < 16 as a

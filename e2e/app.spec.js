@@ -63,6 +63,8 @@ test('"More below" scrolls the desktop form to its end and then hides', async ({
   test.skip(testInfo.project.name !== 'desktop');
   await page.setViewportSize({ width: 1920, height: 945 });
   await page.goto('/');
+  // Open Measurements so the form is taller than the rail whatever the sample's pace hint says.
+  await page.locator('#measure summary').click();
   const more = page.locator('#railMore');
   await expect(more).toBeVisible();
   for (let i = 0; i < 4 && await more.isVisible(); i++) await more.click({ force: true });

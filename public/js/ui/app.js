@@ -4,7 +4,7 @@
   const { fmt } = FH;
   const $ = (id) => document.getElementById(id);
   // Shown in the footer. public/sw.js names its cache after it; bump both together (see AGENTS.md).
-  const APP_VERSION = '1.03';
+  const APP_VERSION = '1.04';
   const STORE = 'weightframe.v1';
   const THEME_STORE = 'weightframe.theme';
   const DISCLAIMER_STORE = 'weightframe.disclaimerDismissed';
@@ -16,7 +16,7 @@
     units: 'metric', locale: 'en', sex: 'male', ageYears: 35, ageMonths: 0, heightCm: 180, weightKg: 98,
     activity: 'low', ethnicity: 'other', waistCm: null, hipCm: null, neckCm: null,
     bodyFatPct: null, athlete: false, pregnant: false, childReference: 'cdc', bmrChoice: '',
-    goalWeightKg: 80, paceMode: 'fast', weeks: 24, intakeKcal: 1600, extraActivityKcal: 0,
+    goalWeightKg: 80, paceMode: 'moderate', weeks: 24, intakeKcal: 1600, extraActivityKcal: 0,
   };
   const NUM_KEYS = ['ageYears', 'ageMonths', 'heightCm', 'weightKg', 'waistCm', 'hipCm', 'neckCm', 'bodyFatPct', 'goalWeightKg', 'weeks', 'intakeKcal', 'extraActivityKcal'];
   const BOOL_KEYS = ['athlete', 'pregnant'];
