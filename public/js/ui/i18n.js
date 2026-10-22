@@ -175,14 +175,14 @@
       'Obliczone za pomocą dynamicznego modelu NIH (Hall 2011), który uwzględnia spowolnienie przemiany materii w miarę utraty masy ciała, a nie stałą regułę kalorii na funt.',
     "The gap between today's maintenance and your planned intake. The model narrows this gap on its own as your body adapts, even at a constant intake.":
       'Różnica między dzisiejszym zapotrzebowaniem na utrzymanie masy ciała a planowanym spożyciem kalorii. Model sam ją zmniejsza w miarę adaptacji organizmu, nawet przy stałym spożyciu.',
-    'From the National Academies 2023 equation, fitted to about 6,500 doubly labelled-water measurements – the gold-standard method for free-living energy expenditure.':
+    'From the National Academies 2023 equation, fitted to about 6,500 doubly labeled-water measurements – the gold-standard method for free-living energy expenditure.':
       'Na podstawie równania National Academies z 2023 r., dopasowanego do około 6500 pomiarów metodą podwójnie znakowanej wody, uznawaną za złoty standard pomiaru wydatku energetycznego w codziennym życiu.',
     'Guideline diets stay under about 1% of body weight a week. Faster loss raises the risk of gallstones and losing lean tissue along with fat.':
       'Zalecane diety zakładają zwykle tempo utraty masy ciała nieprzekraczające około 1% tygodniowo. Szybsza utrata zwiększa ryzyko kamicy żółciowej i utraty masy beztłuszczowej wraz z tłuszczem.',
     "Lower than today's maintenance because a lighter body burns less energy – from the same NIH dynamic model (Hall 2011) used for your projection.":
       'Niższe od dzisiejszego zapotrzebowania na utrzymanie masy ciała, ponieważ lżejszy organizm zużywa mniej energii. To ten sam dynamiczny model NIH (Hall 2011), który wykorzystano do prognozy.',
     'Why this equation?': 'Dlaczego to równanie?',
-    'The ±1 RMSE spread is expected to bracket about two-thirds of people with your profile, based on the 2023 equations fitted to ~6,500 doubly labelled-water measurements – the gold-standard method for free-living expenditure.':
+    'The ±1 RMSE spread is expected to bracket about two-thirds of people with your profile, based on the 2023 equations fitted to ~6,500 doubly labeled-water measurements – the gold-standard method for free-living expenditure.':
       'Zakres ±1 RMSE powinien obejmować około dwie trzecie osób o Twoim profilu. Opiera się na równaniach z 2023 r. dopasowanych do około 6500 pomiarów metodą podwójnie znakowanej wody, uznawaną za złoty standard pomiaru wydatku energetycznego w codziennym życiu.',
     'An independent estimate – resting metabolic rate times an activity multiplier (PAL) – as a sanity check against the equation above.':
       'Niezależne oszacowanie, czyli spoczynkowa przemiana materii pomnożona przez mnożnik aktywności (PAL), służące do sprawdzenia powyższego równania.',
@@ -246,7 +246,7 @@
     'Muscle, organs, bone, water': 'Mięśnie, narządy, kości, woda',
     'Fat mass index': 'Wskaźnik masy tłuszczowej',
     'Fat-free mass index': 'Wskaźnik masy beztłuszczowej',
-    'Fat-free mass index (height-normalised) rarely exceeds ~25 in drug-free men; typical values are ~17–21 for men and ~14–17 for women.':
+    'Fat-free mass index (height-normalized) rarely exceeds ~25 in drug-free men; typical values are ~17–21 for men and ~14–17 for women.':
       'Wskaźnik masy beztłuszczowej (znormalizowany względem wzrostu) rzadko przekracza ~25 u mężczyzn nieprzyjmujących środków dopingujących; typowe wartości to ~17–21 u mężczyzn i ~14–17 u kobiet.',
     'Not enough data.': 'Za mało danych.',
     // Body-fat estimator names/notes (anthro.js ESTIMATORS, static regardless of locale)
@@ -344,7 +344,7 @@
     'per day': 'na dzień',
     'Protein': 'Białko',
     'Lean athletes in a deficit ': 'Szczupli, wytrenowani sportowcy w deficycie ',
-    'Fibre': 'Błonnik',
+    'Fiber': 'Błonnik',
     'Adequate Intake for your age & sex; the 14 g/1,000 kcal rule of thumb gives ≈': 'Wystarczające spożycie dla Twojego wieku i płci; przybliżenie 14 g na 1000 kcal daje ≈',
     ' g at your calorie level ': ' g przy Twoim poziomie kalorii ',
     'Water': 'Woda',
@@ -391,7 +391,7 @@
     'Ultra-processed food, calories and macros matched': 'Żywność ultraprzetworzona, przy takiej samej liczbie kalorii i proporcji makroskładników',
     'Two weeks on each menu, inpatient, eating as much as you like.': 'Po dwa tygodnie na każdym jadłospisie, w warunkach szpitalnych; uczestnicy jedli bez ograniczeń.',
     'Sleeping 1.2 hours longer, if you sleep under 6.5': 'Sen dłuższy o 1,2 godziny przy czasie snu krótszym niż 6,5 godziny',
-    'Intake measured by doubly labelled water, not by a food diary.': 'Spożycie ocenione metodą podwójnie znakowanej wody, a nie na podstawie dzienniczka żywieniowego.',
+    'Intake measured by doubly labeled water, not by a food diary.': 'Spożycie ocenione metodą podwójnie znakowanej wody, a nie na podstawie dzienniczka żywieniowego.',
     '500 ml of water before each of three meals': '500 ml wody przed każdym z trzech posiłków',
     'Measured as 43 kcal at one test meal, counted three times; it had faded by week 12.':
       'W jednym posiłku testowym zmierzono 43 kcal i przemnożono wynik przez trzy; do 12. tygodnia efekt zanikł.',
@@ -414,7 +414,7 @@
     'What the weight is made of': 'Z czego składa się utrata masy ciała',
     'Short sleep moves the loss from fat to lean tissue': 'Krótki sen zmniejsza udział tłuszczu w utraconej masie',
     'less of it fat': 'mniej tłuszczu w utraconej masie',
-    'Randomised crossover · 10 adults with overweight · 14 days on one reduced-calorie diet':
+    'Randomized crossover · 10 adults with overweight · 14 days on one reduced-calorie diet':
       'Randomizowane badanie krzyżowe · 10 dorosłych z nadwagą · 14 dni na tej samej diecie redukcyjnej',
     'Same diet, and roughly the same 3 kg gone either way. On 5.5 hours in bed instead of 8.5, only 0.6 kg of that was fat instead of 1.4 kg, while lean-tissue loss rose from 1.5 kg to 2.4 kg. Hunger and ghrelin were higher and less fat was burned for fuel.':
       'Ta sama dieta i mniej więcej te same 3 kg utraconej masy w obu wariantach. Przy 5,5 godziny w łóżku zamiast 8,5 tylko 0,6 kg stanowił tłuszcz, a nie 1,4 kg; utrata masy beztłuszczowej wzrosła z 1,5 kg do 2,4 kg. Uczestnicy odczuwali większy głód i mieli wyższy poziom greliny, a ich organizm spalał mniej tłuszczu jako paliwa.',
@@ -423,7 +423,7 @@
     'The same direction shows up over years, not just weeks: among 68,183 women followed for 16 years, those sleeping 5 hours or less gained 1.14 kg more than the 7-hour sleepers.':
       'Ten sam kierunek widać w skali lat, nie tylko tygodni: wśród 68 183 kobiet obserwowanych przez 16 lat kobiety śpiące 5 godzin lub krócej przytyły o 1,14 kg więcej niż te śpiące 7 godzin.',
     'Past about 500 kcal a day, training stops adding lean mass': 'Powyżej deficytu około 500 kcal na dobę trening przestaje zwiększać masę beztłuszczową',
-    'Meta-analysis and meta-regression · randomised trials of 3 weeks or more of resistance training in a deficit':
+    'Meta-analysis and meta-regression · randomized trials of 3 weeks or more of resistance training in a deficit':
       'Metaanaliza i metaregresja · randomizowane badania trwające co najmniej 3 tygodnie, dotyczące treningu oporowego w deficycie',
     'Lifting while in a deficit keeps your strength, no differently from lifting with full energy available. But the meta-regression puts the deficit where resistance training stops adding lean mass at about 500 kcal a day – it is about lean-mass gains stalling, not about losing what training would otherwise have protected. It works alongside the protein target in Nutrition, not instead of it.':
       'Trening oporowy podczas deficytu pomaga utrzymać siłę, podobnie jak przy pełnej dostępności energii. Metaregresja wskazuje jednak, że przy deficycie około 500 kcal dziennie trening oporowy przestaje zwiększać masę beztłuszczową. Chodzi o zatrzymanie przyrostu, a nie o utratę tego, co trening w innych warunkach pomógłby zachować. Trening uzupełnia cel białkowy w sekcji „Odżywianie”, ale go nie zastępuje.',
@@ -441,7 +441,7 @@
       'Zmiany NEAT odpowiadały za dziesięciokrotne różnice w odkładaniu tłuszczu, które wystąpiły…',
     'The same meals, four hours later': 'Te same posiłki, cztery godziny później',
     'later, nothing else changed': 'później, przy niezmienionych pozostałych warunkach',
-    'Randomised crossover · 16 adults with overweight or obesity · meals, sleep, light and activity held identical':
+    'Randomized crossover · 16 adults with overweight or obesity · meals, sleep, light and activity held identical':
       'Randomizowane badanie krzyżowe · 16 dorosłych z nadwagą lub otyłością · identyczne posiłki, czas snu, oświetlenie i aktywność',
     'Shifting identical meals about four hours later raised hunger, tilted the ghrelin-to-leptin ratio towards appetite, lowered waking energy expenditure and 24-hour core temperature, and moved fat-tissue gene expression away from releasing fat and towards storing it.':
       'Przesunięcie identycznych posiłków o około cztery godziny zwiększyło głód, przesunęło stosunek greliny do leptyny w stronę większego apetytu, obniżyło wydatek energetyczny podczas czuwania i dobową temperaturę głęboką ciała oraz zmieniło ekspresję genów tkanki tłuszczowej: zamiast uwalniania tłuszczu sprzyjała ona jego magazynowaniu.',
@@ -451,7 +451,7 @@
     'Whether you can see where you are': 'Czy wiesz, na czym stoisz',
     'Self-reported intake often runs below actual intake': 'Deklarowane spożycie kalorii często jest niższe od rzeczywistego',
     'under-reported': 'zaniżonego spożycia w raportach',
-    'Metabolic study · 10 adults who could not lose weight on a reported 1,200 kcal/day · 14 days of calorimetry and doubly labelled water':
+    'Metabolic study · 10 adults who could not lose weight on a reported 1,200 kcal/day · 14 days of calorimetry and doubly labeled water':
       'Badanie metaboliczne · 10 dorosłych, którzy nie chudli przy raportowanych 1200 kcal na dobę · 14 dni kalorymetrii i wody podwójnie znakowanej',
     "This small group's metabolism turned out to be ordinary: total expenditure sat within 5% of what the equations predicted. Their food and activity records were the thing that was wrong, with intake under-reported by 47% and activity over-reported by 51%. It is one of the reasons a plan and a bathroom scale can disagree, alongside water, timing and measurement noise – a 10-person study does not establish how often it explains any given gap.":
       'Metabolizm tej niewielkiej grupy nie odbiegał od normy: całkowity wydatek energetyczny mieścił się w granicach 5% wartości przewidywanej przez równania. Błąd tkwił w zapisach jedzenia i aktywności: spożycie zaniżono o 47%, a aktywność zawyżono o 51%. To jeden z powodów, dla których plan i wskazania wagi łazienkowej mogą się nie zgadzać, obok wpływu wody, pory pomiaru i szumu pomiarowego. Badanie na 10 osobach nie pokazuje jednak, jak często to wyjaśnia konkretną rozbieżność.',
@@ -459,16 +459,16 @@
       '…zaniżali w deklaracjach rzeczywiste spożycie jedzenia średnio (± SD) o 47 ± 16%…',
     'Logging often tracks with success more than logging carefully': 'Sukces wiąże się bardziej z częstotliwością zapisywania niż z dokładnością zapisów',
     'vs 1.7 entries a day': 'w porównaniu z 1,7 wpisu dziennie',
-    '24-week online behavioural programme · 142 adults': '24-tygodniowy internetowy program zmiany zachowania · 142 osoby dorosłe',
-    "Minutes spent recording did not separate the successful from the rest in this programme; how often they came back did. People who lost a tenth of their body weight or more opened their diary 2.7 times a day against 1.7 for everyone else – an association, not a controlled test of one against the other. It also gets cheaper with practice: 23 minutes a day in month one, 15 by month six.":
+    '24-week online behavioral program · 142 adults': '24-tygodniowy internetowy program zmiany zachowania · 142 osoby dorosłe',
+    "Minutes spent recording did not separate the successful from the rest in this program; how often they came back did. People who lost a tenth of their body weight or more opened their diary 2.7 times a day against 1.7 for everyone else – an association, not a controlled test of one against the other. It also gets cheaper with practice: 23 minutes a day in month one, 15 by month six.":
       'W tym programie liczba minut poświęconych na zapisywanie nie odróżniała osób, którym się udało, od pozostałych. Decydowało to, jak często wracały do dzienniczka. Osoby, które straciły co najmniej 10% masy ciała, otwierały go 2,7 raza dziennie, a pozostali 1,7 raza. To związek zaobserwowany w badaniu, a nie kontrolowane porównanie obu zachowań. Z czasem zapisywanie zajmowało też mniej czasu: 23 minuty dziennie w pierwszym miesiącu i 15 w szóstym.',
     'The frequency of self-monitoring is significantly related to weight loss…':
       'Częstość samokontroli wiąże się istotnie z utratą masy ciała…',
     'Weigh yourself often, but read the trend': 'Waż się często, ale obserwuj trend',
-    'added to a programme': 'dołączone do programu',
-    'Meta-analysis of randomised trials · 4 adding self-weighing to an existing programme':
+    'added to a program': 'dołączone do programu',
+    'Meta-analysis of randomized trials · 4 adding self-weighing to an existing program':
       'Metaanaliza randomizowanych badań · 4 badania, w których do istniejącego programu dodano samodzielne ważenie',
-    'Adding self-weighing and self-regulation to a weight-loss programme was worth an extra 1.7 kg (95% CI 0.8 to 2.6). On its own it did nothing measurable, so the scale is a feedback signal rather than a treatment. Day to day it mostly tracks water, as the first week above shows, which is why the weekly average is the number to read.':
+    'Adding self-weighing and self-regulation to a weight-loss program was worth an extra 1.7 kg (95% CI 0.8 to 2.6). On its own it did nothing measurable, so the scale is a feedback signal rather than a treatment. Day to day it mostly tracks water, as the first week above shows, which is why the weekly average is the number to read.':
       'Dodanie samodzielnego ważenia i samoregulacji do programu odchudzania wiązało się z dodatkową utratą 1,7 kg (95% CI 0,8–2,6). Samo ważenie nie dało mierzalnego efektu, więc waga jest sygnałem zwrotnym, a nie metodą leczenia. Wahania z dnia na dzień odzwierciedlają głównie wodę, jak pokazuje pierwszy tydzień powyżej. Dlatego warto obserwować średnią tygodniową.',
     'Four trials added self-weighing/self-regulation techniques to multi-component programmes and resulted in a significant difference of −1.7 kg…':
       'W czterech badaniach do programów wieloskładnikowych dodano techniki samodzielnego ważenia/samoregulacji, co dało istotną różnicę −1,7 kg…',
@@ -479,7 +479,7 @@
     // Sources tab topic-group headings (FH.refs.orderedTopics)
     'Children': 'Dzieci', 'BMR': 'PPM (BMR)', 'TDEE': 'TDEE', 'Dynamics': 'Dynamika',
     'Adiposity': 'Otyłość centralna', 'Guidelines': 'Wytyczne',
-    'Activity': 'Aktywność', 'Sleep & behaviour': 'Sen i zachowanie', 'Outcomes': 'Wyniki kliniczne',
+    'Activity': 'Aktywność', 'Sleep & behavior': 'Sen i zachowanie', 'Outcomes': 'Wyniki kliniczne',
 
     // .hint tooltip contents (data-tip)
     'Predictive equations are fitted separately for males and females because body composition and resting metabolic rate differ systematically between them.':
@@ -657,7 +657,7 @@
       'Wszystkie równania pokazujemy obok siebie, a Ty wybierasz, które ma być główne. Domyślnie tryb Automatycznie wybiera równanie najlepiej uzasadnione badaniami dla Twojego profilu i wyświetla obok powód tego wyboru. Każde z nich może dawać indywidualny błąd rzędu ±10%.',
 
     'Total daily energy expenditure (TDEE)': 'Całkowity dzienny wydatek energetyczny (TDEE)',
-    'Primary estimate: the <b>National Academies 2023</b> equations, fitted directly to doubly-labelled-water measurements of free-living energy expenditure. ':
+    'Primary estimate: the <b>National Academies 2023</b> equations, fitted directly to doubly-labeled-water measurements of free-living energy expenditure. ':
       'Główny wynik: równania <b>National Academies 2023</b>, dopasowane bezpośrednio do pomiarów wydatku energetycznego metodą podwójnie znakowanej wody u osób żyjących w warunkach codziennych. ',
     'Individual prediction error (RMSE): men ±339, women ±246, boys ±259, girls ±237 kcal/day, shown as a range, not hidden. ':
       'Indywidualny błąd predykcji (RMSE): mężczyźni ±339, kobiety ±246, chłopcy ±259, dziewczynki ±237 kcal/dzień. Pokazujemy go jako zakres, a nie ukrywamy. ',
@@ -693,7 +693,7 @@
       'Formuły oparte wyłącznie na BMI (CUN-BAE, Gallagher, Deurenberg) są rozwiązaniem zapasowym; nie odróżniają większej masy mięśniowej od nadmiaru tłuszczu. ',
     'Healthy ranges come from Gallagher 2000: the body fat matching BMI 18.5 / 25 / 30 by age, sex and ethnicity (e.g. women 20–39: 21–33%, men 20–39: 8–20%). ':
       'Prawidłowe zakresy pochodzą z Gallagher 2000: odpowiadają zawartości tkanki tłuszczowej przy BMI 18,5 / 25 / 30, zależnie od wieku, płci i pochodzenia (np. kobiety w wieku 20–39 lat: 21–33%, mężczyźni: 8–20%). ',
-    'Fat mass index classes (kg/m²) from NHANES DXA; fat-free mass index normalised to 1.8 m. ':
+    'Fat mass index classes (kg/m²) from NHANES DXA; fat-free mass index normalized to 1.8 m. ':
       'Klasy wskaźnika masy tłuszczowej (kg/m²) na podstawie DXA z NHANES; wskaźnik masy beztłuszczowej przeliczony na wzrost 1,8 m. ',
 
     'Central fat': 'Tłuszcz brzuszny',
@@ -737,7 +737,7 @@
     'Older adults: at least 1.0–1.2 g/kg. ': 'Osoby starsze: co najmniej 1,0–1,2 g/kg. ',
     'Lean, resistance-trained athletes in a deficit: 2.3–3.1 g/kg fat-free mass. ':
       'Szczupli, wytrenowani sportowcy w deficycie: 2,3–3,1 g/kg masy beztłuszczowej. ',
-    'Macronutrient ranges (AMDR): carbohydrate 45–65%, fat 20–35% (children 25–35%), protein 10–35%; fibre 14 g per 1,000 kcal and age/sex Adequate Intakes. ':
+    'Macronutrient ranges (AMDR): carbohydrate 45–65%, fat 20–35% (children 25–35%), protein 10–35%; fiber 14 g per 1,000 kcal and age/sex Adequate Intakes. ':
       'Zakresy makroskładników (AMDR): węglowodany 45–65%, tłuszcz 20–35% (dzieci 25–35%), białko 10–35%; błonnik 14 g na 1000 kcal oraz normy wystarczającego spożycia zależne od wieku i płci. ',
     'Total water: 2.0 L/day women, 2.5 L/day men, from drinks and food. ':
       'Całkowita podaż wody: 2,0 l dziennie u kobiet i 2,5 l u mężczyzn, z napojów i jedzenia. ',
@@ -745,7 +745,7 @@
       'Aktywność: dorośli 150–300 min umiarkowanej aktywności tygodniowo, dzieci 60 min dziennie. 200–300 min tygodniowo pomaga zapobiegać ponownemu przybieraniu na wadze. ',
 
     'Children: guidance, not diets': 'Dzieci: wskazówki, nie diety',
-    'AAP 2023: children with overweight or obesity should be offered family-based intensive health-behaviour and lifestyle treatment (≥ 26 contact hours over 3–12 months). ':
+    'AAP 2023: children with overweight or obesity should be offered family-based intensive health-behavior and lifestyle treatment (≥ 26 contact hours over 3–12 months). ':
       'AAP 2023: dzieciom z nadwagą lub otyłością należy zaproponować intensywną, rodzinną terapię zachowań zdrowotnych i stylu życia (co najmniej 26 godzin kontaktu w ciągu 3–12 miesięcy). ',
     'Weight goals by age and BMI percentile (Expert Committee 2007): maintenance while growing for most; if loss is appropriate, no more than ~0.5 kg per month (younger children) or ~0.9 kg per week (severe obesity, older children and teens). ':
       'Cele zależą od wieku i percentyla BMI (Komitet Ekspertów 2007). U większości dzieci zaleca się utrzymanie masy ciała podczas wzrostu. Jeśli redukcja jest wskazana, nie powinna przekraczać około 0,5 kg miesięcznie u młodszych dzieci ani około 0,9 kg tygodniowo u starszych dzieci i nastolatków z ciężką otyłością. ',

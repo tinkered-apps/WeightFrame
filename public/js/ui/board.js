@@ -70,7 +70,7 @@
     const fact = (label, value, tip, sub) => `<div class="fact"><dt>${label}${hint(label, tip)}</dt><dd>${value}${sub ? `<span class="fact__sub">${sub}</span>` : ''}</dd></div>`;
 
     if (!p) {
-      const maintHint = 'From the National Academies 2023 equation, fitted to about 6,500 doubly labelled-water measurements – the gold-standard method for free-living energy expenditure.';
+      const maintHint = 'From the National Academies 2023 equation, fitted to about 6,500 doubly labeled-water measurements – the gold-standard method for free-living energy expenditure.';
       return `<article class="outlook outlook--solo" aria-labelledby="outlook-h">${head(`Energy balance ${c(['nasem2023'])}`)}
         <div class="outlook__now">${numeral('Maintenance', maintHint, e.tdee.primary, 'kcal/day')}
         <p class="outlook__lead">${r.planBlocked ? 'No weight-change plan is shown. The notice below explains why.' : 'Weight-loss planning is switched off.'}</p></div></article>`;
@@ -155,7 +155,7 @@
     const e = r.energy, b = e.bmr, t = r.bmiClass.thresholds;
     const bf = r.bodyFat.consensus;
     const bfBasis = bf ? (r.bodyFat.basis === 'measured' ? 'Measured' : r.bodyFat.basis === 'circumference' ? 'Estimated from your measurements' : 'Estimated from BMI, age & sex') : 'Add waist and neck for an estimate';
-    const maintHint = 'From the National Academies 2023 equation, fitted to about 6,500 doubly labelled-water measurements – the gold-standard method for free-living energy expenditure.';
+    const maintHint = 'From the National Academies 2023 equation, fitted to about 6,500 doubly labeled-water measurements – the gold-standard method for free-living energy expenditure.';
 
     const bmiGauge = charts.meter({ min: 15, max: 45, value: r.bmi, level: r.bmiClass.level,
       band: [18.5, t.overweight],
@@ -310,7 +310,7 @@
       const hr = r.healthyRange, range = r.story.find((x) => x.id === 'range');
       if (hr && range) cells.push(cell(esc(range.title), `${fmt.n(fmt.massVal(hr.minKg), 1)}–${fmt.n(fmt.massVal(hr.maxKg), 1)}`, fmt.massUnit(), c(range.refs)));
       strip = `<div class="strip">${cells.join('')}</div>
-        <p class="small muted">Fat-free mass index (height-normalised) rarely exceeds ~25 in drug-free men; typical values are ~17–21 for men and ~14–17 for women.</p>`;
+        <p class="small muted">Fat-free mass index (height-normalized) rarely exceeds ~25 in drug-free men; typical values are ~17–21 for men and ~14–17 for women.</p>`;
     }
     const verdict = `<div class="verdict">${I('target', 'verdict__icon')}<div><p><b>Excess body fat?</b> ${esc(r.adiposity.text)} ${c(r.adiposity.refs)}</p>
       <p class="small muted">The 2025 Lancet Commission on clinical obesity asks for BMI to be confirmed by a waist-based measure or body-fat measurement before calling it obesity.</p></div></div>`;
@@ -348,7 +348,7 @@
     { label: 'Ultra-processed food, calories and macros matched', v: 508, refs: ['hall2019upf'],
       note: 'Two weeks on each menu, inpatient, eating as much as you like.' },
     { label: 'Sleeping 1.2 hours longer, if you sleep under 6.5', v: -270, refs: ['tasali2022'],
-      note: 'Intake measured by doubly labelled water, not by a food diary.' },
+      note: 'Intake measured by doubly labeled water, not by a food diary.' },
     { label: '500 ml of water before each of three meals', v: -130, derived: true, refs: ['dennis2010'],
       note: 'Measured as 43 kcal at one test meal, counted three times; it had faded by week 12.' },
     { label: 'A drink with the meal, before the drink itself counts', v: 82, derived: true, refs: ['kwok2019'],
@@ -358,13 +358,13 @@
   const LEVER_GROUPS = [
     { title: 'What the weight is made of', items: [
       { k: 'Short sleep moves the loss from fat to lean tissue', v: '55%', unit: 'less of it fat',
-        design: 'Randomised crossover · 10 adults with overweight · 14 days on one reduced-calorie diet',
+        design: 'Randomized crossover · 10 adults with overweight · 14 days on one reduced-calorie diet',
         t: 'Same diet, and roughly the same 3 kg gone either way. On 5.5 hours in bed instead of 8.5, only 0.6 kg of that was fat instead of 1.4 kg, while lean-tissue loss rose from 1.5 kg to 2.4 kg. Hunger and ghrelin were higher and less fat was burned for fuel.',
         q: 'Sleep curtailment decreased the proportion of weight lost as fat by 55%.',
         refs: ['nedeltcheva2010'],
         tail: 'The same direction shows up over years, not just weeks: among 68,183 women followed for 16 years, those sleeping 5 hours or less gained 1.14 kg more than the 7-hour sleepers.', tailRefs: ['patel2006'] },
       { k: 'Past about 500 kcal a day, training stops adding lean mass', v: '500', unit: 'kcal/day',
-        design: 'Meta-analysis and meta-regression · randomised trials of 3 weeks or more of resistance training in a deficit',
+        design: 'Meta-analysis and meta-regression · randomized trials of 3 weeks or more of resistance training in a deficit',
         t: 'Lifting while in a deficit keeps your strength, no differently from lifting with full energy available. But the meta-regression puts the deficit where resistance training stops adding lean mass at about 500 kcal a day – it is about lean-mass gains stalling, not about losing what training would otherwise have protected. It works alongside the protein target in Nutrition, not instead of it.',
         q: '…an energy deficit of ~500 kcal · day⁻¹ prevented gains in LM [lean mass].',
         refs: ['murphy2022'], dyn: 'deficit' },
@@ -376,25 +376,25 @@
         q: 'Changes in NEAT accounted for the 10-fold differences in fat storage that occurred…',
         refs: ['levine1999'] },
       { k: 'The same meals, four hours later', v: '4 h', unit: 'later, nothing else changed',
-        design: 'Randomised crossover · 16 adults with overweight or obesity · meals, sleep, light and activity held identical',
+        design: 'Randomized crossover · 16 adults with overweight or obesity · meals, sleep, light and activity held identical',
         t: 'Shifting identical meals about four hours later raised hunger, tilted the ghrelin-to-leptin ratio towards appetite, lowered waking energy expenditure and 24-hour core temperature, and moved fat-tissue gene expression away from releasing fat and towards storing it.',
         q: 'Late eating increased hunger… Furthermore, late eating decreased waketime energy expenditure…',
         refs: ['vujovic2022'] },
     ] },
     { title: 'Whether you can see where you are', items: [
       { k: 'Self-reported intake often runs below actual intake', v: '47%', unit: 'under-reported',
-        design: 'Metabolic study · 10 adults who could not lose weight on a reported 1,200 kcal/day · 14 days of calorimetry and doubly labelled water',
+        design: 'Metabolic study · 10 adults who could not lose weight on a reported 1,200 kcal/day · 14 days of calorimetry and doubly labeled water',
         t: "This small group's metabolism turned out to be ordinary: total expenditure sat within 5% of what the equations predicted. Their food and activity records were the thing that was wrong, with intake under-reported by 47% and activity over-reported by 51%. It is one of the reasons a plan and a bathroom scale can disagree, alongside water, timing and measurement noise – a 10-person study does not establish how often it explains any given gap.",
         q: '…underreported their actual food intake by an average (± SD) of 47 ± 16 percent…',
         refs: ['lichtman1992'] },
       { k: 'Logging often tracks with success more than logging carefully', v: '2.7', unit: 'vs 1.7 entries a day',
-        design: '24-week online behavioural programme · 142 adults',
-        t: "Minutes spent recording did not separate the successful from the rest in this programme; how often they came back did. People who lost a tenth of their body weight or more opened their diary 2.7 times a day against 1.7 for everyone else – an association, not a controlled test of one against the other. It also gets cheaper with practice: 23 minutes a day in month one, 15 by month six.",
+        design: '24-week online behavioral program · 142 adults',
+        t: "Minutes spent recording did not separate the successful from the rest in this program; how often they came back did. People who lost a tenth of their body weight or more opened their diary 2.7 times a day against 1.7 for everyone else – an association, not a controlled test of one against the other. It also gets cheaper with practice: 23 minutes a day in month one, 15 by month six.",
         q: 'The frequency of self-monitoring is significantly related to weight loss…',
         refs: ['harvey2019'] },
-      { k: 'Weigh yourself often, but read the trend', v: '1.7 kg', unit: 'added to a programme',
-        design: 'Meta-analysis of randomised trials · 4 adding self-weighing to an existing programme',
-        t: 'Adding self-weighing and self-regulation to a weight-loss programme was worth an extra 1.7 kg (95% CI 0.8 to 2.6). On its own it did nothing measurable, so the scale is a feedback signal rather than a treatment. Day to day it mostly tracks water, as the first week above shows, which is why the weekly average is the number to read.',
+      { k: 'Weigh yourself often, but read the trend', v: '1.7 kg', unit: 'added to a program',
+        design: 'Meta-analysis of randomized trials · 4 adding self-weighing to an existing program',
+        t: 'Adding self-weighing and self-regulation to a weight-loss program was worth an extra 1.7 kg (95% CI 0.8 to 2.6). On its own it did nothing measurable, so the scale is a feedback signal rather than a treatment. Day to day it mostly tracks water, as the first week above shows, which is why the weekly average is the number to read.',
         q: 'Four trials added self-weighing/self-regulation techniques to multi-component programmes and resulted in a significant difference of −1.7 kg…',
         refs: ['madigan2015'] },
     ] },
@@ -491,7 +491,7 @@
       ${cell('Protein', gv(n.protein.grams[0], n.protein.grams[1]), 'g', proteinNote)}
       ${cell('Carbohydrate', gv(n.amdr.carbs.grams[0], n.amdr.carbs.grams[1]), 'g', `${n.amdr.carbs.pct.join('–')}% of energy ${c(['iom2005'])}`)}
       ${cell('Fat', gv(n.amdr.fat.grams[0], n.amdr.fat.grams[1]), 'g', `${n.amdr.fat.pct.join('–')}% of energy ${c(['iom2005'])}`)}
-      ${cell('Fibre', fmt.n(n.fiber.ai), 'g', 'Adequate Intake for your age & sex; the 14 g/1,000 kcal rule of thumb gives ≈' + fmt.n(Math.max(n.fiber.perKcal, 0)) + ' g at your calorie level ' + c(['iom2005']))}
+      ${cell('Fiber', fmt.n(n.fiber.ai), 'g', 'Adequate Intake for your age & sex; the 14 g/1,000 kcal rule of thumb gives ≈' + fmt.n(Math.max(n.fiber.perKcal, 0)) + ' g at your calorie level ' + c(['iom2005']))}
       ${cell('Water', fmt.n(n.water.litres, 1), 'L', 'From drinks and food ' + c(n.water.refs))}
     </div>`;
     // Acceptable ranges drawn on one 0-100% axis, so the three overlap visibly.
@@ -665,7 +665,7 @@
       </tbody></table></div>`;
     const pal = t.impliedPal;
     const reasonHint = b.reason + (b.notes.length ? ' ' + b.notes.join(' ') : '');
-    const rmseHint = 'The ±1 RMSE spread is expected to bracket about two-thirds of people with your profile, based on the 2023 equations fitted to ~6,500 doubly labelled-water measurements – the gold-standard method for free-living expenditure.';
+    const rmseHint = 'The ±1 RMSE spread is expected to bracket about two-thirds of people with your profile, based on the 2023 equations fitted to ~6,500 doubly labeled-water measurements – the gold-standard method for free-living expenditure.';
     const crosscheckHint = 'An independent estimate – resting metabolic rate times an activity multiplier (PAL) – as a sanity check against the equation above.';
     const palHint = 'Physical Activity Level: total expenditure ÷ resting metabolic rate. Free-living adults are rarely below about 1.4; the old “sedentary ×1.2” multiplier undersells almost everyone.';
     const cell = (label, value, unit, note, tip) => `<div class="strip__cell"><span class="strip__label">${label}${hint(label, tip)}</span><span class="strip__value">${value}${unit ? `<small>${unit}</small>` : ''}</span><span class="strip__note">${note}</span></div>`;
