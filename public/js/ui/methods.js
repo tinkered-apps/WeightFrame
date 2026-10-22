@@ -36,7 +36,7 @@ ${table(['BMI', 'WHO class'], [
   ['35–39.9', 'Obesity II'],
   ['≥ 40', 'Obesity III'],
 ])}
-<p class="small muted" style="margin-top:8px">Lower thresholds apply for South Asian, Chinese and other Asian, Middle Eastern, and Black African / African-Caribbean backgrounds: 23 overweight, 27.5 obesity.</p>
+<p class="small muted" style="margin-top:8px">Lower thresholds apply for South Asian, Chinese and other Asian, Middle Eastern, and Black African / African-Caribbean backgrounds: 23 overweight, 27.5 obesity, and 32.5 / 37.5 for obesity classes II / III.</p>
 <ul>
 <li>Several populations carry more body fat and cardiometabolic risk at the same BMI, hence the lower action points. ${c(['who2004asia', 'nice2025'])}</li>
 <li>From 65 years, mortality is lowest around BMI 23–30 and rises below 23; "overweight" is not a risk marker at that age. ${c(['winter2014'])}</li>
@@ -235,8 +235,8 @@ ${formula(
       // from here - deferred until renderMethods() actually runs - not baked into the string.
       body: () => `<p>Two people can share a BMI and carry very different amounts of fat around the waist – central ("visceral") fat carries extra cardiometabolic risk that BMI alone misses.</p>
 ${table(['Waist circumference', 'Increased risk', 'Substantially increased'], [
-  [`${men(FH.i18n.t('Men'))}, Europid`, '≥ 94 cm', '≥ 102 cm'],
-  [`${women(FH.i18n.t('Women'))}, Europid`, '≥ 80 cm', '≥ 88 cm'],
+  [`${men(FH.i18n.t('Men'))}, European background`, '≥ 94 cm', '≥ 102 cm'],
+  [`${women(FH.i18n.t('Women'))}, European background`, '≥ 80 cm', '≥ 88 cm'],
   [`${men(FH.i18n.t('Men'))}, Asian / Latin American`, '≥ 90 cm', '—'],
   [`${women(FH.i18n.t('Women'))}, Asian / Latin American`, '≥ 80 cm', '—'],
 ])}
