@@ -119,7 +119,7 @@ ${formula(
     },
     {
       title: 'Total daily energy expenditure (TDEE)',
-      body: `<p>Primary estimate: the <b>National Academies 2023</b> equations, fitted directly to doubly-labelled-water measurements of free-living energy expenditure. ${c(['nasem2023'])}</p>
+      body: `<p>Primary estimate: the <b>National Academies 2023</b> equations, fitted directly to doubly-labeled-water measurements of free-living energy expenditure. ${c(['nasem2023'])}</p>
 ${formula(
   [
     ['A', 'age, years'],
@@ -222,7 +222,7 @@ ${formula(
 <li>With a tape measure, circumference methods (RFM validated against DXA in NHANES; US Navy) beat BMI-only formulas; their median is used. ${c(['woolcott2018', 'hodgdon1984'])}</li>
 <li>BMI-only formulas (CUN-BAE, Gallagher, Deurenberg) are a fallback; they cannot tell a muscular person from a fat one. ${c(['gomezambrosi2012', 'gallagher2000', 'deurenberg1991'])}</li>
 <li>Healthy ranges come from Gallagher 2000: the body fat matching BMI 18.5 / 25 / 30 by age, sex and ethnicity (e.g. women 20–39: 21–33%, men 20–39: 8–20%). ${c(['gallagher2000'])}</li>
-<li>Fat mass index classes (kg/m²) from NHANES DXA; fat-free mass index normalised to 1.8 m. ${c(['kelly2009', 'kouri1995'])}</li>
+<li>Fat mass index classes (kg/m²) from NHANES DXA; fat-free mass index normalized to 1.8 m. ${c(['kelly2009', 'kouri1995'])}</li>
 </ul>`,
     },
     {
@@ -267,7 +267,7 @@ ${table(['Ratio', 'Threshold'], [
       title: 'Daily targets',
       body: `<ul>
 <li>Protein while losing weight: 1.2–1.6 g/kg/day helps preserve lean mass and satiety. With BMI ≥ 30 the app uses goal weight, since protein needs follow lean mass. ${c(['leidy2015'])} Older adults: at least 1.0–1.2 g/kg. ${c(['bauer2013'])} Lean, resistance-trained athletes in a deficit: 2.3–3.1 g/kg fat-free mass. ${c(['helms2014'])}</li>
-<li>Macronutrient ranges (AMDR): carbohydrate 45–65%, fat 20–35% (children 25–35%), protein 10–35%; fibre 14 g per 1,000 kcal and age/sex Adequate Intakes. ${c(['iom2005'])}</li>
+<li>Macronutrient ranges (AMDR): carbohydrate 45–65%, fat 20–35% (children 25–35%), protein 10–35%; fiber 14 g per 1,000 kcal and age/sex Adequate Intakes. ${c(['iom2005'])}</li>
 <li>Total water: 2.0 L/day women, 2.5 L/day men, from drinks and food. ${c(['efsa2010water'])}</li>
 <li>Activity: 150–300 min/week moderate for adults; 60 min/day for children. 200–300 min/week helps prevent regain. ${c(['who2020pa', 'donnelly2009'])}</li>
 </ul>`,
@@ -275,7 +275,7 @@ ${table(['Ratio', 'Threshold'], [
     {
       title: 'Children: guidance, not diets',
       body: `<ul>
-<li>AAP 2023: children with overweight or obesity should be offered family-based intensive health-behaviour and lifestyle treatment (≥ 26 contact hours over 3–12 months). ${c(['hampl2023'])}</li>
+<li>AAP 2023: children with overweight or obesity should be offered family-based intensive health-behavior and lifestyle treatment (≥ 26 contact hours over 3–12 months). ${c(['hampl2023'])}</li>
 <li>Weight goals by age and BMI percentile (Expert Committee 2007): maintenance while growing for most; if loss is appropriate, no more than ~0.5 kg per month (younger children) or ~0.9 kg per week (severe obesity, older children and teens). ${c(['barlow2007'])}</li>
 <li>Energy shown is the National Academies requirement for healthy growth at the chosen activity level, not a deficit target. ${c(['nasem2023'])}</li>
 </ul>`,

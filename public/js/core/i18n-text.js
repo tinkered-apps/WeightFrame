@@ -24,7 +24,7 @@
     bmrSummary: {
       msj: 'Best-validated general-purpose adult equation, including people with obesity.',
       hb: "Historic standard; tends to over-predict in general populations but was unbiased in athletes (O'Neill 2023).",
-      hbrs: 'Re-fit of Harris-Benedict coefficients; similar behaviour.',
+      hbrs: 'Re-fit of Harris-Benedict coefficients; similar behavior.',
       owen: 'Weight-only; tends to under-predict.',
       schofield: 'Weight-only, age-banded; basis of many national energy requirements.',
       schofieldWH: 'Recommended by ESPGHAN/ESPEN for children (best agreement with measured values).',
@@ -73,7 +73,7 @@
 
     // ---- assess.js: safety flags --------------------------------------------------------
     flags: {
-      vlcd: () => 'Below 800 kcal/day is a very-low-calorie diet: use only as part of a clinically supervised programme.',
+      vlcd: () => 'Below 800 kcal/day is a very-low-calorie diet: use only as part of a clinically supervised program.',
       belowFloor: (floorStr, sex) => 'This is below ' + floorStr + ', the lower end of guideline weight-loss diets for ' + sexWord.en(sex) + ' (1,200-1,500 kcal women, 1,500-1,800 kcal men). You may find it harder to meet your nutrient needs.',
       gallstoneRisk: (rateStr) => 'Projected loss of ' + rateStr + ' per week after the first fortnight. Losing more than 1.5 kg (3.3 lb) per week raises the risk of gallstones.',
       fastPace: (pctStr) => 'This projects ≈' + pctStr + ' of body weight per week, faster than the usual 0.5-1% (roughly 0.5-1 kg) per week. Faster loss tends to cost more lean mass.',
@@ -88,7 +88,7 @@
       currentUnderweight: (bmiStr) => 'Your BMI of ' + bmiStr + ' is in the underweight range (below 18.5). It is worth checking with a doctor, especially if you lost weight without trying.',
       gainToObesity: (bmiStr, obese) => 'A goal BMI of ' + bmiStr + ' is in the obesity range (' + obese + ' or more), so the app does not plan weight gain toward it.',
       gainToOverweight: (bmiStr) => 'A goal BMI of ' + bmiStr + ' is above the healthy range. Gaining into it raises health risks, so consider a lower goal.',
-      vlcdTyped: () => 'Below 800 kcal/day is a very-low-calorie diet: use only as part of a clinically supervised programme. The app does not project it.',
+      vlcdTyped: () => 'Below 800 kcal/day is a very-low-calorie diet: use only as part of a clinically supervised program. The app does not project it.',
       modelRange: () => 'At this intake the projection would take weight far below a healthy range or run body-fat stores almost empty, which is outside what the weight model was built for, so no projection is shown.',
       gainSurplusTyped: (surplusStr) => 'This intake is about ' + surplusStr + ' above your current expenditure, more than the 500 kcal/day surplus the app would plan.',
       wrongDirection: (maintStr, plateauStr, isLoss) => isLoss
@@ -100,8 +100,8 @@
       bodyFatClampedEstimate: (estStr, usedStr) => 'The weight-projection model only supports body fat from 5% to 60%; the estimated ' + estStr + ' was set to ' + usedStr + ' for that calculation only.',
       goalLowOlder: () => 'For adults 65+, a BMI below about 23 is associated with higher mortality. Consider a higher goal.',
       isGain: () => 'Your goal is above your current weight, so the plan shows a weight-gain scenario.',
-      plateau: (kgStr) => 'At this intake the model predicts weight levelling off around ' + kgStr + ', so the goal is not reached within 3 years.',
-      unreachable: (plateauStr, goalStr) => "This goal isn't reachable by your chosen date – not even at the model's most extreme intake. At that pace, the model instead predicts levelling off around " + plateauStr + ', short of ' + goalStr + '. Try a later date, a smaller goal, or set the intake yourself to see where it leads.',
+      plateau: (kgStr) => 'At this intake the model predicts weight leveling off around ' + kgStr + ', so the goal is not reached within 3 years.',
+      unreachable: (plateauStr, goalStr) => "This goal isn't reachable by your chosen date – not even at the model's most extreme intake. At that pace, the model instead predicts leveling off around " + plateauStr + ', short of ' + goalStr + '. Try a later date, a smaller goal, or set the intake yourself to see where it leads.',
       deadlineExtended: (reqDays, actDays) => 'Your chosen timeframe (' + Math.round(reqDays / 7) + ' weeks) is not reachable at a safe intake. At the lowest intake the app plans on its own (the guideline minimum, and no faster than 1.5 kg or 3.3 lb a week), reaching the goal takes about ' + Math.round(actDays / 7) + ' weeks.',
       paceExtended: (reqDays, actDays) => 'This pace would reach the goal in about ' + Math.round(reqDays / 7) + ' weeks, but only with an intake below the guideline minimum or a loss faster than 1.5 kg (3.3 lb) a week, which the app does not plan. Within those limits it takes about ' + Math.round(actDays / 7) + ' weeks.',
       bodyFatClamped: (enteredStr, usedStr) => 'The weight-projection model only supports body-fat inputs from 5% to 60%; your ' + enteredStr + ' was capped to ' + usedStr + ' for that calculation only (other results on this page still use what you entered).',
@@ -125,7 +125,7 @@
     pediatric: {
       goalBasisCdc: (pctStr) => 'CDC percentile ' + pctStr,
       goalBasisWho: () => 'WHO percentile',
-      underweight: () => 'BMI is below the healthy range. Discuss growth and nutrition with a paediatrician; weight loss is not appropriate.',
+      underweight: () => 'BMI is below the healthy range. Discuss growth and nutrition with a pediatrician; weight loss is not appropriate.',
       healthyRange: () => 'Healthy range: aim for healthy growth. Keep BMI tracking along its current percentile as height increases.',
       maintainTeen: () => 'Weight maintenance while growing is the usual goal (the BMI percentile falls as height increases); after growth is complete, gradual loss is acceptable.',
       maintainYounger: () => 'Weight maintenance (or slower weight gain) while growing taller, until BMI is below the 85th percentile.',
@@ -134,7 +134,7 @@
       under12Severe: () => 'Gradual weight loss under clinical supervision, not exceeding an average of ~0.9 kg (2 lb) per week.',
       under12: () => 'Weight maintenance while growing, or gradual loss of no more than ~0.5 kg (1 lb) per month.',
       teenSevere: () => 'Gradual weight loss under clinical supervision is appropriate, not exceeding an average of ~0.9 kg (2 lb) per week.',
-      treatment: () => 'For children with overweight or obesity, the AAP 2023 guideline recommends family-based intensive health behaviour and lifestyle treatment (≥26 contact hours over 3-12 months) rather than calorie restriction on your own.',
+      treatment: () => 'For children with overweight or obesity, the AAP 2023 guideline recommends family-based intensive health behavior and lifestyle treatment (≥26 contact hours over 3-12 months) rather than calorie restriction on your own.',
     },
 
     // ---- assess.js: nutrition ------------------------------------------------------------

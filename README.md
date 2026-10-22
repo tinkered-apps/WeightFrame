@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/icons/social-card.png" alt="The WeightFrame name next to a panel showing a daily intake of 1,860 kcal and a weight curve levelling off at the goal." width="760">
+  <img src="public/icons/social-card.png" alt="The WeightFrame name next to a panel showing a daily intake of 1,860 kcal and a weight curve leveling off at the goal." width="760">
 </p>
 
 <h1 align="center">WeightFrame</h1>
@@ -35,7 +35,7 @@ verified is in **[RESEARCH.md](RESEARCH.md)**. A condensed version is in the app
 
 | For | Shows |
 |---|---|
-| Adults | BMI with ethnicity-adjusted cut-offs; Lancet Commission 2025 adiposity check; 10 BMR equations with the evidence-based pick; National Academies 2023 TDEE with its error range; NIH/Hall 2011 dynamic projection vs the 3,500 kcal rule; intake to reach a goal by a pace or date; composition of the loss; milestones; maintenance after the goal; safety flags; body-fat estimates; waist, waist-to-height, waist-to-hip; protein, macros, fibre, water, activity |
+| Adults | BMI with ethnicity-adjusted cut-offs; Lancet Commission 2025 adiposity check; 10 BMR equations with the evidence-based pick; National Academies 2023 TDEE with its error range; NIH/Hall 2011 dynamic projection vs the 3,500 kcal rule; intake to reach a goal by a pace or date; composition of the loss; milestones; maintenance after the goal; safety flags; body-fat estimates; waist, waist-to-height, waist-to-hip; protein, macros, fiber, water, activity |
 | Children 2–17 | CDC and WHO BMI-for-age percentiles/z-scores (CDC 2022 extended method above the 95th percentile), growth chart, energy for growth, guideline-based goals (no calorie-deficit plans) |
 
 ## Data
@@ -61,7 +61,7 @@ Commands, architecture and conventions are in [AGENTS.md](AGENTS.md).
 ## Credits
 
 - Author: Kuba (kuba@tinkered.app)
-- Fonts: Hanken Grotesk and JetBrains Mono, SIL Open Font License 1.1, licence texts in
+- Fonts: Hanken Grotesk and JetBrains Mono, SIL Open Font License 1.1, license texts in
   [public/assets/fonts/](public/assets/fonts)
 - Growth references: CDC 2000 and WHO 2006/2007 BMI-for-age tables, original downloads in
   [data-src/](data-src). Their sources and terms of use are in

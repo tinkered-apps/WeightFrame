@@ -353,7 +353,7 @@
     // healthy band between lowest and third curve
     const lowC = curves[pcts[0].p], upC = curves[pcts[2].p];
     const band = lowC.map((p) => [x(p[0]), y(p[1])]).concat(upC.slice().reverse().map((p) => [x(p[0]), y(p[1])]));
-    g += `<path class="tr-band" d="${pathFrom(band)}Z"/>`;
+    g += `<path class="tr-band" data-level="0" d="${pathFrom(band)}Z"/>`;
     pcts.forEach((q, i) => {
       const pts = curves[q.p].map((p) => [x(p[0]), y(p[1])]);
       g += `<path class="gc-curve${i === 1 ? ' gc-curve--mid' : ''}" d="${pathFrom(pts)}"/>`;

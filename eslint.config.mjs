@@ -5,7 +5,7 @@ import js from '@eslint/js';
 import globals from 'globals';
 
 export default [
-  { ignores: ['node_modules/', 'test-results/', 'playwright-report/', '.wrangler/'] },
+  { ignores: ['node_modules/', 'test-results/', 'playwright-report/', '.wrangler/', '.marketing/'] },
 
   js.configs.recommended,
   {
