@@ -49,7 +49,7 @@
     'Active': 'Aktywny',
     'Very active': 'Bardzo aktywny',
     'Pregnant or breastfeeding': 'Ciąża lub karmienie piersią',
-    'White / Europid': 'Europejskie (białe)',
+    'White / European': 'Europejskie (białe)',
     'South Asian': 'Południowoazjatyckie',
     'Chinese / East or Southeast Asian': 'Chińskie / wschodnio- lub południowo-wschodnioazjatyckie',
     'Black African / African-Caribbean': 'Afrykańskie (czarnoskóre) / afrokaraibskie',
@@ -292,7 +292,7 @@
     '≥ 0.5 raised': '≥ 0,5 podwyższony',
     '≥ 0.90 substantially increased': '≥ 0,90 znacznie zwiększone',
     '≥ 0.85 substantially increased': '≥ 0,85 znacznie zwiększone',
-    ', Europid': ', pochodzenie europejskie',
+    ', European background': ', pochodzenie europejskie',
     ', Asian / Latin American': ', pochodzenie azjatyckie / latynoamerykańskie',
     'Add your waist (and hip) under <b>Measurements</b> to see central-fat risk.':
       'Dodaj pomiar obwodu pasa (i bioder) w sekcji <b>Pomiary</b>, aby zobaczyć ryzyko związane z tłuszczem brzusznym.',
@@ -621,7 +621,7 @@
     'Used as a screen, always paired with a waist-based measure when one is entered.':
       'Służy do przesiewowej oceny i zawsze łączy się z pomiarem obwodu pasa, jeśli taki pomiar podano.',
     'Lower thresholds apply for South Asian, Chinese and other Asian, Middle Eastern, and Black African / African-Caribbean backgrounds: 23 overweight, 27.5 obesity, and 32.5 / 37.5 for obesity classes II / III.':
-      'Niższe progi dotyczą osób pochodzenia południowoazjatyckiego, chińskiego lub innego azjatyckiego, bliskowschodniego oraz osób czarnych pochodzenia afrykańskiego lub afrokaraibskiego: BMI 23 oznacza nadwagę, 27,5 otyłość, a 32,5 / 37,5 otyłość II / III stopnia.',
+      'Niższe progi dotyczą osób pochodzenia południowoazjatyckiego, chińskiego lub innego azjatyckiego, bliskowschodniego oraz osób czarnoskórych pochodzenia afrykańskiego lub afrokaraibskiego: BMI 23 oznacza nadwagę, 27,5 otyłość, a 32,5 / 37,5 otyłość II / III stopnia.',
     'WHO class': 'Klasa WHO',
 
     'BMI for children (2–19 years)': 'BMI dla dzieci (2–19 lat)',

@@ -235,8 +235,8 @@ ${formula(
       // from here - deferred until renderMethods() actually runs - not baked into the string.
       body: () => `<p>Two people can share a BMI and carry very different amounts of fat around the waist – central ("visceral") fat carries extra cardiometabolic risk that BMI alone misses.</p>
 ${table(['Waist circumference', 'Increased risk', 'Substantially increased'], [
-  [`${men(FH.i18n.t('Men'))}, Europid`, '≥ 94 cm', '≥ 102 cm'],
-  [`${women(FH.i18n.t('Women'))}, Europid`, '≥ 80 cm', '≥ 88 cm'],
+  [`${men(FH.i18n.t('Men'))}, European background`, '≥ 94 cm', '≥ 102 cm'],
+  [`${women(FH.i18n.t('Women'))}, European background`, '≥ 80 cm', '≥ 88 cm'],
   [`${men(FH.i18n.t('Men'))}, Asian / Latin American`, '≥ 90 cm', '—'],
   [`${women(FH.i18n.t('Women'))}, Asian / Latin American`, '≥ 80 cm', '—'],
 ])}

@@ -9,7 +9,7 @@
    * (23 / 27.5). Waist thresholds per IDF (Alberti 2005; single "increased risk" cut-off for Asian and
    * Latin American groups) and WHO 2008 (two-level thresholds for Europid-type values). */
   const ETHNICITY = {
-    europid: { label: 'White / Europid', lowerBmi: false, waist: 'europid', fatTable: 'general' },
+    europid: { label: 'White / European', lowerBmi: false, waist: 'europid', fatTable: 'general' },
     southAsian: { label: 'South Asian', lowerBmi: true, waist: 'asian', fatTable: 'asian' },
     eastAsian: { label: 'Chinese / East or Southeast Asian', lowerBmi: true, waist: 'asian', fatTable: 'asian' },
     blackAfrican: { label: 'Black African / African-Caribbean', lowerBmi: true, waist: 'europid', fatTable: 'general' },
