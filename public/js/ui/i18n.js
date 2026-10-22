@@ -40,7 +40,7 @@
     'mo': 'mies.',
     'Height': 'Wzrost',
     'Weight': 'Waga',
-    'Ethnic background': 'Grupa etniczna',
+    'Ethnic background': 'Pochodzenie etniczne',
     'Daily activity': 'Codzienna aktywność',
     // Activity button labels (energy.js ACTIVITY.label - the .desc hint text is separately
     // translated via i18n-text.js since it's threaded through the engine's T bundle).
@@ -49,12 +49,12 @@
     'Active': 'Aktywny',
     'Very active': 'Bardzo aktywny',
     'Pregnant or breastfeeding': 'Ciąża lub karmienie piersią',
-    'White / Europid': 'Biała / europejska',
+    'White / Europid': 'Europejskie (białe)',
     'South Asian': 'Południowoazjatyckie',
     'Chinese / East or Southeast Asian': 'Chińskie / wschodnio- lub południowo-wschodnioazjatyckie',
-    'Black African / African-Caribbean': 'Czarnoskóre afrykańskie / afrokaraibskie',
-    'Middle Eastern / North African': 'Bliskowschodnie / północnoafrykańskie',
-    'Hispanic / Latin American': 'Latynoamerykańskie',
+    'Black African / African-Caribbean': 'Afrykańskie (czarnoskóre) / afrokaraibskie',
+    'Middle Eastern': 'Bliskowschodnie',
+    'Latino / Latin American': 'Latynoamerykańskie',
     'Other / Prefer not to say': 'Inne / wolę nie podawać',
 
     // Form: Measurements
@@ -292,8 +292,8 @@
     '≥ 0.5 raised': '≥ 0,5 podwyższony',
     '≥ 0.90 substantially increased': '≥ 0,90 znacznie zwiększone',
     '≥ 0.85 substantially increased': '≥ 0,85 znacznie zwiększone',
-    ', Europid': ', europejskie',
-    ', Asian / Latin American': ', azjatyckie / latynoamerykańskie',
+    ', Europid': ', pochodzenie europejskie',
+    ', Asian / Latin American': ', pochodzenie azjatyckie / latynoamerykańskie',
     'Add your waist (and hip) under <b>Measurements</b> to see central-fat risk.':
       'Dodaj pomiar obwodu pasa (i bioder) w sekcji <b>Pomiary</b>, aby zobaczyć ryzyko związane z tłuszczem brzusznym.',
     'Excess body fat?': 'Nadmiar tkanki tłuszczowej?',
@@ -484,8 +484,8 @@
     // .hint tooltip contents (data-tip)
     'Predictive equations are fitted separately for males and females because body composition and resting metabolic rate differ systematically between them.':
       'Równania predykcyjne dopasowuje się osobno dla kobiet i mężczyzn, ponieważ skład ciała i spoczynkowa przemiana materii systematycznie się między nimi różnią.',
-    'Adjusts BMI and waist thresholds: several populations carry more risk at a lower BMI.':
-      'Uwzględnia inne progi BMI i obwodu pasa: w niektórych populacjach wyższe ryzyko pojawia się już przy niższym BMI.',
+    'Adjusts BMI, waist and body-fat thresholds: several populations carry more risk at a lower BMI.':
+      'Uwzględnia inne progi BMI, obwodu pasa i tkanki tłuszczowej: w niektórych populacjach wyższe ryzyko pojawia się już przy niższym BMI.',
     'Only if measured (DXA, BodPod, a clinical scan). Home scales are too imprecise to override the estimates.':
       'Tylko po wykonaniu pomiaru (DXA, BodPod lub badanie kliniczne). Wagi domowe są zbyt niedokładne, aby zastąpić nimi oszacowanie.',
     'On top of today. E.g. a daily 30-min brisk walk ≈ 120–150 kcal for a 70–80 kg adult.':
@@ -620,8 +620,8 @@
       'Komisja Lancet z 2025 r.: samo BMI nie wystarcza do rozpoznania otyłości. Potwierdź wynik pomiarem obwodu pasa, stosunkiem obwodu pasa do bioder lub wzrostu albo pomiarem tkanki tłuszczowej (powyżej BMI 40 nie jest to konieczne). ',
     'Used as a screen, always paired with a waist-based measure when one is entered.':
       'Służy do przesiewowej oceny i zawsze łączy się z pomiarem obwodu pasa, jeśli taki pomiar podano.',
-    'Lower thresholds apply for South Asian, Chinese and other Asian, Middle Eastern, and Black African / African-Caribbean backgrounds: 23 overweight, 27.5 obesity.':
-      'Niższe progi dotyczą osób pochodzenia południowoazjatyckiego, chińskiego lub innego azjatyckiego, bliskowschodniego oraz osób czarnych pochodzenia afrykańskiego lub afrokaraibskiego: BMI 23 oznacza nadwagę, a 27,5 otyłość.',
+    'Lower thresholds apply for South Asian, Chinese and other Asian, Middle Eastern, and Black African / African-Caribbean backgrounds: 23 overweight, 27.5 obesity, and 32.5 / 37.5 for obesity classes II / III.':
+      'Niższe progi dotyczą osób pochodzenia południowoazjatyckiego, chińskiego lub innego azjatyckiego, bliskowschodniego oraz osób czarnych pochodzenia afrykańskiego lub afrokaraibskiego: BMI 23 oznacza nadwagę, 27,5 otyłość, a 32,5 / 37,5 otyłość II / III stopnia.',
     'WHO class': 'Klasa WHO',
 
     'BMI for children (2–19 years)': 'BMI dla dzieci (2–19 lat)',

@@ -13,8 +13,8 @@
     southAsian: { label: 'South Asian', lowerBmi: true, waist: 'asian', fatTable: 'asian' },
     eastAsian: { label: 'Chinese / East or Southeast Asian', lowerBmi: true, waist: 'asian', fatTable: 'asian' },
     blackAfrican: { label: 'Black African / African-Caribbean', lowerBmi: true, waist: 'europid', fatTable: 'general' },
-    middleEastern: { label: 'Middle Eastern / North African', lowerBmi: true, waist: 'europid', fatTable: 'general' },
-    latino: { label: 'Hispanic / Latin American', lowerBmi: false, waist: 'asian', fatTable: 'general' },
+    middleEastern: { label: 'Middle Eastern', lowerBmi: true, waist: 'europid', fatTable: 'general' },
+    latino: { label: 'Latino / Latin American', lowerBmi: false, waist: 'asian', fatTable: 'general' },
     other: { label: 'Other / Prefer not to say', lowerBmi: false, waist: 'europid', fatTable: 'general' },
   };
 

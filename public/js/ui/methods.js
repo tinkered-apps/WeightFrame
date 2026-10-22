@@ -36,7 +36,7 @@ ${table(['BMI', 'WHO class'], [
   ['35–39.9', 'Obesity II'],
   ['≥ 40', 'Obesity III'],
 ])}
-<p class="small muted" style="margin-top:8px">Lower thresholds apply for South Asian, Chinese and other Asian, Middle Eastern, and Black African / African-Caribbean backgrounds: 23 overweight, 27.5 obesity.</p>
+<p class="small muted" style="margin-top:8px">Lower thresholds apply for South Asian, Chinese and other Asian, Middle Eastern, and Black African / African-Caribbean backgrounds: 23 overweight, 27.5 obesity, and 32.5 / 37.5 for obesity classes II / III.</p>
 <ul>
 <li>Several populations carry more body fat and cardiometabolic risk at the same BMI, hence the lower action points. ${c(['who2004asia', 'nice2025'])}</li>
 <li>From 65 years, mortality is lowest around BMI 23–30 and rises below 23; "overweight" is not a risk marker at that age. ${c(['winter2014'])}</li>
