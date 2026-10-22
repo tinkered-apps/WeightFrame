@@ -218,7 +218,7 @@
     $('weeksField').hidden = state.paceMode !== 'weeks';
     $('intakeField').hidden = state.paceMode !== 'intake';
     const actT = FH.i18nText.get(state.locale).activity[state.activity];
-    $('activityHint').textContent = (actT || {}).desc || '';
+    $('activityHint').innerHTML = actT ? fmt.esc(actT.desc) + ' ' + fmt.cite(['nasem2023']) : '';
     const hints = state.locale === 'pl' ? {
       gentle: 'Około 0,5% masy ciała na tydzień.', moderate: 'Około 0,75% masy ciała na tydzień.', fast: 'Około 1% masy ciała na tydzień – górna granica zalecanego tempa.',
       weeks: 'Model znajduje podaż kalorii, która pozwoli osiągnąć cel w tylu tygodniach.', intake: 'Model pokazuje, dokąd ta podaż kalorii Cię zaprowadzi i kiedy.',
@@ -231,7 +231,9 @@
     const gainHint = state.locale === 'pl'
       ? 'Przy przybieraniu masy ciała aplikacja planuje nadwyżkę najwyżej 500 kcal dziennie; nie ma zalecanego tempa przybierania.'
       : 'For weight gain the app plans at most a 500 kcal/day surplus; there is no guideline pace for gaining.';
-    $('paceHint').textContent = gain && PACE_PRESETS.includes(state.paceMode) ? gainHint : hints[state.paceMode] || '';
+    const preset = PACE_PRESETS.includes(state.paceMode);
+    $('paceHint').innerHTML = gain && preset ? fmt.esc(gainHint)
+      : fmt.esc(hints[state.paceMode] || '') + (preset ? ' ' + fmt.cite(['nhlbi1998', 'helms2014']) : '');
   }
 
   function toInput() {
@@ -343,7 +345,8 @@
     if (r.ok && !r.isChild && r.healthyRange) {
       const hr = r.healthyRange;
       const prefix = state.locale === 'pl' ? 'Zdrowy zakres dla wzrostu: ' : 'Healthy range for your height: ';
-      $('goalHint').textContent = `${prefix}${fmt.mass(hr.minKg)} – ${fmt.mass(hr.maxKg)}.`;
+      const range = r.story.find((x) => x.id === 'range');
+      $('goalHint').innerHTML = fmt.esc(`${prefix}${fmt.mass(hr.minKg)} – ${fmt.mass(hr.maxKg)}.`) + (range ? ' ' + fmt.cite(range.refs) : '');
     } else $('goalHint').textContent = '';
     if (!r.ok && narrowMQ.matches) setRailOpen(true);
     railSummary();
