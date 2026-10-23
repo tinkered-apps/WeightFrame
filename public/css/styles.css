@@ -592,11 +592,12 @@ select:focus-visible { outline: none; border-color: var(--blue); box-shadow: 0 0
 .outlook__sub { font-size: 14px; color: var(--on-sky-2); margin: 10px 0 0; max-width: 60ch; }
 .outlook--solo .outlook__now { max-width: 640px; }
 .outlook__facts { margin: 16px 0 0; display: grid; gap: 0; }
-.fact { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 9px 0; border-top: 1px solid var(--sky-line); }
+.fact { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 12px; padding: 9px 0; border-top: 1px solid var(--sky-line); }
 .fact dt { display: flex; align-items: center; gap: 5px; font-size: 14px; color: var(--on-sky-2); min-width: 0; }
 .fact dd { margin: 0; text-align: right; font-size: 15.5px; font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; color: #fff; }
 .fact dd small { font-size: 12.5px; font-weight: 500; color: var(--on-sky-3); margin-left: 2px; }
-.fact__sub { display: block; font-size: 12.5px; font-weight: 500; color: var(--on-sky-3); }
+/* A note under the whole row, so a long one never squeezes the label beside the value. */
+.fact dd.fact__sub { flex-basis: 100%; font-size: 12.5px; font-weight: 500; white-space: normal; color: var(--on-sky-3); }
 .outlook__chart { min-width: 0; }
 .outlook__foot { margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--sky-line); font-size: 14px; color: var(--on-sky-2); max-width: 110ch; }
 .outlook__note { margin: 12px 0 0; font-size: 13px; color: var(--on-sky-2); max-width: 110ch; }
@@ -625,7 +626,6 @@ select:focus-visible { outline: none; border-color: var(--blue); box-shadow: 0 0
 .chart svg { display: block; width: 100%; height: auto; overflow: visible; }
 .chart text { font-family: var(--f-sans); }
 .tr-grid { stroke: var(--sky-line); stroke-width: 1; shape-rendering: crispEdges; }
-.tr-grid--v { stroke-dasharray: 2 4; }
 .tr-base { stroke: rgba(190, 210, 240, .3); stroke-width: 1; shape-rendering: crispEdges; }
 .tr-tick { font-size: 11.5px; fill: var(--on-sky-3); font-variant-numeric: tabular-nums; }
 .tr-tick--title { font-weight: 600; }
@@ -649,8 +649,6 @@ select:focus-visible { outline: none; border-color: var(--blue); box-shadow: 0 0
 .tr-switch { stroke: rgba(238, 243, 252, .28); stroke-width: 1; stroke-dasharray: 3 3; }
 .tr-note { font-size: 12px; font-weight: 600; fill: var(--on-sky-2); }
 .tr-note--soft { font-weight: 500; fill: var(--on-sky-3); }
-.tr-leader { stroke: rgba(190, 210, 240, .45); stroke-width: 1; }
-.tr-leader-dot { fill: var(--on-sky-2); }
 .tr-area { fill: url(#trAreaGrad); }
 .tr-unc { fill: rgba(134, 182, 255, .17); stroke: rgba(134, 182, 255, .32); stroke-width: 1; stroke-dasharray: 2 3; }
 .tr-unc.is-drawing { opacity: 0; animation: tr-fade .9s ease-out .9s forwards; }

@@ -50,11 +50,9 @@
     const W = chartWidth(ctx.width), narrow = W < 560;
     // A phone screen is tall and narrow, so the chart gets more height there, not less.
     const H = narrow ? 330 : 292;
-    // m.t leaves an annotation lane above the plot: notes live there and reach the curve on
-    // leader lines, so no label ever sits on top of a gridline or another label. On a narrow
-    // chart the lane holds only "switch to maintenance" (the refill note moves below), so it is
-    // one line tall.
-    const m = narrow ? { l: 34, r: 14, t: 28, b: 30 } : { l: 42, r: 18, t: 46, b: 30 };
+    // m.t leaves a one-line annotation lane above the plot for "switch to maintenance", so the
+    // label never sits on top of a gridline or the curve.
+    const m = narrow ? { l: 34, r: 14, t: 28, b: 30 } : { l: 42, r: 18, t: 28, b: 30 };
     const iw = W - m.l - m.r, ih = H - m.t - m.b;
     const days = s.day[s.day.length - 1];
     const toU = fmt.massVal;
@@ -85,7 +83,8 @@
     let g = `<defs><linearGradient id="trAreaGrad" x1="0" x2="0" y1="0" y2="1"><stop offset="0" class="tr-area-stop1"/><stop offset="1" class="tr-area-stop2"/></linearGradient></defs>`;
     g += '<g class="tr-axis">';
     for (const v of yt) g += `<line class="tr-grid" x1="${m.l}" x2="${m.l + iw}" y1="${y(v)}" y2="${y(v)}"/><text class="tr-tick" x="${m.l - 9}" y="${y(v) + 4}" text-anchor="end">${fmt.n(v, yd)}</text>`;
-    for (const d of xt) g += `<line class="tr-grid tr-grid--v" x1="${x(d)}" x2="${x(d)}" y1="${m.t}" y2="${m.t + ih}"/><text class="tr-tick" x="${x(d)}" y="${m.t + ih + 20}" text-anchor="middle">${fmt.shortDate(d)}</text>`;
+    // Month labels only, no vertical gridlines: the dashed switch line stays the one vertical.
+    for (const d of xt) g += `<text class="tr-tick" x="${x(d)}" y="${m.t + ih + 20}" text-anchor="middle">${fmt.shortDate(d)}</text>`;
     g += `<line class="tr-base" x1="${m.l}" x2="${m.l + iw}" y1="${m.t + ih}" y2="${m.t + ih}"/></g>`;
 
     // BMI classification bands: the healthy range, plus - once you're above it - each level up
@@ -93,7 +92,6 @@
     // settled above) but drawn later, on top of the uncertainty fill - otherwise that fill's own
     // blue tint sits over the band and dilutes/muddies its colour, making a band unrecognisable
     // as itself wherever the two happen to overlap.
-    let bandDrawn = false;
     const bandDefs = [];
     if (ctx.healthy) bandDefs.push({ level: 0, loKg: ctx.healthy.minKg, hiKg: ctx.healthy.maxKg, label: 'healthy BMI range' });
     if (ctx.bmiBands) bandDefs.push(...ctx.bmiBands);
@@ -102,8 +100,10 @@
       const hiU = bd.hiKg != null ? toU(bd.hiKg) : yMax;
       const top = Math.min(yMax, hiU), bot = Math.max(yMin, toU(bd.loKg));
       if (!(top > yMin && bot < yMax && top > bot)) continue;
-      if (bd.level === 0) bandDrawn = true;
-      bandsToPaint.push({ level: bd.level, label: bd.label, ty: y(top), by: y(bot) });
+      // The healthy label sits at the bottom of its band: after the goal the curve runs along
+      // the band's top edge and would cross a label placed there.
+      const ty = y(top), by = y(bot);
+      bandsToPaint.push({ level: bd.level, label: bd.label, ty, by, labelY: bd.level === 0 ? by - 6 : ty + 14 });
     }
     // goal line
     const goalY = y(toU(plan.goalKg));
@@ -122,17 +122,15 @@
     }
     for (const bp of bandsToPaint) {
       g += `<rect class="tr-band" data-level="${bp.level}" x="${m.l}" width="${iw}" y="${bp.ty.toFixed(1)}" height="${(bp.by - bp.ty).toFixed(1)}"/>`;
-      if (bp.by - bp.ty > 16) g += `<text class="tr-band-label" data-level="${bp.level}" x="${m.l + iw - 8}" y="${(bp.ty + 14).toFixed(1)}" text-anchor="end">${fmt.esc(bp.label)}</text>`;
+      if (bp.by - bp.ty > 16) g += `<text class="tr-band-label" data-level="${bp.level}" x="${m.l + iw - 8}" y="${bp.labelY.toFixed(1)}" text-anchor="end">${fmt.esc(bp.label)}</text>`;
     }
 
-    // Annotation lane: where the plan switches to maintenance, and the harmless water rebound.
-    // A note sits beside the line it describes (right first, then left) or, when neither side
-    // has room, moves below the chart - it never overlaps the axis, a gridline label or another note.
+    // Annotation lane: where the plan switches to maintenance. The label sits beside the line
+    // (right first, then left) or, when neither side has room, moves below the chart. The water
+    // and glycogen rebound after the goal is told in the outlook's facts, not here.
     const laneRight = m.l + iw;
     const offChart = [];
     const endW = s.weight[s.weight.length - 1];
-    const refillTxt = plan.days && plan.lossKg > 0 && endW - plan.goalKg > 0.3
-      ? `+${fmt.n(toU(endW - plan.goalKg), 1)} ${fmt.massUnit()} water &amp; glycogen refill → ${fmt.n(toU(endW), 1)} ${fmt.massUnit()}` : '';
     if (plan.days && plan.lossKg !== 0 && plan.mode !== 'maintain') {
       const gx = x(s.dietDays);
       g += `<line class="tr-switch" x1="${gx}" x2="${gx}" y1="8" y2="${m.t + ih}"/>`;
@@ -140,23 +138,6 @@
       if (gx + 8 + sw <= laneRight) g += `<text class="tr-note" x="${gx + 8}" y="16">switch to maintenance</text>`;
       else if (gx - 8 - sw >= m.l) g += `<text class="tr-note" x="${gx - 8}" y="16" text-anchor="end">switch to maintenance</text>`;
       else offChart.push(`<b>${fmt.date(s.dietDays)}</b>: switch to maintenance`);
-      if (refillTxt) {
-        const rw = textW(refillTxt.replace(/&amp;/g, '&'));
-        if (!narrow && gx + 8 + rw <= laneRight) {
-          // The note hangs on a leader that drops to where the rebound shows on the curve.
-          const di = Math.min(s.weight.length - 1, s.dietDays + Math.round((days - s.dietDays) * 0.3));
-          const lx = Math.max(gx + 14, Math.min(x(di), gx + 8 + rw - 6)), ly = y(toU(s.weight[Math.min(s.weight.length - 1, Math.round((lx - m.l) / iw * days))]));
-          g += `<text class="tr-note tr-note--soft" x="${gx + 8}" y="33">${refillTxt}</text>`;
-          g += `<line class="tr-leader" x1="${lx}" x2="${lx}" y1="39" y2="${ly - 5}"/><circle class="tr-leader-dot" cx="${lx}" cy="${ly}" r="2.5"/>`;
-        // A late switch point (slow-pace plans) can leave no room on the right for this longer
-        // line even when "switch to maintenance" fit; stack it on the left instead of dropping
-        // it off-chart, same as the switch label's own fallback. No leader here - the rebound
-        // point it would point to sits to the right, past the text, so a straight drop line
-        // wouldn't read as connected to it anyway.
-        } else if (!narrow && gx - 8 - rw >= m.l) {
-          g += `<text class="tr-note tr-note--soft" x="${gx - 8}" y="33" text-anchor="end">${refillTxt}</text>`;
-        } else offChart.push(refillTxt);
-      }
     }
     // 3,500 rule
     if (rulePts) {
@@ -174,6 +155,9 @@
     // goal reached + you
     if (plan.days && plan.mode !== 'maintain') g += `<circle class="tr-dot" cx="${x(s.dietDays)}" cy="${y(toU(s.weight[s.dietDays]))}" r="4.5"/>`;
     g += `<circle class="tr-you-halo" cx="${mpts[0][0]}" cy="${mpts[0][1]}" r="11"/><circle class="tr-you" cx="${mpts[0][0]}" cy="${mpts[0][1]}" r="5.5"/>`;
+    // Labelled in place instead of in the legend, on the side away from where the curve heads.
+    const youY = s.weight[0] >= plan.goalKg ? mpts[0][1] - 8 : mpts[0][1] + 18;
+    g += `<text class="tr-end tr-end--soft" x="${mpts[0][0] + 16}" y="${youY}">You today</text>`;
     // The goal line is labelled "goal 78.0 kg" inside the plot, at its left end just past the
     // "you" halo, on the side away from today's weight (the curve starts on the other side), so
     // the chart needs no right margin and keeps its width on a phone. The curve end gets its own
@@ -181,7 +165,7 @@
     const endY = mpts[mpts.length - 1][1];
     if (!plan.days) {
       // Band labels are right-aligned too: take the side of the curve end that misses them.
-      const bandLabelYs = bandsToPaint.filter((bp) => bp.by - bp.ty > 16).map((bp) => bp.ty + 14);
+      const bandLabelYs = bandsToPaint.filter((bp) => bp.by - bp.ty > 16).map((bp) => bp.labelY);
       const sides = endY < goalY ? [endY - 8, endY + 16] : [endY + 16, endY - 8];
       const ey = sides.find((cy) => bandLabelYs.every((by) => Math.abs(by - cy) > 14)) ?? sides[0];
       g += `<text class="tr-end" x="${m.l + iw - 4}" y="${ey}" text-anchor="end">${fmt.n(toU(endW), 1)} ${fmt.massUnit()}</text>`;
@@ -197,14 +181,14 @@
     const ruleLabelText = fmt.units === 'metric' ? '7,700 kcal = 1 kg' : '3,500 kcal = 1 lb';
     // The rule's own "would promise X weeks" explanation hangs off its legend entry as a hint
     // instead of a paragraph under the chart, so it doesn't compete with the chart for space.
-    const ruleHint = ctx.ruleTip ? `<button type="button" class="hint" data-tip="${fmt.esc(ctx.ruleTip)}" aria-label="“${ruleLabelText}” rule – more info">${icon('help')}</button>${fmt.cite(['hall2011'])}` : '';
+    // The model's name and source are in the outlook header, and the healthy band and today's
+    // dot are labelled in the plot, so the legend keys only what the plot leaves unnamed.
+    const ruleHint = ctx.ruleTip ? `<button type="button" class="hint" data-tip="${fmt.esc(ctx.ruleTip)}" aria-label="“${ruleLabelText}” rule – more info">${icon('help')}</button>` : '';
     const legend = `<div class="legend legend--dark">
-      <span><i class="lg lg--line"></i>Dynamic model (NIH / Hall 2011)</span>
+      <span><i class="lg lg--line"></i>Forecast</span>
       ${unc ? `<span><i class="lg lg--unc"></i>Likely range<button type="button" class="hint" data-tip="The same plan if your true maintenance sits anywhere in its likely range: ±1 prediction error of the National Academies 2023 equation, which covers about 2 in 3 people." aria-label="Likely range – more info">${icon('help')}</button></span>` : ''}
       ${rulePts ? `<span><i class="lg lg--rule"></i>“${ruleLabelText}” rule${ruleHint}</span>` : ''}
-      ${bandDrawn ? '<span><i class="lg lg--band"></i>Healthy BMI range</span>' : ''}
       ${milestones.length ? '<span><i class="lg lg--ms"></i>Milestone</span>' : ''}
-      <span><i class="lg lg--you"></i>You today</span>
     </div>`;
     const chip = hasWhy ? `<button type="button" class="why-chip">${icon('info')}<span>Why the curve bends</span></button>` : '';
     const desc = `Projected weight from ${fmt.mass(s.weight[0])} to ${fmt.mass(plan.goalKg)}.`;

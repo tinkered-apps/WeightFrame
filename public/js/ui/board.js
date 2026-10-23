@@ -67,7 +67,7 @@
     const head = (meta, right) => `<header class="outlook__head"><h2 class="outlook__title" id="outlook-h">Your outlook</h2><div class="outlook__head-right">${meta ? `<p class="outlook__meta">${meta}</p>` : ''}${right || ''}</div></header>`;
     const numeral = (label, tip, v, unitTxt) => `<p class="outlook__label">${label}${hint(label, tip)}</p>
       <p class="outlook__numeral">${roll('headline', Math.round(v / 10) * 10, 0, fmt.kcal(v))}<small>${unitTxt}</small></p>`;
-    const fact = (label, value, tip, sub) => `<div class="fact"><dt>${label}${hint(label, tip)}</dt><dd>${value}${sub ? `<span class="fact__sub">${sub}</span>` : ''}</dd></div>`;
+    const fact = (label, value, tip, sub) => `<div class="fact"><dt>${label}${hint(label, tip)}</dt><dd>${value}</dd>${sub ? `<dd class="fact__sub">${sub}</dd>` : ''}</div>`;
 
     if (!p) {
       const maintHint = 'From the National Academies 2023 equation, fitted to about 6,500 doubly labeled-water measurements – the gold-standard method for free-living energy expenditure.';
@@ -104,7 +104,11 @@
         </div>`;
       if (p.lossKg > 0.25) facts.push(fact('Average pace', `${fmt.mass(p.avgRateKgPerWeek, 2)}<small>/week</small>`, paceHint));
       facts.push(fact(deficitShown < 0 ? 'Starting surplus' : 'Starting deficit', `${fmt.n(Math.abs(deficitShown))} <small>kcal/day</small>`, deficitHint));
-      if (p.lossKg > 0.25) facts.push(fact('Maintenance after goal', `${fmt.kcal(p.maintenanceAtGoal)} <small>kcal/day</small>`, afterHint));
+      // The harmless water and glycogen rebound after the goal, told here rather than on the chart.
+      const endW = p.series.weight[p.series.weight.length - 1];
+      const refill = p.lossKg > 0 && endW - p.goalKg > 0.3
+        ? `+${fmt.n(fmt.massVal(endW - p.goalKg), 1)} ${fmt.massUnit()} water &amp; glycogen refill → ${fmt.mass(endW)}` : '';
+      if (p.lossKg > 0.25) facts.push(fact('Maintenance after goal', `${fmt.kcal(p.maintenanceAtGoal)} <small>kcal/day</small>`, afterHint, refill));
       const afterGoalText = p.lossKg > 0.25 ? (pl ? H.afterGoal(fmt.kcal(p.maintenanceAtGoal)) : `After the goal, maintenance is about ${fmt.kcal(p.maintenanceAtGoal)} kcal a day. `) : '';
       if (gain) {
         foot = 'Projection from the NIH dynamic model.';
