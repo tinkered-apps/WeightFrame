@@ -120,6 +120,7 @@
     'water &amp; glycogen refill': 'uzupełnienie wody i glikogenu',
     'goal': 'cel',
     'Dynamic model (NIH / Hall 2011)': 'Model dynamiczny (NIH / Hall 2011)',
+    'Forecast': 'Prognoza',
     '“3,500 kcal = 1 lb” rule': 'reguła „3500 kcal = 1 funt”',
     '“7,700 kcal = 1 kg” rule': 'reguła „7700 kcal = 1 kg”',
     'Healthy BMI range': 'Prawidłowy zakres BMI',
