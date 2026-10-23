@@ -48,10 +48,13 @@
   function trajectory(plan, ctx) {
     const s = plan.series;
     const W = chartWidth(ctx.width), narrow = W < 560;
-    const H = narrow ? 250 : 292;
+    // A phone screen is tall and narrow, so the chart gets more height there, not less.
+    const H = narrow ? 330 : 292;
     // m.t leaves an annotation lane above the plot: notes live there and reach the curve on
-    // leader lines, so no label ever sits on top of a gridline or another label.
-    const m = { l: 42, r: 18, t: 46, b: 30 };
+    // leader lines, so no label ever sits on top of a gridline or another label. On a narrow
+    // chart the lane holds only "switch to maintenance" (the refill note moves below), so it is
+    // one line tall.
+    const m = narrow ? { l: 34, r: 14, t: 28, b: 30 } : { l: 42, r: 18, t: 46, b: 30 };
     const iw = W - m.l - m.r, ih = H - m.t - m.b;
     const days = s.day[s.day.length - 1];
     const toU = fmt.massVal;
