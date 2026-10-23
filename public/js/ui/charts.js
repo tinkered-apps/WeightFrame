@@ -51,7 +51,7 @@
     const H = narrow ? 250 : 292;
     // m.t leaves an annotation lane above the plot: notes live there and reach the curve on
     // leader lines, so no label ever sits on top of a gridline or another label.
-    const m = { l: 42, r: narrow ? 62 : 82, t: 46, b: 30 };
+    const m = { l: 42, r: 18, t: 46, b: 30 };
     const iw = W - m.l - m.r, ih = H - m.t - m.b;
     const days = s.day[s.day.length - 1];
     const toU = fmt.massVal;
@@ -171,17 +171,20 @@
     // goal reached + you
     if (plan.days && plan.mode !== 'maintain') g += `<circle class="tr-dot" cx="${x(s.dietDays)}" cy="${y(toU(s.weight[s.dietDays]))}" r="4.5"/>`;
     g += `<circle class="tr-you-halo" cx="${mpts[0][0]}" cy="${mpts[0][1]}" r="11"/><circle class="tr-you" cx="${mpts[0][0]}" cy="${mpts[0][1]}" r="5.5"/>`;
-    // Right margin: the goal line is labelled "goal / 78.0 kg". The curve end gets its own value
-    // only when the goal is never reached (a plateau), where it means something different.
+    // The goal line is labelled "goal 78.0 kg" inside the plot, at its left end just past the
+    // "you" halo, on the side away from today's weight (the curve starts on the other side), so
+    // the chart needs no right margin and keeps its width on a phone. The curve end gets its own
+    // value only when the goal is never reached (a plateau), where it means something different.
     const endY = mpts[mpts.length - 1][1];
-    const gxR = m.l + iw + 10;
-    let gy = goalY;
     if (!plan.days) {
-      const close = Math.abs(goalY - endY) < 30;
-      g += `<text class="tr-end" x="${gxR}" y="${endY + 4}">${fmt.n(toU(endW), 1)} ${fmt.massUnit()}</text>`;
-      if (close) gy = goalY >= endY ? endY + 30 : endY - 30;
+      // Band labels are right-aligned too: take the side of the curve end that misses them.
+      const bandLabelYs = bandsToPaint.filter((bp) => bp.by - bp.ty > 16).map((bp) => bp.ty + 14);
+      const sides = endY < goalY ? [endY - 8, endY + 16] : [endY + 16, endY - 8];
+      const ey = sides.find((cy) => bandLabelYs.every((by) => Math.abs(by - cy) > 14)) ?? sides[0];
+      g += `<text class="tr-end" x="${m.l + iw - 4}" y="${ey}" text-anchor="end">${fmt.n(toU(endW), 1)} ${fmt.massUnit()}</text>`;
     }
-    g += `<text class="tr-end tr-end--soft" x="${gxR}" y="${gy - 3}">goal</text><text class="tr-end" x="${gxR}" y="${gy + 12}">${fmt.n(toU(plan.goalKg), 1)} ${fmt.massUnit()}</text>`;
+    const gy = s.weight[0] >= plan.goalKg ? goalY + 16 : goalY - 7;
+    g += `<text class="tr-end" x="${m.l + 16}" y="${gy}"><tspan class="tr-end--soft">goal</tspan> ${fmt.n(toU(plan.goalKg), 1)} ${fmt.massUnit()}</text>`;
     // crosshair
     g += `<line class="tr-xh" x1="0" x2="0" y1="${m.t}" y2="${m.t + ih}" visibility="hidden"/>`;
     g += `<circle class="tr-xh-dot" r="5" visibility="hidden"/>`;

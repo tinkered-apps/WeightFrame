@@ -644,7 +644,8 @@ select:focus-visible { outline: none; border-color: var(--blue); box-shadow: 0 0
 .tr-band-label[data-level="2"] { fill: #f0a878; }
 .tr-band-label[data-level="3"] { fill: var(--on-sky-critical); }
 .tr-band-label[data-level="4"] { fill: #e58fc0; }
-.tr-aim { stroke: rgba(238, 243, 252, .45); stroke-width: 1; stroke-dasharray: 4 4; shape-rendering: crispEdges; }
+/* Solid, so the goal line never reads as the dashed calorie-rule line. */
+.tr-aim { stroke: rgba(238, 243, 252, .5); stroke-width: 1; shape-rendering: crispEdges; }
 .tr-switch { stroke: rgba(238, 243, 252, .28); stroke-width: 1; stroke-dasharray: 3 3; }
 .tr-note { font-size: 12px; font-weight: 600; fill: var(--on-sky-2); }
 .tr-note--soft { font-weight: 500; fill: var(--on-sky-3); }
